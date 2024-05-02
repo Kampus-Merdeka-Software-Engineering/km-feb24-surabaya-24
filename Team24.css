@@ -1,0 +1,63 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.container {
+    display: flex;
+    height: 100vh; 
+}
+.sidebar {
+    flex: 0 0 200px; 
+    background-color: #000000;
+    color: white;
+    padding: 20px;
+}
+.content {
+    flex: 1; /* Mengambil ruang sisa */
+    padding: 20px;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 100px;
+}
+nav ul li {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+}
+.hero {
+    background-color: #ffb007;
+    padding: 20px;
+    border-radius: 5px;
+}
+.hero-content h1 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.logo-container{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.logo { 
+    width: 75px; 
+    height: auto;
+}
+
+.logo-text {
+    margin-left: 10px; 
+    font-size: 14px;
+    color: #ffffff; 
+}
