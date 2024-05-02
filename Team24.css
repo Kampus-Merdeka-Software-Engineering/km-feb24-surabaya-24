@@ -2,7 +2,11 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-color: #211f74;
 }
+
+
+
 .container {
     display: flex;
     height: 100vh; 
@@ -61,3 +65,4 @@ nav ul li a:hover {
     font-size: 14px;
     color: #ffffff; 
 }
+
