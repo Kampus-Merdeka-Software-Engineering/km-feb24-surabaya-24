@@ -2,10 +2,12 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: #211f74;
+    /*background-image: url("image/pizza_back_4.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;*/
+    background-color: #fff;
 }
-
-
 
 .container {
     display: flex;
@@ -38,7 +40,7 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 .hero {
-    background-color: #ffb007;
+    background-color: #e9da07;
     padding: 20px;
     border-radius: 5px;
 }
