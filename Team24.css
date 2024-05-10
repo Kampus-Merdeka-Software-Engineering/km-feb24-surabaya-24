@@ -15,7 +15,7 @@ body, html {
 }
 .sidebar {
     flex: 0 0 200px; 
-    background-color: #d4d4d4;
+    background-color: #ffffff;
     color: rgb(255, 255, 255);
     padding: 20px;
 }
@@ -33,20 +33,20 @@ nav ul li {
     margin-top: 20px;
 }
 nav ul li a {
-    color: rgb(0, 0, 0);
+    color: #8f61c5(0, 0, 0);
     text-decoration: none;
 }
 nav ul li a:hover {
     text-decoration: underline;
 }
 .hero {
-    background-color: #cb90da;
+    background-color: #8f61c5;
     padding: 20px;
     border-radius: 5px;
 }
 .hero-content h1 {
     margin: 0;
-    color: #000000;
+    color: #fffefe;
 }
 
 .logo-container{
