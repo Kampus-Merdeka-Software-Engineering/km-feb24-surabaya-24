@@ -92,7 +92,7 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url("dark_pizza.jpg");
+  background-image: url("/image/dark_pizza.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
