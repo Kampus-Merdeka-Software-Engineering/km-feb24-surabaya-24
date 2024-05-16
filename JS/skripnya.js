@@ -42,3 +42,4 @@ function filterTable() {
   var selectedMonthYear = document.getElementById("monthYearSelect").value;
   alert("You selected: " + selectedMonthYear); // Replace this with your logic
 }
+
