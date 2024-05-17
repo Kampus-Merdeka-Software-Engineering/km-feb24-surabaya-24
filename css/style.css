@@ -151,19 +151,19 @@ body {
 
 /* About Section */
 .about,
-.profil {
+.profile {
   padding: 7rem 7% 1.4rem;
 }
 
 .about h2,
-.profil h2 {
+.profile h2 {
   text-align: center;
   font-size: 3.6rem;
   margin-bottom: 3rem;
 }
 
 .about h2 span,
-.profil h2 span {
+.profile h2 span {
   color: var(--primary);
 }
 
@@ -243,12 +243,12 @@ body {
   text-align: center;
 }
 
-
 /* Profil Section */
-.profil h2 {
+.profile h2 {
   margin-bottom: 1rem;
 }
-.profil p {
+
+.profile p {
   text-align: center;
   max-width: 80rem;
   margin: auto;
@@ -256,25 +256,26 @@ body {
   line-height: 1.6;
 }
 
-.profil .row {
+.profile .row {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   margin-top: 5rem;
   justify-content: center;
 }
 
-.profil .row .profil-card {
+.profile .row .profil-card {
   text-align: center;
   flex-direction: row;
   padding-bottom: 1rem;
 }
 
-.profil .row .profil-card img {
+.profile .row .profil-card img {
   border-radius: 200px;
   width: 200px;
 }
 
-.profil .row .profil-card .profil-title {
+.profile .row .profil-card .profil-title {
   margin: 1rem auto 0.5rem;
 }
 

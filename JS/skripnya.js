@@ -17,7 +17,7 @@ document.addEventListener("click", function (e) {
 
 // filtering dropdown date//
 // JavaScript for dynamically generating select options
-document.addEventListener("DOMContentLoaded", function(event) { 
+document.addEventListener("DOMContentLoaded", function (event) {
   var select = document.getElementById("monthYearSelect");
 
   // Starting from January 2015 to December 2015
@@ -26,7 +26,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var currentDate = new Date(startDate);
 
   while (currentDate <= endDate) {
-    var monthYear = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+    var monthYear = currentDate.toLocaleString("default", {
+      month: "long",
+      year: "numeric",
+    });
     var option = document.createElement("option");
     option.text = monthYear;
     option.value = monthYear;
@@ -42,4 +45,3 @@ function filterTable() {
   var selectedMonthYear = document.getElementById("monthYearSelect").value;
   alert("You selected: " + selectedMonthYear); // Replace this with your logic
 }
-
