@@ -290,7 +290,6 @@ body {
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: auto auto;
   gap: 20px;
-  max-width: 1200px;
   margin-top: 5rem;
   margin-bottom: 2rem;
 }
@@ -315,6 +314,11 @@ body {
   border-radius: 200px;
   width: 100px;
   height: 100px;
+  align-items: center;
+}
+
+.profile h3{
+  text-align: center;
 }
 
 .profile .row .profil-card .profil-title {
