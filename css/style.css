@@ -149,48 +149,48 @@ body {
   box-shadow: 1px 3px 3px rgba(1, 1, 3, 0.5);
 }
 
-/* About Section */
-.about,
+/* insight Section */
+.insight,
 .profile {
   padding: 7rem 7% 1.4rem;
 }
 
-.about h2,
+.insight h2,
 .profile h2 {
   text-align: center;
   font-size: 3.6rem;
   margin-bottom: 3rem;
 }
 
-.about h2 span,
+.insight h2 span,
 .profile h2 span {
   color: var(--primary);
 }
 
-.about .row {
+.insight .row {
   display: flex;
 }
 
-.about .row .about-img {
+.insight .row .insight-img {
   flex: 1 1 45rem;
 }
 
-.about .row .about-img img {
+.insight .row .insight-img img {
   width: 100%;
   padding: 0 1rem;
 }
 
-.about .row .content {
+.insight .row .content {
   flex: 1 1 35rem;
   padding: 0 1rem;
 }
 
-.about .row .content h3 {
+.insight .row .content h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
-.about .row .content p {
+.insight .row .content p {
   margin-bottom: 0.8rem;
   font-size: 1.3rem;
   font-weight: 150;
@@ -393,25 +393,25 @@ footer .credit a {
   .navbar .navbar-nav a:hover::after {
     transform: scaleX(0.2);
   }
-  .about .row {
+  .insight .row {
     flex-wrap: wrap;
   }
 
-  .about .row .about-img img {
+  .insight .row .insight-img img {
     height: 24rem;
     object-fit: cover;
     object-position: center;
   }
-  .about .row .content {
+  .insight .row .content {
     padding: 0;
   }
 
-  .about .row .content h3 {
+  .insight .row .content h3 {
     margin-top: 1rem;
     font-size: 2rem;
   }
 
-  .about .row .content p {
+  .insight .row .content p {
     font-size: 1.6rem;
   }
 
@@ -441,10 +441,10 @@ footer .credit a {
   html {
     font-size: 55%;
   }
-  .about .row .content h3 {
+  .insight .row .content h3 {
     text-align: center;
   }
-  .about .row .content p {
+  .insight .row .content p {
     text-align: center;
   }
 }
