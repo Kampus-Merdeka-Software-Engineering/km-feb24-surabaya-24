@@ -240,7 +240,36 @@ body {
   min-height: 100vh;
   display: flexbox;
   position: relative;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between rows */
+  width: 80%;
+  max-width: 800px; /* You can adjust the max-width based on your preference */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row:first-child {
+  justify-content: space-between; /* Ensure all 3 columns take equal space */
+}
+
+.item {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
   text-align: center;
+  flex: 1;
+  margin: 5px; /* Spacing between columns */
+}
+
+.row:not(:first-child) .item {
+  flex-basis: calc(50% - 10px); /* 2 columns with equal width, considering the margin */
 }
 
 /* Profil Section */
