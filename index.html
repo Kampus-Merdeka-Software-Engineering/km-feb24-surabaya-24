@@ -15,9 +15,12 @@
 
     <!-- Feather Icons-->
     <script src="https://unpkg.com/feather-icons"></script>
+  
 
     <!-- My Style-->
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   </head>
 
   <body>
@@ -111,20 +114,53 @@
         <main class="content3">
         <p>TARUH GRAFIK DISINI</p>
         </main>
-      <!--Nyoba flex box -->
+      
+        <!--Nyoba flex box -->
       <div class="container">
         <div class="row">
           <div class="item">1-1</div>
           <div class="item">1-2</div>
           <div class="item">1-3</div>
         </div>
+        
+        <!--tampilan table dan time barchart -->
         <div class="row">
-          <div class="item">2-1</div>
-          <div class="item">2-2</div>
+          <div class="table"><h3>sales table(sementara)</h3>
+            <table>
+            <thread>
+              <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>order.vol</th>
+              </tr>
+            </thread>
+            <tbody id="data-output">
+            </tbody>
+          </table>
+          </div>
+          
+          <div class="timebar"><h3>Time Barchart</h3>
+            <div>
+            <canvas id="timebarchart"></canvas>
+            </div>
+           </div>
         </div>
+
+        <!--revenue linechart dan price barchart -->
         <div class="row">
-          <div class="item">3-1</div>
-          <div class="item">3-2</div>
+          <div class="reve"><h3>Revenue</h3>
+            <div>
+            <canvas id="revenue"></canvas>
+            </div>
+           </div>
+          
+           <div class="pricebar"><h3>Price Range</h3>
+            <div>
+            <canvas id="pricerange"></canvas>
+            </div>
+           </div>
         </div>
         <div class="row">
           <div class="item">4-1</div>

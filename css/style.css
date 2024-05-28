@@ -253,6 +253,7 @@ body {
 .row {
   display: flex;
   justify-content: space-between;
+  gap: 50px;
 }
 
 .row:first-child {
@@ -260,7 +261,7 @@ body {
 }
 
 .item {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 20px;
   text-align: center;
@@ -269,7 +270,87 @@ body {
 }
 
 .row:not(:first-child) .item {
-  flex-basis: calc(50% - 10px); /* 2 columns with equal width, considering the margin */
+  flex-basis: calc(
+    50% - 10px
+  ); /* 2 columns with equal width, considering the margin */
+}
+
+/* table */
+h3 {
+  text-align: center;
+}
+.table {
+  display: flexbox;
+  justify-content: center;
+}
+
+.table table {
+  width: 500px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #146c94;
+}
+
+.table th {
+  background-color: #146c94;
+}
+
+.table tr:nth-child(even) {
+  background-color: #146c94;
+}
+
+.table tr:hover {
+  background-color: #b9b9b9;
+}
+
+.table th,
+.table td {
+  font-size: 12px;
+}
+
+.table th {
+  font-weight: bold;
+}
+
+/* time barchart */
+.timebar {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#timebarchart {
+  width: 500px;
+}
+
+/* revnue linechart */
+.reve {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#revenue {
+  width: 500px;
+}
+
+/* price range barchart */
+.pricebar {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#pricerange {
+  width: 500px;
 }
 
 /* Profil Section */
@@ -317,7 +398,7 @@ body {
   align-items: center;
 }
 
-.profile h3{
+.profile h3 {
   text-align: center;
 }
 

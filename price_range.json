@@ -1,0 +1,27 @@
+[
+  {
+    "pizza_id": "big_meat_s",
+    "PriceRange": "10-15",
+    "Record_Count": 3622
+  },
+  {
+    "pizza_id": "thai_ckn_l",
+    "PriceRange": "20.1-25",
+    "Record_Count": 2730
+  },
+  {
+    "pizza_id": "five_cheese_l",
+    "PriceRange": "15.1-20",
+    "Record_Count": 2718
+  },
+  {
+    "pizza_id": "four_cheese_l",
+    "PriceRange": "15.1-20",
+    "Record_Count": 2546
+  },
+  {
+    "pizza_id": "classic_dlx_m",
+    "PriceRange": "15.1-20",
+    "Record_Count": 2318
+  }
+]
