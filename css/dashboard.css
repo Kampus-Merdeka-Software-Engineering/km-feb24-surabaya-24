@@ -23,18 +23,12 @@ body {
   min-height: 2000px;
 }
 
-/* Gaya dasar untuk navbar */
+/* Mengatur judul dan opsi */
 .navbar {
   background-color: #144f92;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-}
-
-/* Mengatur kontainer judul dan opsi */
-.nav-title-container {
-  display: flex;
-  justify-content: space-between;
+  padding: 15px;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -63,4 +57,18 @@ body {
   position: relative;
   padding: 5px;
   display: flex;
+}
+
+.navbar .nav-title h1 {
+  font-family: "sans-serif";
+  font-size: 40px;
+}
+
+.navbar .right .nav-logo {
+  text-align: center;
+  align-self: flex-start;
+  padding: 5px;
+  flex: 1;
+  width: 100%;
+  height: auto;
 }
