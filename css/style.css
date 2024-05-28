@@ -20,7 +20,7 @@ body {
   font-family: "poppins", sans-serif;
   background-color: var(--bg);
   color: #fff;
-  min-height: 3000px;
+  min-height: 2000px;
 }
 
 /* Navbar */
@@ -273,6 +273,7 @@ body {
   flex-basis: calc(
     50% - 10px
   ); /* 2 columns with equal width, considering the margin */
+<<<<<<< Updated upstream
 }
 
 /* table */
@@ -351,6 +352,8 @@ h3 {
 }
 #pricerange {
   width: 500px;
+=======
+>>>>>>> Stashed changes
 }
 
 /* Profil Section */

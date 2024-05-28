@@ -1,0 +1,66 @@
+:root {
+  --primary: #146c94;
+  --bg: #010101;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "poppins", sans-serif;
+  background-color: var(--bg);
+  color: #fff;
+  min-height: 2000px;
+}
+
+/* Gaya dasar untuk navbar */
+.navbar {
+  background-color: #144f92;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+/* Mengatur kontainer judul dan opsi */
+.nav-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter {
+  align-items: center;
+  display: flexbox;
+  padding: 10px;
+  background-color: #146c94;
+  width: 190px;
+}
+
+.filter1 {
+  position: relative;
+  padding: 5px;
+  display: flex;
+}
+
+.filter2 {
+  position: relative;
+  padding: 5px;
+  display: flex;
+}
+
+.filter3 {
+  position: relative;
+  padding: 5px;
+  display: flex;
+}
