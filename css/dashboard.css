@@ -37,26 +37,34 @@ body {
   align-items: center;
   display: flexbox;
   padding: 10px;
-  background-color: #146c94;
-  width: 190px;
+  background: linear-gradient(to bottom, #146c94 6%, #00b6cb 100%);
+  width: 280px;
 }
 
+.filter h2 {
+  position: relative;
+  padding: 1px 5px;
+  display: flex;
+}
 .filter1 {
   position: relative;
   padding: 5px;
   display: flex;
+  height: 30px;
 }
 
 .filter2 {
   position: relative;
   padding: 5px;
   display: flex;
+  height: 30px;
 }
 
 .filter3 {
   position: relative;
   padding: 5px;
   display: flex;
+  height: 30px;
 }
 
 .navbar .nav-title h1 {
@@ -71,4 +79,123 @@ body {
   flex: 1;
   width: 100%;
   height: auto;
+}
+
+/* Graph */
+.graph {
+  min-height: 100vh;
+  display: flexbox;
+  position: relative;
+  padding-left: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between rows */
+  width: 80%;
+  max-width: 800px; /* You can adjust the max-width based on your preference */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.row:first-child {
+  justify-content: space-between; /* Ensure all 3 columns take equal space */
+}
+
+.item {
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  flex: 1;
+  margin: 5px; /* Spacing between columns */
+}
+
+.row:not(:first-child) .item {
+  flex-basis: calc(
+    50% - 10px
+  ); /* 2 columns with equal width, considering the margin */
+}
+
+/* table */
+h3 {
+  text-align: center;
+}
+.table {
+  display: flexbox;
+  justify-content: center;
+}
+
+.table table {
+  width: 500px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #146c94;
+}
+
+.table th {
+  background-color: #146c94;
+}
+
+.table tr:nth-child(even) {
+  background-color: #146c94;
+}
+
+.table tr:hover {
+  background-color: #b9b9b9;
+}
+
+.table th,
+.table td {
+  font-size: 12px;
+}
+
+.table th {
+  font-weight: bold;
+}
+
+/* time barchart */
+.timebar {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#timebarchart {
+  width: 500px;
+}
+
+/* revnue linechart */
+.reve {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#revenue {
+  width: 500px;
+}
+
+/* price range barchart */
+.pricebar {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#pricerange {
+  width: 500px;
 }
