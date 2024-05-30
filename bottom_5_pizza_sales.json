@@ -2,26 +2,26 @@
   {
     "pizza_id": "the_greek_xxl",
     "category": "Classic",
-    "Record Count": 56
+    "Record_Count": 56
   },
   {
     "pizza_id": "green_garden_l",
     "category": "Veggie",
-    "Record Count": 188
+    "Record_Count": 188
   },
   {
     "pizza_id": "ckn_alfredo_s",
     "category": "Chicken",
-    "Record Count": 192
+    "Record_Count": 192
   },
   {
     "pizza_id": "calabrese_s",
     "category": "Supreme",
-    "Record Count": 198
+    "Record_Count": 198
   },
   {
     "pizza_id": "mexicana_s",
     "category": "Veggie",
-    "Record Count": 320
+    "Record_Count": 320
   }
 ]
