@@ -199,3 +199,26 @@ h3 {
 #pricerange {
   width: 500px;
 }
+/* top 5 pizza barchart */
+.top5 {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#top5pizza {
+  width: 500px;
+}
+
+/* bottom 5 pizza barchart */
+.bottom5 {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#bottom5pizza {
+  width: 500px;
+}
