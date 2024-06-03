@@ -1,66 +1,40 @@
-// filtering dropdown date//
-// JavaScript for dynamically generating select options
-document.addEventListener("DOMContentLoaded", function (event) {
-  var select = document.getElementById("monthYearSelect");
-
-  // Starting from January 2015 to December 2015
-  var startDate = new Date("2015-01-01");
-  var endDate = new Date("2015-12-31");
-  var currentDate = new Date(startDate);
-
-  while (currentDate <= endDate) {
-    var monthYear = currentDate.toLocaleString("default", {
-      month: "long",
-      year: "numeric",
-    });
-    var option = document.createElement("option");
-    option.text = monthYear;
-    option.value = monthYear;
-    select.add(option);
-
-    // Move to the next month
-    currentDate.setMonth(currentDate.getMonth() + 1);
-  }
-});
-
-// Function to filter based on selected month and year
-function filterTable() {
-  var selectedMonthYear = document.getElementById("monthYearSelect").value;
-  alert("You selected: " + selectedMonthYear); // Replace this with your logic
-}
-
-// Mengambil data dari file pizza_sales.json
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   fetch("pizza_places.json")
     .then((response) => response.json())
-    .then((pizzaData) => {
-      // Menghitung Total Income
-      const totalIncome = pizzaData.reduce((sum, item) => {
-        return sum + parseFloat(item.Price.replace("$", ""));
-      }, 0);
-
-      // Menghitung Total Product Sold
-      const totalProductsSold = pizzaData.reduce((sum, item) => {
-        return sum + item.Quantity;
-      }, 0);
-
-      // Menghitung Sales Volume
-      const uniqueOrders = new Set(pizzaData.map((item) => item["Order ID"]));
-      const salesVolume = uniqueOrders.size;
-
-      // Menampilkan hasil di halaman web dengan format yang lebih rapi
+    .then((data) => {
+      const { totalIncome, totalQuantity, totalOrders, monthlyRevenue } =
+        calculateTotals(data);
+      document.getElementById("total-income").textContent = `$${totalIncome}`;
       document.getElementById(
-        "total-income"
-      ).innerText = `$${totalIncome.toLocaleString("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      })}`;
-      document.getElementById("total-products-sold").innerText =
-        totalProductsSold.toLocaleString("en-US");
-      document.getElementById("sales-volume").innerText =
-        salesVolume.toLocaleString("en-US");
+        "total-quantity"
+      ).textContent = `${totalQuantity}`;
+      document.getElementById("total-order").textContent = `${totalOrders}`;
+      displayRevenueChart(monthlyRevenue);
     })
-    .catch((error) => console.error("Error fetching the data:", error));
+    .catch((error) => console.error("Error fetching the JSON data:", error));
+
+  function calculateTotals(data) {
+    let totalIncome = 0;
+    let totalQuantity = 0;
+    let orderIds = new Set();
+
+    data.forEach((item) => {
+      const price = parseFloat(item.Price.replace("$", ""));
+      const quantity = item.Quantity;
+      totalIncome += price * quantity;
+      totalQuantity += quantity;
+      orderIds.add(item["Order ID"]);
+    });
+
+    return {
+      totalIncome: totalIncome.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+      totalQuantity: totalQuantity.toLocaleString("en-US"),
+      totalOrders: orderIds.size.toLocaleString("en-US"),
+    };
+  }
 });
 
 /* table penjualan */
@@ -419,6 +393,8 @@ fetch("pizza_places.json")
   });
 
 //bottom 5 pizza//
+// Ambil data dari file JSON
+// Ambil data dari file JSON
 fetch("pizza_places.json")
   .then((response) => response.json())
   .then((data) => {
@@ -453,7 +429,7 @@ fetch("pizza_places.json")
         labels: labels,
         datasets: [
           {
-            label: "Quantity Sold",
+            label: "Pizza ID",
             data: dataValues,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
