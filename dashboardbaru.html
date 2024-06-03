@@ -1,10 +1,10 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>dashboard baru</title>
+  <head>
+    <meta charset="utf-8" />
+    <title>dashboard baru</title>
     <!---Stylesheet-->
-    <link rel="stylesheet" href="css/dashboardbaru.css">
+    <link rel="stylesheet" href="css/dashboardbaru.css" />
     <!--Font-------------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,21 +12,137 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    </head>
-    <body>
+  </head>
+  <body>
     <!--Project Section--------------------->
-        <section id="project">
-            <div class="project-heading">
-                <span>Pizza Sales</span>
-                <h3>Pages</h3>
-            </div> 
-    <!---filter------------------------------>
-            <ul class="project-filter">
-                <li class="list project-filter-active">Dashboard</li>
-                <li class="list">Insight</li>
-                <li class="list">Recomendation</li>
-            </ul>
-        </section>
-    </body>
+    <section id="project">
+      <div class="project-heading">
+        <span>Pizza Sales</span>
+        <h3>Pages</h3>
+      </div>
+      <!---filter------------------------------>
+      <ul class="project-filter">
+        <li class="list project-filter-active">Dashboard</li>
+        <li class="list">Insight</li>
+        <li class="list">Recomendation</li>
+      </ul>
+    </section>
+    <main class="container-dashboard">
+      <header class="dash-header">
+    <div class="select-dropdown">
+      <div class="select-btn btn1">
+        <span class="btn-text">MonthYearSelect</span>
+        <span class="arrow-dwn">
+          <i class="bx bx-chevron-up"></i>
+        </span>
+      </div>
+      <ul class="list-items pizza-type"></ul>
+    </div>
+    <div class="select-dropdown">
+      <div class="select-btn btn2">
+        <span class="btn-text">Pizza-Name</span>
+        <span class="arrow-dwn">
+          <i class="bx bx-chevron-up"></i>
+        </span>
+      </div>
+      <ul class="list-items pizza-category"></ul>
+    </div>
+    <div class="select-dropdown">
+      <div class="select-btn btn3">
+        <span class="btn-text">Category</span>
+        <span class="arrow-dwn">
+          <i class="bx bx-chevron-up"></i>
+        </span>
+      </div>
+      <ul class="list-items pizza-size"></ul>
+    </div>
+  </ul>
+</div>
+</form>
+</header>
+      
+    <!---section analys------------------------------>
+      <!--Nyoba flex box -->
+      <div class="container">
+        <div class="row">
+          <div class="item">
+            <h3>Total Income</h3>
+            <h1 id="total-income">$0</h1>
+          </div>
+          <div class="item">
+            <h3>Quantity of Product Sold</h3>
+            <h1 id="total-quantity">0</h1>
+          </div>
+          <div class="item">
+            <h3>Sales Volume</h3>
+            <h1 id="total-order">0</h1>
+          </div>
+        </div>
 
+        <!--tampilan table dan time barchart -->
+        <div class="row">
+          <div class="table">
+            <h3>sales table(sementara)</h3>
+            <table>
+              <thread>
+                <tr>
+                  <th>Name</th>
+                  <th>Size</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>order.vol</th>
+                </tr>
+              </thread>
+              <tbody id="data-output"></tbody>
+            </table>
+          </div>
+
+          <div class="timebar">
+            <h3>Time Barchart</h3>
+            <div>
+              <canvas id="timebarchart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!--revenue linechart dan price barchart -->
+        <main>
+        <div class="row">
+          <div class="reve">
+            <h3>Revenue</h3>
+            <div>
+              <canvas id="revenue"></canvas>
+            </div>
+          </div>
+
+          <div class="pricebar">
+            <h3>Price Range</h3>
+            <div>
+              <canvas id="pricerange"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="top5">
+            <h3>Top 5 Pizza Sales</h3>
+            <div>
+              <canvas id="top5pizza"></canvas>
+            </div>
+          </div>
+          <div class="bottom5">
+            <h3>Bottom 5 Pizza Sales</h3>
+            <div>
+              <canvas id="bottom5pizza"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+      <!--overview section end-->
+
+
+    <!-- My Javasript-->
+    <script src="JS/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </body>
 </html>

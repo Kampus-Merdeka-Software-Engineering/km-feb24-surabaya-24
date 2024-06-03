@@ -1,62 +1,357 @@
-*{
-    margin: 0px;
-    padding: 0px;
-    font-family: poppins;
-    box-sizing: border-box;
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: poppins;
+  box-sizing: border-box;
 }
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
 }
-ul{
-    list-style: none;
+ul {
+  list-style: none;
 }
-body{
-    margin: 0px;
-    padding: 0px;
-    font-family: poppins;
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: poppins;
 }
+
+/*Popup*/
+.popup {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  width: 450px;
+  padding: 30px 40px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  display: none;
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.popup button {
+  display: block;
+  margin: 0 0 20px auto;
+  background-color: transparent;
+  font-size: 30px;
+  color: #c5c5c5;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.popup h2 {
+  color: #010101;
+  text-align: left;
+}
+.popup p {
+  font-size: 15px;
+  color: #010101;
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 27px;
+}
+
+a {
+  display: block;
+  border-radius: 5px;
+  width: 150px;
+  position: relative;
+  margin: auto;
+  text-align: center;
+  background-color: #146c94;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
 /*Project Section*/
-#project{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 40px;
+#project {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
 }
-.project-heading h3{
-    font-size: 2.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #222222;
-   
+.project-heading h3 {
+  font-size: 2.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #222222;
 }
-.project-heading span{
-    color: #f33c3c;
-    font-size: 2.7rem;
-    font-weight: 600;
+.project-heading span {
+  color: #f33c3c;
+  font-size: 2.7rem;
+  font-weight: 600;
 }
-.project-filter{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    border: 1px solid rgba(237, 237, 237, 0.6);
-    flex-wrap: wrap;
-    margin: 40px;
-    border-radius: 3rem;
+.project-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border: 1px solid rgba(237, 237, 237, 0.6);
+  flex-wrap: wrap;
+  margin: 40px;
+  border-radius: 3rem;
 }
-.project-filter li{
-    margin: 10px;
-    padding: 5px 20px;
-    color: #4f4f4f;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    font-weight: 400;
-    cursor: pointer;
-    user-select: none;
+.project-filter li {
+  margin: 10px;
+  padding: 5px 20px;
+  color: #4f4f4f;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
 }
-.project-filter-active{
-    background: #f0f0f0;
-    color: #272727;
-    border-radius: 3rem;
+.project-filter-active {
+  background: #f0f0f0;
+  color: #272727;
+  border-radius: 3rem;
+}
+
+/*filtering*/
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header .select {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap: 2px;
+}
+header .select-dropdown .select-btn {
+  display: flex;
+  height: 40px;
+  width: 150px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--card-filter);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+header .select-btn .btn-text {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-color);
+}
+header .select-btn .arrow-dwn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-size: 1.3rem;
+  transition: var(--tran-03);
+}
+.select-btn.open-list .arrow-dwn {
+  transform: rotate(180deg);
+}
+.select-btn.open-list ~ .list-items {
+  display: block;
+}
+.select .list-items {
+  position: absolute;
+  width: 150px;
+  max-height: 280px;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: var(--card-filter);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  overflow-y: scroll;
+}
+.select .pizza-type {
+  width: 350px;
+}
+.select .list-items .select-all {
+  width: 100px;
+  padding: 4px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  margin: 5px 5px;
+  color: #fff;
+  background-color: #886839;
+}
+.select .list-items .select-all:hover {
+  cursor: pointer;
+}
+
+.select .list-items .item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  list-style: none;
+  height: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 0 5px;
+  border-radius: 5px;
+  background-color: var(--card-filter);
+}
+.select .list-items .item:hover {
+  background-color: var(--hover-color);
+}
+.select .list-items .item label {
+  font-size: 1rem;
+  font-weight: 400;
+  padding-left: 5px;
+  color: var(--text-color);
+}
+.select .list-items .item #pizza-type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12px;
+  width: 12px;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: var(--tran-03);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between rows */
+  width: 80%;
+  max-width: 800px; /* You can adjust the max-width based on your preference */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.row:first-child {
+  justify-content: space-between; /* Ensure all 3 columns take equal space */
+}
+
+.item {
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  flex: 1;
+  margin: 5px; /* Spacing between columns */
+}
+
+.row:not(:first-child) .item {
+  flex-basis: calc(
+    50% - 10px
+  ); /* 2 columns with equal width, considering the margin */
+}
+
+/* table */
+/* table */
+h3 {
+  text-align: center;
+}
+.table {
+  min-width: 400px; /* Tetapkan lebar tabel */
+  max-width: 500px;
+  height: 300px;
+  overflow-y: auto; /* Tambahkan scrollbar vertikal */
+}
+
+.table table {
+  width: 100%; /* Lebar tabel mengisi kontainer */
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #146c94;
+}
+
+.table th {
+  background-color: #146c94;
+}
+
+.table tr:nth-child(even) {
+  background-color: #146c94;
+}
+
+.table tr:hover {
+  background-color: #b9b9b9;
+}
+
+.table th,
+.table td {
+  font-size: 12px;
+}
+
+.table th {
+  font-weight: bold;
+}
+
+/* time barchart */
+.timebar {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#timebarchart {
+  width: 500px;
+}
+
+/* revnue linechart */
+.reve {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#revenue {
+  width: 500px;
+}
+
+/* price range barchart */
+.pricebar {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#pricerange {
+  width: 500px;
+}
+/* top 5 pizza barchart */
+.topbottom5 {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#top5pizza {
+  width: 500px;
+}
+
+/* bottom 5 pizza barchart */
+.bottom5 {
+  width: 500px;
+  display: flexbox;
+}
+h3 {
+  text-align: center;
+}
+#bottom5pizza {
+  width: 500px;
 }

@@ -1,42 +1,16 @@
-<<<<<<< Updated upstream
 document.addEventListener("DOMContentLoaded", () => {
   fetch("pizza_places.json")
     .then((response) => response.json())
     .then((data) => {
-      const { totalIncome, totalQuantity, totalOrders, monthlyRevenue } =
-        calculateTotals(data);
+      const { totalIncome, totalQuantity, totalOrders } = calculateTotals(data);
       document.getElementById("total-income").textContent = `$${totalIncome}`;
       document.getElementById(
         "total-quantity"
       ).textContent = `${totalQuantity}`;
       document.getElementById("total-order").textContent = `${totalOrders}`;
-      displayRevenueChart(monthlyRevenue);
+      displayRevenueChart(data); // Assuming displayRevenueChart function exists and works with raw data
     })
     .catch((error) => console.error("Error fetching the JSON data:", error));
-=======
-//Show popup//
-window.addEventListener("load", function(){
-  setTimeout(
-      function open(event){
-          document.querySelector(".popup").style.display = "block";
-      },
-      300
-  )
-});
-
-//Close popup//
-document.querySelector("#xbutton").addEventListener("click", function(){
-  document.querySelector(".popup").style.display = "none";
-});
-document.querySelector("#close").addEventListener("click", function(){
-  document.querySelector(".popup").style.display = "none";
-});
-
-// filtering dropdown date//
-// JavaScript for dynamically generating select options
-document.addEventListener("DOMContentLoaded", function (event) {
-  var select = document.getElementById("monthYearSelect");
->>>>>>> Stashed changes
 
   function calculateTotals(data) {
     let totalIncome = 0;
@@ -60,6 +34,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
       totalOrders: orderIds.size.toLocaleString("en-US"),
     };
   }
+
+  // Show popup
+  window.addEventListener("load", function () {
+    setTimeout(function open(event) {
+      document.querySelector(".popup").style.display = "block";
+    }, 300);
+  });
+
+  // Close popup
+  document.querySelector("#xbutton").addEventListener("click", function () {
+    document.querySelector(".popup").style.display = "none";
+  });
+
+  document.querySelector("#close").addEventListener("click", function () {
+    document.querySelector(".popup").style.display = "none";
+  });
 });
 
 /* table penjualan */
@@ -68,22 +58,50 @@ fetch("pizza_places.json")
     return response.json();
   })
   .then(function (products) {
-    products = products.slice(0, 10);
+    // Mengelompokkan data berdasarkan nama pizza dan menghitung jumlahnya
+    let pizzaSales = {};
+
+    products.forEach(function (product) {
+      // Buat kunci unik berdasarkan nama dan ukuran untuk memastikan setiap ukuran dicatat
+      let key = `${product.Name} (${product.Size})`;
+
+      if (!pizzaSales[key]) {
+        pizzaSales[key] = {
+          Name: product.Name,
+          Size: product.Size,
+          Category: product.Category,
+          Price: product.Price,
+          OrderVolume: 0,
+        };
+      }
+      pizzaSales[key].OrderVolume += product.Quantity;
+    });
+
+    // Mengubah objek pizzaSales menjadi array dan mengurutkannya berdasarkan OrderVolume secara menurun
+    let sortedProducts = Object.values(pizzaSales).sort(
+      (a, b) => b.OrderVolume - a.OrderVolume
+    );
+
+    // Mengambil 10 produk pertama untuk ditampilkan
+    let displayedProducts = sortedProducts;
 
     let placeholder = document.querySelector("#data-output");
     let out = "";
-    for (let product of products) {
+    for (let product of displayedProducts) {
       out += `
-          <tr>
-            <td>${product.Name}</td>
-            <td>${product.Size}</td>
-            <td>${product.Category}</td>
-            <td>${product.Price}</td>
-            <td></td>
-          </tr>
-        `;
+        <tr>
+          <td>${product.Name}</td>
+          <td>${product.Size}</td>
+          <td>${product.Category}</td>
+          <td>${product.Price}</td>
+          <td>${product.OrderVolume}</td>
+        </tr>
+      `;
     }
     placeholder.innerHTML = out;
+  })
+  .catch(function (error) {
+    console.error("Error fetching and processing data:", error);
   });
 
 // Mengambil data dari file JSON menggunakan fetch
@@ -251,62 +269,25 @@ fetch("pizza_places.json")
   .catch((error) => console.error("Error fetching data:", error)); // Tangani kesalahan jika fetch gagal
 
 /*pringe range*/
-(function () {
-  // Fungsi untuk mengambil data dari file JSON menggunakan fetch
-  async function fetchData() {
-    try {
-      const response = await fetch("pizza_places.json");
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
 
-  // Fungsi untuk menghitung jumlah pizza dalam setiap rentang harga
-  function countPriceRange(data) {
-    const priceRanges = [10, 15, 20, 25, Number.MAX_SAFE_INTEGER];
-    const priceRangeCounts = [0, 0, 0, 0, 0];
+// top 5 pizza//
+// Fungsi untuk mengambil ID pizza berdasarkan nama
+function getPizzaID(data, pizzaName) {
+  const pizza = data.find((order) => order["Name"] === pizzaName);
+  return pizza ? pizza["Pizza ID"] : "Unknown";
+}
 
-    data.forEach((pizza) => {
-      const price = parseFloat(pizza.Price.replace("$", ""));
-      for (let i = 0; i < priceRanges.length; i++) {
-        if (price <= priceRanges[i]) {
-          priceRangeCounts[i]++;
-          break;
-        }
-      }
-    });
-
-    // Membuat array dari objek dengan rentang harga dan jumlahnya
-    const priceRangeData = priceRanges.map((range, index) => ({
-      range:
-        index === priceRanges.length - 1
-          ? `$${range}+`
-          : `$${range} - $${priceRanges[index + 1]}`,
-      count: priceRangeCounts[index],
-    }));
-
-    // Mengurutkan array berdasarkan jumlah (dari yang terbanyak)
-    priceRangeData.sort((a, b) => b.count - a.count);
-
-    // Mengambil hanya jumlah terbesar 5
-    return priceRangeData.slice(0, 5);
-  }
-
-  // Mengambil konteks canvas
-  const ctx = document.getElementById("pricerange").getContext("2d");
-
-  // Memuat data menggunakan fetch dan membuat chart
-  async function loadChart() {
-    const pizzaData = await fetchData();
-
-    // Data yang akan digunakan untuk membuat chart
-    const data = {
-      labels: countPriceRange(pizzaData).map((item) => item.range),
+// Fungsi untuk membuat chart
+function createChart(ctxId, labels, dataValues, data) {
+  const ctx = document.getElementById(ctxId).getContext("2d");
+  return new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
       datasets: [
         {
-          label: "Count Price Range",
+          label: "Pizza ID",
+          data: dataValues,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(54, 162, 235, 0.2)",
@@ -322,37 +303,37 @@ fetch("pizza_places.json")
             "rgba(153, 102, 255, 1)",
           ],
           borderWidth: 1,
-          data: countPriceRange(pizzaData).map((item) => item.count),
         },
       ],
-    };
-
-    // Konfigurasi chart
-    const options = {
+    },
+    options: {
       scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              var label = context.dataset.label || "";
+
+              if (label) {
+                label += ": ";
+              }
+              if (context.parsed.y !== null) {
+                label += context.parsed.y;
+              }
+              return label;
             },
           },
-        ],
+        },
       },
-    };
+    },
+  });
+}
 
-    // Membuat chart baru dengan data dan opsi yang telah ditentukan
-    const priceChart = new Chart(ctx, {
-      type: "bar",
-      data: data,
-      options: options,
-    });
-  }
-
-  // Memanggil fungsi untuk memuat chart saat halaman dimuat
-  loadChart();
-})();
-
-// top 5 pizza//
+// Fetch data dan buat chart untuk top 5 pizza
 fetch("pizza_places.json")
   .then((response) => response.json())
   .then((data) => {
@@ -374,51 +355,15 @@ fetch("pizza_places.json")
 
     // Mengambil lima jenis pizza teratas
     const top5Pizza = sortedPizzaSales.slice(0, 5);
+    const top5Labels = top5Pizza.map((item) => item[0]); // Mengambil nama pizza langsung dari data
+    const top5DataValues = top5Pizza.map((item) => item[1]);
+    const top5PizzaIDs = top5Labels.map((label) => getPizzaID(data, label));
 
-    // Membuat data untuk chart
-    const labels = top5Pizza.map((item) => item[0]);
-    const dataValues = top5Pizza.map((item) => item[1]);
-
-    // Membuat bar chart
-    const ctx = document.getElementById("top5pizza").getContext("2d");
-    const myChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Quantity Sold",
-            data: dataValues,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-            ],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
+    // Membuat chart top 5 pizza
+    createChart("top5pizza", top5Labels, top5DataValues, top5PizzaIDs);
   });
 
 //bottom 5 pizza//
-// Ambil data dari file JSON
 // Ambil data dari file JSON
 fetch("pizza_places.json")
   .then((response) => response.json())
