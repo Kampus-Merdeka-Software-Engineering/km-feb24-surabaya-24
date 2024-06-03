@@ -29,8 +29,42 @@ function filterTable() {
   alert("You selected: " + selectedMonthYear); // Replace this with your logic
 }
 
+// Mengambil data dari file pizza_sales.json
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("pizza_places.json")
+    .then((response) => response.json())
+    .then((pizzaData) => {
+      // Menghitung Total Income
+      const totalIncome = pizzaData.reduce((sum, item) => {
+        return sum + parseFloat(item.Price.replace("$", ""));
+      }, 0);
+
+      // Menghitung Total Product Sold
+      const totalProductsSold = pizzaData.reduce((sum, item) => {
+        return sum + item.Quantity;
+      }, 0);
+
+      // Menghitung Sales Volume
+      const uniqueOrders = new Set(pizzaData.map((item) => item["Order ID"]));
+      const salesVolume = uniqueOrders.size;
+
+      // Menampilkan hasil di halaman web dengan format yang lebih rapi
+      document.getElementById(
+        "total-income"
+      ).innerText = `$${totalIncome.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })}`;
+      document.getElementById("total-products-sold").innerText =
+        totalProductsSold.toLocaleString("en-US");
+      document.getElementById("sales-volume").innerText =
+        salesVolume.toLocaleString("en-US");
+    })
+    .catch((error) => console.error("Error fetching the data:", error));
+});
+
 /* table penjualan */
-fetch("table_penjualan.json")
+fetch("pizza_places.json")
   .then(function (response) {
     return response.json();
   })
@@ -46,31 +80,330 @@ fetch("table_penjualan.json")
             <td>${product.Size}</td>
             <td>${product.Category}</td>
             <td>${product.Price}</td>
-            <td>${product.Order_vol}</td>
+            <td></td>
           </tr>
         `;
     }
     placeholder.innerHTML = out;
   });
 
-/** chart*/
-document.addEventListener("DOMContentLoaded", function () {
-  let charts = {};
+// Mengambil data dari file JSON menggunakan fetch
+fetch("pizza_places.json")
+  .then((response) => response.json())
+  .then((data) => {
+    // Inisialisasi objek untuk menyimpan jumlah penjualan berdasarkan rentang waktu
+    const salesByTimeRange = {
+      "11:00:00-15:00:00": 0,
+      "15:00:01-19:00:00": 0,
+      "19:00:01-23:00:00": 0,
+    };
 
-  // Function to create charts, generalized to handle different chart types
-  function createChart(chartKey, ctx, data, type, labelKey, dataKey) {
-    // Destroy the previous chart instance if it exists
-    if (charts[chartKey]) {
-      charts[chartKey].destroy();
+    // Fungsi untuk menentukan rentang waktu
+    function getTimeRange(time) {
+      if (time >= "11:00:00" && time <= "15:00:00") {
+        return "11:00:00-15:00:00";
+      } else if (time >= "15:00:01" && time <= "19:00:00") {
+        return "15:00:01-19:00:00";
+      } else if (time >= "19:00:01" && time <= "23:00:00") {
+        return "19:00:01-23:00:00";
+      } else {
+        return "Invalid Time";
+      }
     }
-    charts[chartKey] = new Chart(ctx, {
-      type: type,
+
+    // Hitung jumlah penjualan berdasarkan rentang waktu
+    data.forEach((order) => {
+      const time = order["Time"];
+      const timeRange = getTimeRange(time);
+      if (timeRange !== "Invalid Time") {
+        salesByTimeRange[timeRange] += order.Quantity;
+      }
+    });
+
+    console.log(salesByTimeRange);
+
+    // Buat array untuk label waktu dan data penjualan
+    const labels = Object.keys(salesByTimeRange);
+    const dataValues = Object.values(salesByTimeRange);
+
+    // Buat bar chart
+    const ctx = document.getElementById("timebarchart").getContext("2d");
+    const timeBarChart = new Chart(ctx, {
+      type: "bar",
       data: {
-        labels: data.map((row) => row[labelKey]),
+        labels: labels,
         datasets: [
           {
-            label: "Record Count",
-            data: data.map((row) => row[dataKey]),
+            label: "Count Time based on Penjualan",
+            data: dataValues,
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });
+
+//revenue//
+// Ambil elemen canvas dari HTML
+var ctx = document.getElementById("revenue").getContext("2d");
+
+// Ambil data dari file JSON menggunakan fetch
+fetch("pizza_places.json")
+  .then((response) => response.json()) // Ubah respons ke JSON
+  .then((data) => {
+    // Ubah format tanggal dan pendapatan
+    var formattedData = data.map(function (item) {
+      return {
+        month: item.Month.trim(), // Hapus spasi ekstra dari nama bulan
+        revenue: parseFloat(item.Price.replace("$", "")), // Hapus tanda $ dan ubah ke float
+      };
+    });
+
+    // Buat objek untuk menyimpan total pendapatan per bulan
+    var monthlyRevenue = {};
+
+    // Hitung total pendapatan per bulan
+    formattedData.forEach(function (item) {
+      if (!monthlyRevenue[item.month]) {
+        monthlyRevenue[item.month] = 0;
+      }
+      monthlyRevenue[item.month] += item.revenue;
+    });
+
+    // Urutkan total pendapatan berdasarkan bulan (dengan memastikan urutan bulan dari Januari ke Desember)
+    var sortedMonthlyRevenue = Object.keys(monthlyRevenue)
+      .sort((a, b) => {
+        // Konversi nama bulan menjadi angka untuk memudahkan pengurutan
+        var months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        return months.indexOf(a) - months.indexOf(b);
+      })
+      .map(function (month) {
+        return {
+          month: month,
+          revenue: monthlyRevenue[month],
+        };
+      });
+
+    // Siapkan data untuk chart
+    var labels = sortedMonthlyRevenue.map(function (item) {
+      return item.month;
+    });
+    var values = sortedMonthlyRevenue.map(function (item) {
+      return item.revenue;
+    });
+
+    // Buat grafik garis
+    var lineChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Total Revenue",
+            data: values,
+            backgroundColor: "rgba(75, 192, 192, 0.2)", // Warna area di bawah garis
+            borderColor: "rgba(75, 192, 192, 1)", // Warna garis
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+  })
+  .catch((error) => console.error("Error fetching data:", error)); // Tangani kesalahan jika fetch gagal
+
+/*pringe range*/
+(function () {
+  // Fungsi untuk mengambil data dari file JSON menggunakan fetch
+  async function fetchData() {
+    try {
+      const response = await fetch("pizza_places.json");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  // Fungsi untuk menghitung jumlah pizza dalam setiap rentang harga
+  function countPriceRange(data) {
+    const priceRanges = [10, 15, 20, 25, Number.MAX_SAFE_INTEGER];
+    const priceRangeCounts = [0, 0, 0, 0, 0];
+
+    data.forEach((pizza) => {
+      const price = parseFloat(pizza.Price.replace("$", ""));
+      for (let i = 0; i < priceRanges.length; i++) {
+        if (price <= priceRanges[i]) {
+          priceRangeCounts[i]++;
+          break;
+        }
+      }
+    });
+
+    // Membuat array dari objek dengan rentang harga dan jumlahnya
+    const priceRangeData = priceRanges.map((range, index) => ({
+      range:
+        index === priceRanges.length - 1
+          ? `$${range}+`
+          : `$${range} - $${priceRanges[index + 1]}`,
+      count: priceRangeCounts[index],
+    }));
+
+    // Mengurutkan array berdasarkan jumlah (dari yang terbanyak)
+    priceRangeData.sort((a, b) => b.count - a.count);
+
+    // Mengambil hanya jumlah terbesar 5
+    return priceRangeData.slice(0, 5);
+  }
+
+  // Mengambil konteks canvas
+  const ctx = document.getElementById("pricerange").getContext("2d");
+
+  // Memuat data menggunakan fetch dan membuat chart
+  async function loadChart() {
+    const pizzaData = await fetchData();
+
+    // Data yang akan digunakan untuk membuat chart
+    const data = {
+      labels: countPriceRange(pizzaData).map((item) => item.range),
+      datasets: [
+        {
+          label: "Count Price Range",
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+          ],
+          borderWidth: 1,
+          data: countPriceRange(pizzaData).map((item) => item.count),
+        },
+      ],
+    };
+
+    // Konfigurasi chart
+    const options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    };
+
+    // Membuat chart baru dengan data dan opsi yang telah ditentukan
+    const priceChart = new Chart(ctx, {
+      type: "bar",
+      data: data,
+      options: options,
+    });
+  }
+
+  // Memanggil fungsi untuk memuat chart saat halaman dimuat
+  loadChart();
+})();
+
+// top 5 pizza//
+fetch("pizza_places.json")
+  .then((response) => response.json())
+  .then((data) => {
+    // Menghitung total penjualan untuk setiap jenis pizza
+    const pizzaSales = {};
+    data.forEach((order) => {
+      const pizzaID = order["Pizza ID"];
+      if (pizzaSales[pizzaID]) {
+        pizzaSales[pizzaID] += order.Quantity;
+      } else {
+        pizzaSales[pizzaID] = order.Quantity;
+      }
+    });
+
+    // Mengurutkan jenis pizza berdasarkan total penjualan secara descending
+    const sortedPizzaSales = Object.entries(pizzaSales).sort(
+      (a, b) => b[1] - a[1]
+    );
+
+    // Mengambil lima jenis pizza teratas
+    const top5Pizza = sortedPizzaSales.slice(0, 5);
+
+    // Membuat data untuk chart
+    const labels = top5Pizza.map((item) => item[0]);
+    const dataValues = top5Pizza.map((item) => item[1]);
+
+    // Membuat bar chart
+    const ctx = document.getElementById("top5pizza").getContext("2d");
+    const myChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Quantity Sold",
+            data: dataValues,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+            ],
             borderWidth: 1,
           },
         ],
@@ -83,85 +416,69 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
     });
-  }
+  });
 
-  // Generic fetch function to get data and create charts
-  function fetchDataAndCreateChart(
-    url,
-    chartKey,
-    ctx,
-    type,
-    labelKey,
-    dataKey
-  ) {
-    fetch(url)
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
-      })
-      .then(function (data) {
-        console.log(data);
-        createChart(chartKey, ctx, data, type, labelKey, dataKey);
-      })
-      .catch(function (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      });
-  }
+//bottom 5 pizza//
+fetch("pizza_places.json")
+  .then((response) => response.json())
+  .then((data) => {
+    // Menghitung total penjualan untuk setiap jenis pizza
+    const pizzaSales = {};
+    data.forEach((order) => {
+      const pizzaID = order["Pizza ID"];
+      if (pizzaSales[pizzaID]) {
+        pizzaSales[pizzaID] += order.Quantity;
+      } else {
+        pizzaSales[pizzaID] = order.Quantity;
+      }
+    });
 
-  /* time barchart */
-  const ctx1 = document.getElementById("timebarchart");
-  fetchDataAndCreateChart(
-    "time_of_pizza_sales.json",
-    "timeBarChart",
-    ctx1,
-    "bar",
-    "Times",
-    "Record_Count"
-  );
+    // Mengurutkan jenis pizza berdasarkan total penjualan secara ascending
+    const sortedPizzaSales = Object.entries(pizzaSales).sort(
+      (a, b) => a[1] - b[1]
+    );
 
-  /* revenue linechart */
-  const ctx2 = document.getElementById("revenue");
-  fetchDataAndCreateChart(
-    "revenue.json",
-    "RevenueLineChart",
-    ctx2,
-    "line",
-    "Bulan_Tahun",
-    "price"
-  );
+    // Mengambil lima jenis pizza terbawah
+    const bottom5Pizza = sortedPizzaSales.slice(0, 5);
 
-  /* price range barchart */
-  const ctx3 = document.getElementById("pricerange");
-  fetchDataAndCreateChart(
-    "price_range.json",
-    "priceBarChart",
-    ctx3,
-    "bar",
-    "pizza_id",
-    "Record_Count"
-  );
+    // Membuat data untuk chart
+    const labels = bottom5Pizza.map((item) => item[0]);
+    const dataValues = bottom5Pizza.map((item) => item[1]);
 
-  /* top5 pizza sales barchart */
-  const ctx4 = document.getElementById("top5pizza");
-  fetchDataAndCreateChart(
-    "top_5_pizza_sales.json",
-    "top5pizzasales",
-    ctx4,
-    "bar",
-    "pizza_id",
-    "Record_Count"
-  );
-
-  /* bottom5 pizza sales barchart */
-  const ctx5 = document.getElementById("bottom5pizza");
-  fetchDataAndCreateChart(
-    "bottom_5_pizza_sales.json",
-    "bottom5pizzasales",
-    ctx5,
-    "bar",
-    "pizza_id",
-    "Record_Count"
-  );
-});
+    // Membuat bar chart
+    const ctx = document.getElementById("bottom5pizza").getContext("2d");
+    const myChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Quantity Sold",
+            data: dataValues,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  });
