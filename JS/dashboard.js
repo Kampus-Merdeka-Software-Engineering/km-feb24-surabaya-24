@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 document.addEventListener("DOMContentLoaded", () => {
   fetch("pizza_places.json")
     .then((response) => response.json())
@@ -12,6 +13,30 @@ document.addEventListener("DOMContentLoaded", () => {
       displayRevenueChart(monthlyRevenue);
     })
     .catch((error) => console.error("Error fetching the JSON data:", error));
+=======
+//Show popup//
+window.addEventListener("load", function(){
+  setTimeout(
+      function open(event){
+          document.querySelector(".popup").style.display = "block";
+      },
+      300
+  )
+});
+
+//Close popup//
+document.querySelector("#xbutton").addEventListener("click", function(){
+  document.querySelector(".popup").style.display = "none";
+});
+document.querySelector("#close").addEventListener("click", function(){
+  document.querySelector(".popup").style.display = "none";
+});
+
+// filtering dropdown date//
+// JavaScript for dynamically generating select options
+document.addEventListener("DOMContentLoaded", function (event) {
+  var select = document.getElementById("monthYearSelect");
+>>>>>>> Stashed changes
 
   function calculateTotals(data) {
     let totalIncome = 0;
