@@ -58,7 +58,7 @@ body {
   color: #fff; */
   display: flex;
   align-items: center;
-  color: var(--text-color);
+  color: #E5E3D1;
   font-size: 40px;
   font-weight: 700;
 }
@@ -440,7 +440,7 @@ h3 {
   font-size: 4rem;
   margin-bottom: 2rem;
   line-height: 1.3;
-  color: #ff9f0d;
+  color: #EA4201;
 }
 
 .profile p {
@@ -502,7 +502,7 @@ h3 {
 
 /* Footer */
 footer {
-  background-color: var(--other-color);
+  background-color: #EA4201;
   text-align: center;
   padding: 1rem 1.3rem;
   margin-top: 3rem;
