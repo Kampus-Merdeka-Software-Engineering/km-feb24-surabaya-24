@@ -23,6 +23,60 @@ body {
   min-height: 2000px;
 }
 
+/*Popup*/
+.popup{
+  box-sizing: border-box;
+  background-color: #ffffff;
+  width: 450px;
+  padding: 30px 40px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border-radius: 8px;
+  font-family: "Poppins",sans-serif;
+  display: none;
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.popup button{
+  display: block;
+  margin: 0 0 20px auto;
+  background-color: transparent;
+  font-size: 30px;
+  color: #c5c5c5;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.popup h2{
+  color: #010101;
+  text-align: left;
+}
+.popup p{
+  font-size: 15px;
+  color: #010101;
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 27px;
+}
+
+a{
+  display: block;
+  border-radius: 5px;
+  width: 150px;
+  position: relative;
+  margin: auto;
+  text-align: center;
+  background-color: #146c94;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
 /* Mengatur judul dan opsi */
 .navbar {
   background-color: #144f92;
@@ -39,6 +93,7 @@ body {
   padding: 10px;
   background: linear-gradient(to bottom, #146c94 6%, #00b6cb 100%);
   width: 280px;
+  border-radius: 5px;
 }
 
 .filter h2 {
