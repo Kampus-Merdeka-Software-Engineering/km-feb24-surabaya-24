@@ -235,12 +235,17 @@ header .select-btn .arrow-dwn {
   gap: 30px;
 }
 
+.row2 {
+  display: flex;
+  justify-content: space-between;
+}
+
 .row:first-child {
   justify-content: space-between; /* Ensure all 3 columns take equal space */
 }
 
 .item {
-  background-color: #4caf50;
+  background-color: #ea4201;
   color: white;
   padding: 20px;
   text-align: center;

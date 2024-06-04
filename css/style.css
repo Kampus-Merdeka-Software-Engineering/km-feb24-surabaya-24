@@ -207,7 +207,7 @@ body {
 .profile {
   padding: 7rem 7% 1.4rem;
 }
-/*introduce the team*/
+/* introduce the team */
 .content h2 {
   font-size: var(--h2-fornt);
   margin-bottom: 2rem;
@@ -250,7 +250,7 @@ body {
 }
 
 .insight .row .insight-img img {
-  width: 100%;
+  width: 85%;
   padding: 0 1rem;
 }
 
