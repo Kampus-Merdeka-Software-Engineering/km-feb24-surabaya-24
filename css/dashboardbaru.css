@@ -14,7 +14,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: poppins;
-  background: #E5E3D1;
+  background: #e5e3d1;
 }
 
 /*Popup*/
@@ -64,7 +64,7 @@ a {
   position: relative;
   margin: auto;
   text-align: center;
-  background-color: #146c94;
+  background-color: #ea4201;
   color: #ffffff;
   text-decoration: none;
   padding: 5px 0;
@@ -86,7 +86,7 @@ a {
   color: #222222;
 }
 .project-heading span {
-  color: #EA4201;
+  color: #ea4201;
   font-size: 2.7rem;
   font-weight: 600;
 }
@@ -95,7 +95,7 @@ a {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  border: 1px solid #EA4201;
+  border: 1px solid #ea4201;
   flex-wrap: wrap;
   margin: 40px;
   border-radius: 3rem;
@@ -103,7 +103,7 @@ a {
 .project-filter li {
   margin: 10px;
   padding: 5px 20px;
-  color: #EA4201;
+  color: #ea4201;
   font-size: 1rem;
   letter-spacing: 0.5px;
   font-weight: 400;
