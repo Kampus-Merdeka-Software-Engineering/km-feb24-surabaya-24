@@ -115,6 +115,15 @@ a {
   color: #272727;
   border-radius: 3rem;
 }
+.project-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+    
+}
 
 /*-------------------filtering----------------*/
 header {
