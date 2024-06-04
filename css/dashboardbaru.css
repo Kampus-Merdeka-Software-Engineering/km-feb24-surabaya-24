@@ -14,7 +14,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: poppins;
-  background: #E5E3D1;
+  background: #e5e3d1;
 }
 
 /*Popup*/
@@ -64,7 +64,7 @@ a {
   position: relative;
   margin: auto;
   text-align: center;
-  background-color: #146c94;
+  background-color: #ea4201;
   color: #ffffff;
   text-decoration: none;
   padding: 5px 0;
@@ -86,7 +86,7 @@ a {
   color: #222222;
 }
 .project-heading span {
-  color: #EA4201;
+  color: #ea4201;
   font-size: 2.7rem;
   font-weight: 600;
 }
@@ -95,7 +95,7 @@ a {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  border: 1px solid #EA4201;
+  border: 1px solid #ea4201;
   flex-wrap: wrap;
   margin: 40px;
   border-radius: 3rem;
@@ -103,7 +103,7 @@ a {
 .project-filter li {
   margin: 10px;
   padding: 5px 20px;
-  color: #EA4201;
+  color: #ea4201;
   font-size: 1rem;
   letter-spacing: 0.5px;
   font-weight: 400;
@@ -228,19 +228,40 @@ header .select-btn .arrow-dwn {
   margin-right: 10px;
   transition: var(--tran-03);
 }
+.select-btn.open-list ~ .list-items {
+  display: block;
+}
+
+.list-items {
+  display: none;
+}
+
+.open-list {
+  display: block;
+}
+
+.arrow-dwn .bx-chevron-up {
+  transform: rotate(180deg);
+}
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Spacing between rows */
-  width: 80%;
-  max-width: 800px; /* You can adjust the max-width based on your preference */
+  gap: 30px; /* Spacing between rows */
+  height: 100%;
+  width: 100%;
+  padding: 20px 30px 20px 30px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  gap: 50px;
+  gap: 30px;
+}
+
+.row2 {
+  display: flex;
+  justify-content: space-between;
 }
 
 .row:first-child {
@@ -248,7 +269,7 @@ header .select-btn .arrow-dwn {
 }
 
 .item {
-  background-color: #4caf50;
+  background-color: #ea4201;
   color: white;
   padding: 20px;
   text-align: center;
@@ -272,6 +293,7 @@ h3 {
   max-width: 500px;
   height: 300px;
   overflow-y: auto; /* Tambahkan scrollbar vertikal */
+  background-color: #dddddd;
 }
 
 .table table {
@@ -283,15 +305,15 @@ h3 {
 .table td {
   padding: 2px;
   text-align: left;
-  border-bottom: 1px solid #146c94;
+  border-bottom: 1px solid#dddddd;
 }
 
 .table th {
-  background-color: #146c94;
+  background-color: #dddddd;
 }
 
 .table tr:nth-child(even) {
-  background-color: #146c94;
+  background-color: #dddddd;
 }
 
 .table tr:hover {
@@ -311,6 +333,7 @@ h3 {
 .timebar {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
@@ -323,6 +346,7 @@ h3 {
 .reve {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
@@ -346,6 +370,7 @@ h3 {
 .topbottom5 {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
@@ -358,6 +383,7 @@ h3 {
 .bottom5 {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;

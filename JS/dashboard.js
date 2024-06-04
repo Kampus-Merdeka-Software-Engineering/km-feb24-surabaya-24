@@ -1,3 +1,80 @@
+/** filtering dropdown */
+document.addEventListener("DOMContentLoaded", () => {
+  const monthYearSelect = document.getElementById("month-year-select");
+  const pizzaNameSelect = document.getElementById("pizza-name-select");
+  const categorySelect = document.getElementById("category-select");
+
+  if (!monthYearSelect || !pizzaNameSelect || !categorySelect) {
+    console.error("One or more dropdown elements are missing in the DOM.");
+    return;
+  }
+
+  const dropdownButtons = document.querySelectorAll(".select-btn");
+
+  dropdownButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const dropdown = button.nextElementSibling;
+      const isOpen = dropdown.classList.contains("open-list");
+      document
+        .querySelectorAll(".list-items")
+        .forEach((list) => list.classList.remove("open-list"));
+      if (!isOpen) {
+        dropdown.classList.add("open-list");
+      }
+      const arrow = button.querySelector(".arrow-dwn i");
+      document.querySelectorAll(".arrow-dwn i").forEach((arrow) => {
+        arrow.classList.remove("bx-chevron-up");
+        arrow.classList.add("bx-chevron-down");
+      });
+      arrow.classList.toggle("bx-chevron-up", !isOpen);
+      arrow.classList.toggle("bx-chevron-down", isOpen);
+    });
+  });
+
+  const populateDropdown = (element, data, key) => {
+    if (!element) {
+      console.error(`Element for ${key} is missing.`);
+      return;
+    }
+
+    const selectAllItem = document.createElement("li");
+    selectAllItem.classList.add("item");
+    selectAllItem.innerHTML = `<label><input type="checkbox" class="select-all"> Select All</label>`;
+    element.appendChild(selectAllItem);
+
+    const uniqueValues = [...new Set(data.map((item) => item[key]))];
+    uniqueValues.forEach((value) => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("item");
+      listItem.innerHTML = `<label><input type="checkbox" class="option-checkbox" value="${value}"> ${value}</label>`;
+      element.appendChild(listItem);
+    });
+
+    const selectAllCheckbox = selectAllItem.querySelector(".select-all");
+    selectAllCheckbox.addEventListener("change", (event) => {
+      const checkboxes = element.querySelectorAll(".option-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = event.target.checked;
+      });
+    });
+  };
+
+  fetch("pizza_places.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((pizzaData) => {
+      populateDropdown(monthYearSelect, pizzaData, "Month");
+      populateDropdown(pizzaNameSelect, pizzaData, "Name");
+      populateDropdown(categorySelect, pizzaData, "Category");
+    })
+    .catch((error) => console.error("Error fetching the pizza data:", error));
+});
+
+/** chartmini */
 document.addEventListener("DOMContentLoaded", () => {
   fetch("pizza_places.json")
     .then((response) => response.json())

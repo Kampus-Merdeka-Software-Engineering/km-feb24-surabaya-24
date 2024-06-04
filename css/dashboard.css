@@ -24,7 +24,7 @@ body {
 }
 
 /*Popup*/
-.popup{
+.popup {
   box-sizing: border-box;
   background-color: #ffffff;
   width: 450px;
@@ -34,13 +34,13 @@ body {
   left: 50%;
   top: 50%;
   border-radius: 8px;
-  font-family: "Poppins",sans-serif;
+  font-family: "Poppins", sans-serif;
   display: none;
   transition: all 0.6s ease;
   transform: translate(-50%, -50%) scale(1.2);
 }
 
-.popup button{
+.popup button {
   display: block;
   margin: 0 0 20px auto;
   background-color: transparent;
@@ -51,11 +51,11 @@ body {
   cursor: pointer;
 }
 
-.popup h2{
+.popup h2 {
   color: #010101;
   text-align: left;
 }
-.popup p{
+.popup p {
   font-size: 15px;
   color: #010101;
   text-align: left;
@@ -63,7 +63,7 @@ body {
   margin-bottom: 27px;
 }
 
-a{
+a {
   display: block;
   border-radius: 5px;
   width: 150px;
@@ -247,15 +247,17 @@ header .select-btn .arrow-dwn {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Spacing between rows */
-  width: 80%;
-  max-width: 800px; /* You can adjust the max-width based on your preference */
+  gap: 30px; /* Spacing between rows */
+  height: 100%;
+  width: 100%;
+  padding: 20px 30px 20px 30px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
   gap: 50px;
+  border-radius: 15px;
 }
 
 .row:first-child {
