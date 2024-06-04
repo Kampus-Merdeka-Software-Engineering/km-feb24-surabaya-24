@@ -223,15 +223,16 @@ header .select-btn .arrow-dwn {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Spacing between rows */
-  width: 80%;
-  max-width: 800px; /* You can adjust the max-width based on your preference */
+  gap: 30px; /* Spacing between rows */
+  height: 100%;
+  width: 100%;
+  padding: 20px 30px 20px 30px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  gap: 50px;
+  gap: 30px;
 }
 
 .row:first-child {
