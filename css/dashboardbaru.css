@@ -219,6 +219,21 @@ header .select-btn .arrow-dwn {
   margin-right: 10px;
   transition: var(--tran-03);
 }
+.select-btn.open-list ~ .list-items {
+  display: block;
+}
+
+.list-items {
+  display: none;
+}
+
+.open-list {
+  display: block;
+}
+
+.arrow-dwn .bx-chevron-up {
+  transform: rotate(180deg);
+}
 
 .container {
   display: flex;
@@ -269,6 +284,7 @@ h3 {
   max-width: 500px;
   height: 300px;
   overflow-y: auto; /* Tambahkan scrollbar vertikal */
+  background-color: #dddddd;
 }
 
 .table table {
@@ -280,15 +296,15 @@ h3 {
 .table td {
   padding: 2px;
   text-align: left;
-  border-bottom: 1px solid #146c94;
+  border-bottom: 1px solid#dddddd;
 }
 
 .table th {
-  background-color: #146c94;
+  background-color: #dddddd;
 }
 
 .table tr:nth-child(even) {
-  background-color: #146c94;
+  background-color: #dddddd;
 }
 
 .table tr:hover {
@@ -308,6 +324,7 @@ h3 {
 .timebar {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
@@ -320,6 +337,7 @@ h3 {
 .reve {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
@@ -343,6 +361,7 @@ h3 {
 .topbottom5 {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
@@ -355,6 +374,7 @@ h3 {
 .bottom5 {
   width: 500px;
   display: flexbox;
+  background-color: #dddddd;
 }
 h3 {
   text-align: center;
