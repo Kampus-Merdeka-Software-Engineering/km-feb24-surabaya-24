@@ -19,7 +19,6 @@
     <script src="https://unpkg.com/feather-icons"></script>
   </head>
   <body>
-    
     <nav class="navbar">
       <div class="filter">
         <div>
@@ -59,90 +58,93 @@
     </nav>
 
     <!-- TampilanSection Graph-->
-    
 
-      <!--Nyoba flex box -->
-      <div class="container">
-        <div class="row">
-          <div class="item">
-            <h3>Total Income</h3>
-            <h1 id="total-income">$0</h1>
-          </div>
-          <div class="item">
-            <h3>Quantity of Product Sold</h3>
-            <h1 id="total-quantity">0</h1>
-          </div>
-          <div class="item">
-            <h3>Sales Volume</h3>
-            <h1 id="total-order">0</h1>
-          </div>
+    <!--Nyoba flex box -->
+    <main class="container">
+      <section class="row">
+        <div class="item">
+          <h3>Total Income</h3>
+          <h1 id="total-income">$0</h1>
         </div>
 
-        <!--tampilan table dan time barchart -->
-        <div class="row">
-          <div class="table">
-            <h3>sales table(sementara)</h3>
-            <table>
-              <thread>
-                <tr>
-                  <th>Name</th>
-                  <th>Size</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>order.vol</th>
-                </tr>
-              </thread>
-              <tbody id="data-output"></tbody>
-            </table>
-          </div>
-
-          <div class="timebar">
-            <h3>Time Barchart</h3>
-            <div>
-              <canvas id="timebarchart"></canvas>
-            </div>
-          </div>
+        <div class="item">
+          <h3>Quantity of Product Sold</h3>
+          <h1 id="total-quantity">0</h1>
         </div>
 
-        <!--revenue linechart dan price barchart -->
-        <div class="row">
-          <div class="reve">
-            <h3>Revenue</h3>
-            <div>
-              <canvas id="revenue"></canvas>
-            </div>
-          </div>
-
-          <div class="pricebar">
-            <h3>Price Range</h3>
-            <div>
-              <canvas id="pricerange"></canvas>
-            </div>
-          </div>
+        <div class="item">
+          <h3>Sales Volume</h3>
+          <h1 id="total-order">0</h1>
         </div>
-        <div class="row">
-          <div class="top5">
-            <h3>Top 5 Pizza Sales</h3>
-            <div>
-              <canvas id="top5pizza"></canvas>
-            </div>
-          </div>
-          <div class="bottom5">
-            <h3>Bottom 5 Pizza Sales</h3>
-            <div>
-              <canvas id="bottom5pizza"></canvas>
-            </div>
+      </section>
+
+      <!--tampilan table dan time barchart -->
+      <div class="row">
+        <div class="table">
+          <h3>sales table(sementara)</h3>
+          <table>
+            <thread>
+              <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>order.vol</th>
+              </tr>
+            </thread>
+            <tbody id="data-output"></tbody>
+          </table>
+        </div>
+
+        <div class="timebar">
+          <h3>Time Barchart</h3>
+          <div>
+            <canvas id="timebarchart"></canvas>
           </div>
         </div>
       </div>
-      <!--overview section end-->
-    </section>
+
+      <!--revenue linechart dan price barchart -->
+      <div class="row">
+        <div class="reve">
+          <h3>Revenue</h3>
+          <div>
+            <canvas id="revenue"></canvas>
+          </div>
+        </div>
+
+        <div class="pricebar">
+          <h3>Price Range</h3>
+          <div>
+            <canvas id="pricerange"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="top5">
+          <h3>Top 5 Pizza Sales</h3>
+          <div>
+            <canvas id="top5pizza"></canvas>
+          </div>
+        </div>
+        <div class="bottom5">
+          <h3>Bottom 5 Pizza Sales</h3>
+          <div>
+            <canvas id="bottom5pizza"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--overview section end-->
 
     <!--popup-->
     <div class="popup">
       <button id="xbutton">&times;</button>
       <h2>Hi! Welcome to Team 24 Dashboard</h2>
-      <p>This dashboard presents spesific analyzed data from pizza sales dataset. Please set the data filter to meet your requirements accordingly.</p>
+      <p>
+        This dashboard presents spesific analyzed data from pizza sales dataset.
+        Please set the data filter to meet your requirements accordingly.
+      </p>
       <a id="close">Let's Go</a>
     </div>
 
