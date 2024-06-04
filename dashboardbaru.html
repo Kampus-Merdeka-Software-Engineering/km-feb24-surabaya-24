@@ -17,8 +17,7 @@
     <!--Project Section--------------------->
     <section id="project">
       <div class="project-heading">
-        <span>Pizza Sales</span>
-        <h3>Pages</h3>
+        <span><b>Pizza Sales</b></span>
       </div>
       <!---filter------------------------------>
       <ul class="project-filter">
@@ -140,6 +139,15 @@
     </main>
       <!--overview section end-->
 
+    <!--Using JQuery------------>
+    <script src="JS/jquery.js"></script>
+
+    <script type="text/javascript">
+        $(document).on('click','.project-filter li',function(){
+            $(this).addClass('project-filter-active').siblings().removeClass('project-filter-active')
+        });
+
+    </script>
 
     <!-- My Javasript-->
     <script src="JS/dashboard.js"></script>
