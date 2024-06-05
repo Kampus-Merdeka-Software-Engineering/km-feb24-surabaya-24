@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Fetch the JSON data
-    $.getJSON('data.json', function(data) {
+    $.getJSON('pizza_places.json', function(data) {
         // Initialize the DataTable
         $('#pizzaOrders').DataTable({
             data: data,

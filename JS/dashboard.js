@@ -1,3 +1,29 @@
+$(document).ready(function() {
+  // Fetch the JSON data
+  $.getJSON('pizza_places.json', function(data) {
+      // Initialize the DataTable
+      $('#pizzaOrders').DataTable({
+          data: data,
+          columns: [
+              { data: 'Order Details ID' },
+              { data: 'Order ID' },
+              { data: 'Pizza ID' },
+              { data: 'Pizza Type ID' },
+              { data: 'Name' },
+              { data: 'Category' },
+              { data: 'Size' },
+              { data: 'Quantity' },
+              { data: 'Price' },
+              { data: 'Date' },
+              { data: 'Month' },
+              { data: 'Day' },
+              { data: 'Time' },
+              { data: 'Time Rounding\r' }
+          ]
+      });
+  });
+});
+
 /** filtering dropdown */
 document.addEventListener("DOMContentLoaded", () => {
   const monthYearSelect = document.getElementById("month-year-select");
@@ -85,7 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "total-quantity"
       ).textContent = `${totalQuantity}`;
       document.getElementById("total-order").textContent = `${totalOrders}`;
-      displayRevenueChart(data); // Assuming displayRevenueChart function exists and works with raw data
+      displayRevenueChart(data);
+      // Assuming displayRevenueChart function exists and works with raw data
     })
     .catch((error) => console.error("Error fetching the JSON data:", error));
 
@@ -93,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalIncome = 0;
     let totalQuantity = 0;
     let orderIds = new Set();
-
+  
     data.forEach((item) => {
       const price = parseFloat(item.Price.replace("$", ""));
       const quantity = item.Quantity;
@@ -653,3 +680,5 @@ fetch("pizza_places.json")
       bottom5Categories
     );
   });
+
+
