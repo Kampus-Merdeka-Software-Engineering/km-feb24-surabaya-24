@@ -142,8 +142,10 @@ body {
   justify-content: center;
 }
 .tampilan .home-text {
-  padding: 1.4rem 7%;
+  margin-top: 40px;
+  padding: 4rem;
   max-width: 60rem;
+  margin-inline: auto;
 }
 
 .tampilan .home-text h1 {
@@ -360,11 +362,10 @@ body {
 /* Footer */
 footer {
   background-color: #e5e3d1;
-  display: none;
+  color: black;
   text-align: center;
   padding: 1rem 1.3rem;
   margin-top: 3rem;
-  width: 100%;
   box-sizing: content-box;
 }
 
@@ -373,21 +374,21 @@ footer .socials {
 }
 
 footer .socials a {
-  color: #f5f5f5;
+  color: black;
   margin: 0.2rem;
 }
 
 footer .socials a:hover {
-  color: var(--bg);
+  color: var(--main-color);
   padding: 0.1rem 0.1rem;
 }
 footer .links a {
+  color: black;
   margin-bottom: 1.4rem;
-  color: #f5f5f5;
 }
 
 footer .links a:hover {
-  color: var(--bg);
+  color: var(--main-color);
   padding: 0.1rem 0.1rem;
 }
 
@@ -396,7 +397,6 @@ footer .credit {
 }
 
 footer .credit a {
-  color: var(--text-color);
   font-weight: 600;
 }
 
@@ -445,6 +445,17 @@ footer .credit a {
   .navbar .navbar-nav a:hover::after {
     transform: scaleX(0.2);
   }
+  .tampilan .content{
+    flex-direction: column;
+  }
+  .tampilan .content .home-img img{
+    width: 50%;
+    order: 1;
+  }
+  .tampilan .content .home-text{
+    margin-top: 0;
+    order: 2;
+  }
   .insight .row {
     flex-wrap: wrap;
   }
@@ -466,16 +477,7 @@ footer .credit a {
   .insight .row .content p {
     font-size: 1.6rem;
   }
-  .tampilan .content{
-    flex-direction: column;
-  }
-  .tampilan .content .home-img img{
-    width: 50%;
-    order: 1;
-  }
-  .tampilan .content .home-text{
-    order: 2;
-  }
+  
   .profil p {
     font-size: 1.2rem;
   }
