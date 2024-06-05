@@ -5,6 +5,7 @@
     <title>dashboard baru</title>
     <!---Stylesheet-->
     <link rel="stylesheet" href="css/dashboardbaru.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
     <!--Font-------------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,6 +28,25 @@
         <li class="list" data-filter="recomendation">Recomendation</li>
       </ul>
 
+    <!--Tabel dataset---------------------------------------------->
+    <table id="myTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nurul</td>
+            <td>Busines Intelligence</td>
+            <td>Halodoc</td>
+            <td>21</td>
+          </tr>
+        </tbody>
+      </table>
     <!---container-->
     <div class="project-container">
         <!--page 1 dashboard-->
@@ -198,9 +218,19 @@
           .removeClass("project-filter-active");
       });
     </script>
-
-    <!-- My Javasript-->
-    <script src="JS/dashboard.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- jQuery -->
+   <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
+   <!-- DataTables -->
+   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.dataTables.js"></script>
+   <!-- Initialize DataTable -->
+   <script>
+     $(document).ready(function() {
+       $('#myTable').DataTable();
+     });
+   </script>
+   
+   <!-- My Javascript -->
+   <script src="JS/dashboard.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>
