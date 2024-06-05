@@ -230,7 +230,7 @@ fetch("pizza_places.json")
           {
             label: "Count Time based on Penjualan",
             data: dataValues,
-            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue,
             borderColor: "rgba(54, 162, 235, 1)",
             borderWidth: 1,
           },
@@ -324,7 +324,7 @@ fetch("pizza_places.json")
           {
             label: "Total Revenue",
             data: values,
-            backgroundColor: "rgba(75, 192, 192, 0.2)", // Warna area di bawah garis
+            backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
             borderColor: "rgba(75, 192, 192, 1)", // Warna garis
             borderWidth: 1,
           },
@@ -347,7 +347,7 @@ fetch("pizza_places.json")
 
 /*pringe range*/
 
-// top 5 pizza//
+/*top5*/
 // Fungsi untuk mengambil ID pizza berdasarkan nama
 function getPizzaID(data, pizzaName) {
   const pizza = data.find((order) => order["Name"] === pizzaName);
@@ -355,31 +355,53 @@ function getPizzaID(data, pizzaName) {
 }
 
 // Fungsi untuk membuat chart
-function createChart(ctxId, labels, dataValues, data) {
+function createChart(ctxId, labels, dataValues, categories) {
   const ctx = document.getElementById(ctxId).getContext("2d");
-  return new Chart(ctx, {
+
+  const categoryColors = {
+    Classic: {
+      backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
+      borderColor: "rgba(54, 162, 235, 1)",
+    },
+    Supreme: {
+      backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
+      borderColor: "rgba(75, 192, 192, 1)",
+    },
+    Veggie: {
+      backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
+      borderColor: "rgba(255, 99, 132, 1)",
+    },
+    Chicken: {
+      backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
+      borderColor: "rgba(255, 159, 64, 1)",
+    },
+    Other: {
+      backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
+      borderColor: "rgba(153, 102, 255, 1)",
+    },
+  };
+
+  const allCategories = ["Classic", "Supreme", "Veggie", "Chicken"]; // Include all categories
+
+  const chart = new Chart(ctx, {
     type: "bar",
     data: {
       labels: labels,
       datasets: [
         {
-          label: "Pizza ID",
+          label: "Pizza Sales",
           data: dataValues,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-          ],
-          borderWidth: 1,
+          backgroundColor: categories.map(
+            (category) =>
+              categoryColors[category]?.backgroundColor ||
+              categoryColors["Other"].backgroundColor
+          ),
+          borderColor: categories.map(
+            (category) =>
+              categoryColors[category]?.borderColor ||
+              categoryColors["Other"].borderColor
+          ),
+          borderWidth: 2,
         },
       ],
     },
@@ -394,7 +416,6 @@ function createChart(ctxId, labels, dataValues, data) {
           callbacks: {
             label: function (context) {
               var label = context.dataset.label || "";
-
               if (label) {
                 label += ": ";
               }
@@ -405,9 +426,43 @@ function createChart(ctxId, labels, dataValues, data) {
             },
           },
         },
+        legend: {
+          display: true,
+          labels: {
+            generateLabels: function (chart) {
+              const datasets = chart.data.datasets[0];
+              return allCategories.map((category) => ({
+                text: category,
+                fillStyle:
+                  categoryColors[category]?.backgroundColor ||
+                  categoryColors["Other"].backgroundColor,
+                strokeStyle:
+                  categoryColors[category]?.borderColor ||
+                  categoryColors["Other"].borderColor,
+                lineWidth: datasets.borderWidth,
+                hidden: false, // Initialize all categories as visible
+              }));
+            },
+          },
+          onClick: function (e, legendItem, legend) {
+            const category = legendItem.text;
+            const ci = legend.chart;
+            const meta = ci.getDatasetMeta(0);
+
+            meta.data.forEach(function (bar, barIndex) {
+              if (categories[barIndex] === category) {
+                bar.hidden = !bar.hidden;
+              }
+            });
+
+            ci.update();
+          },
+        },
       },
     },
   });
+
+  return chart;
 }
 
 // Fetch data dan buat chart untuk top 5 pizza
@@ -416,12 +471,14 @@ fetch("pizza_places.json")
   .then((data) => {
     // Menghitung total penjualan untuk setiap jenis pizza
     const pizzaSales = {};
+    const pizzaCategories = {};
     data.forEach((order) => {
       const pizzaID = order["Pizza ID"];
       if (pizzaSales[pizzaID]) {
         pizzaSales[pizzaID] += order.Quantity;
       } else {
         pizzaSales[pizzaID] = order.Quantity;
+        pizzaCategories[pizzaID] = order.Category;
       }
     });
 
@@ -432,27 +489,146 @@ fetch("pizza_places.json")
 
     // Mengambil lima jenis pizza teratas
     const top5Pizza = sortedPizzaSales.slice(0, 5);
-    const top5Labels = top5Pizza.map((item) => item[0]); // Mengambil nama pizza langsung dari data
+    const top5Labels = top5Pizza.map((item) => item[0]);
     const top5DataValues = top5Pizza.map((item) => item[1]);
-    const top5PizzaIDs = top5Labels.map((label) => getPizzaID(data, label));
+    const top5Categories = top5Labels.map((label) => pizzaCategories[label]);
 
     // Membuat chart top 5 pizza
-    createChart("top5pizza", top5Labels, top5DataValues, top5PizzaIDs);
+    createChart("top5pizza", top5Labels, top5DataValues, top5Categories);
   });
 
 //bottom 5 pizza//
-// Ambil data dari file JSON
+// Fungsi untuk mengambil ID pizza berdasarkan nama
+function getPizzaID(data, pizzaName) {
+  const pizza = data.find((order) => order["Name"] === pizzaName);
+  return pizza ? pizza["Pizza ID"] : "Unknown";
+}
+
+// Fungsi untuk membuat chart
+function createChart(ctxId, labels, dataValues, categories) {
+  const ctx = document.getElementById(ctxId).getContext("2d");
+
+  const categoryColors = {
+    Classic: {
+      backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
+      borderColor: "rgba(54, 162, 235, 1)",
+    },
+    Supreme: {
+      backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
+      borderColor: "rgba(75, 192, 192, 1)",
+    },
+    Veggie: {
+      backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
+      borderColor: "rgba(255, 99, 132, 1)",
+    },
+    Chicken: {
+      backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
+      borderColor: "rgba(255, 159, 64, 1)",
+    },
+    Other: {
+      backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
+      borderColor: "rgba(153, 102, 255, 1)",
+    },
+  };
+
+  const allCategories = ["Classic", "Supreme", "Veggie", "Chicken"]; // Include all categories
+
+  const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Pizza Sales",
+          data: dataValues,
+          backgroundColor: categories.map(
+            (category) =>
+              categoryColors[category]?.backgroundColor ||
+              categoryColors["Other"].backgroundColor
+          ),
+          borderColor: categories.map(
+            (category) =>
+              categoryColors[category]?.borderColor ||
+              categoryColors["Other"].borderColor
+          ),
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              var label = context.dataset.label || "";
+              if (label) {
+                label += ": ";
+              }
+              if (context.parsed.y !== null) {
+                label += context.parsed.y;
+              }
+              return label;
+            },
+          },
+        },
+        legend: {
+          display: true,
+          labels: {
+            generateLabels: function (chart) {
+              const datasets = chart.data.datasets[0];
+              return allCategories.map((category) => ({
+                text: category,
+                fillStyle:
+                  categoryColors[category]?.backgroundColor ||
+                  categoryColors["Other"].backgroundColor,
+                strokeStyle:
+                  categoryColors[category]?.borderColor ||
+                  categoryColors["Other"].borderColor,
+                lineWidth: datasets.borderWidth,
+                hidden: false, // Initialize all categories as visible
+              }));
+            },
+          },
+          onClick: function (e, legendItem, legend) {
+            const category = legendItem.text;
+            const ci = legend.chart;
+            const meta = ci.getDatasetMeta(0);
+
+            meta.data.forEach(function (bar, barIndex) {
+              if (categories[barIndex] === category) {
+                bar.hidden = !bar.hidden;
+              }
+            });
+
+            ci.update();
+          },
+        },
+      },
+    },
+  });
+
+  return chart;
+}
+
+// Fetch data dan buat chart untuk bottom 5 pizza
 fetch("pizza_places.json")
   .then((response) => response.json())
   .then((data) => {
     // Menghitung total penjualan untuk setiap jenis pizza
     const pizzaSales = {};
+    const pizzaCategories = {};
     data.forEach((order) => {
       const pizzaID = order["Pizza ID"];
       if (pizzaSales[pizzaID]) {
         pizzaSales[pizzaID] += order.Quantity;
       } else {
         pizzaSales[pizzaID] = order.Quantity;
+        pizzaCategories[pizzaID] = order.Category;
       }
     });
 
@@ -461,47 +637,19 @@ fetch("pizza_places.json")
       (a, b) => a[1] - b[1]
     );
 
-    // Mengambil lima jenis pizza terbawah
+    // Mengambil lima jenis pizza terendah
     const bottom5Pizza = sortedPizzaSales.slice(0, 5);
+    const bottom5Labels = bottom5Pizza.map((item) => item[0]);
+    const bottom5DataValues = bottom5Pizza.map((item) => item[1]);
+    const bottom5Categories = bottom5Labels.map(
+      (label) => pizzaCategories[label]
+    );
 
-    // Membuat data untuk chart
-    const labels = bottom5Pizza.map((item) => item[0]);
-    const dataValues = bottom5Pizza.map((item) => item[1]);
-
-    // Membuat bar chart
-    const ctx = document.getElementById("bottom5pizza").getContext("2d");
-    const myChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Pizza ID",
-            data: dataValues,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-            ],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
+    // Membuat chart bottom 5 pizza
+    createChart(
+      "bottom5pizza",
+      bottom5Labels,
+      bottom5DataValues,
+      bottom5Categories
+    );
   });
