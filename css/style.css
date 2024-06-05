@@ -360,11 +360,10 @@ body {
 /* Footer */
 footer {
   background-color: #e5e3d1;
-  display: none;
+  color: black;
   text-align: center;
   padding: 1rem 1.3rem;
   margin-top: 3rem;
-  width: 100%;
   box-sizing: content-box;
 }
 
@@ -373,21 +372,21 @@ footer .socials {
 }
 
 footer .socials a {
-  color: #f5f5f5;
+  color: black;
   margin: 0.2rem;
 }
 
 footer .socials a:hover {
-  color: var(--bg);
+  color: var(--main-color);
   padding: 0.1rem 0.1rem;
 }
 footer .links a {
+  color: black;
   margin-bottom: 1.4rem;
-  color: #f5f5f5;
 }
 
 footer .links a:hover {
-  color: var(--bg);
+  color: var(--main-color);
   padding: 0.1rem 0.1rem;
 }
 
@@ -396,7 +395,6 @@ footer .credit {
 }
 
 footer .credit a {
-  color: var(--text-color);
   font-weight: 600;
 }
 
