@@ -230,7 +230,7 @@ fetch("pizza_places.json")
           {
             label: "Count Time based on Penjualan",
             data: dataValues,
-            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue,
             borderColor: "rgba(54, 162, 235, 1)",
             borderWidth: 1,
           },
@@ -324,7 +324,7 @@ fetch("pizza_places.json")
           {
             label: "Total Revenue",
             data: values,
-            backgroundColor: "rgba(75, 192, 192, 0.2)", // Warna area di bawah garis
+            backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
             borderColor: "rgba(75, 192, 192, 1)", // Warna garis
             borderWidth: 1,
           },
@@ -360,23 +360,23 @@ function createChart(ctxId, labels, dataValues, categories) {
 
   const categoryColors = {
     Classic: {
-      backgroundColor: "rgba(54, 162, 235, 0.2)", // Blue
+      backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
       borderColor: "rgba(54, 162, 235, 1)",
     },
     Supreme: {
-      backgroundColor: "rgba(75, 192, 192, 0.2)", // Teal
+      backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
       borderColor: "rgba(75, 192, 192, 1)",
     },
     Veggie: {
-      backgroundColor: "rgba(255, 99, 132, 0.2)", // Pink
+      backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
       borderColor: "rgba(255, 99, 132, 1)",
     },
     Chicken: {
-      backgroundColor: "rgba(255, 159, 64, 0.2)", // Orange
+      backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
       borderColor: "rgba(255, 159, 64, 1)",
     },
     Other: {
-      backgroundColor: "rgba(153, 102, 255, 0.2)", // Purple
+      backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
       borderColor: "rgba(153, 102, 255, 1)",
     },
   };
@@ -401,7 +401,7 @@ function createChart(ctxId, labels, dataValues, categories) {
               categoryColors[category]?.borderColor ||
               categoryColors["Other"].borderColor
           ),
-          borderWidth: 1,
+          borderWidth: 2,
         },
       ],
     },
@@ -510,23 +510,23 @@ function createChart(ctxId, labels, dataValues, categories) {
 
   const categoryColors = {
     Classic: {
-      backgroundColor: "rgba(54, 162, 235, 0.2)", // Blue
+      backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
       borderColor: "rgba(54, 162, 235, 1)",
     },
     Supreme: {
-      backgroundColor: "rgba(75, 192, 192, 0.2)", // Teal
+      backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
       borderColor: "rgba(75, 192, 192, 1)",
     },
     Veggie: {
-      backgroundColor: "rgba(255, 99, 132, 0.2)", // Pink
+      backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
       borderColor: "rgba(255, 99, 132, 1)",
     },
     Chicken: {
-      backgroundColor: "rgba(255, 159, 64, 0.2)", // Orange
+      backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
       borderColor: "rgba(255, 159, 64, 1)",
     },
     Other: {
-      backgroundColor: "rgba(153, 102, 255, 0.2)", // Purple
+      backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
       borderColor: "rgba(153, 102, 255, 1)",
     },
   };
@@ -551,7 +551,7 @@ function createChart(ctxId, labels, dataValues, categories) {
               categoryColors[category]?.borderColor ||
               categoryColors["Other"].borderColor
           ),
-          borderWidth: 1,
+          borderWidth: 2,
         },
       ],
     },
