@@ -1,89 +1,39 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Fetch the JSON data
-  $.getJSON('pizza_places.json', function(data) {
-      // Initialize the DataTable
-      $('#pizzaOrders').DataTable({
-          data: data,
-          columns: [
-              { data: 'Order Details ID' },
-              { data: 'Order ID' },
-              { data: 'Pizza ID' },
-              { data: 'Pizza Type ID' },
-              { data: 'Name' },
-              { data: 'Category' },
-              { data: 'Size' },
-              { data: 'Quantity' },
-              { data: 'Price' },
-              { data: 'Date' },
-              { data: 'Month' },
-              { data: 'Day' },
-              { data: 'Time' },
-              { data: 'Time Rounding\r' }
-          ]
-      });
+  $.getJSON("pizza_places.json", function (data) {
+    // Initialize the DataTable
+    $("#pizzaOrders").DataTable({
+      data: data,
+      columns: [
+        { data: "Order Details ID" },
+        { data: "Order ID" },
+        { data: "Pizza ID" },
+        { data: "Pizza Type ID" },
+        { data: "Name" },
+        { data: "Category" },
+        { data: "Size" },
+        { data: "Quantity" },
+        { data: "Price" },
+        { data: "Date" },
+        { data: "Month" },
+        { data: "Day" },
+        { data: "Time" },
+        { data: "Time Rounding\r" },
+      ],
+    });
   });
 });
 
 /** filtering dropdown */
 document.addEventListener("DOMContentLoaded", () => {
-  const monthYearSelect = document.getElementById("month-year-select");
-  const pizzaNameSelect = document.getElementById("pizza-name-select");
-  const categorySelect = document.getElementById("category-select");
-
-  if (!monthYearSelect || !pizzaNameSelect || !categorySelect) {
-    console.error("One or more dropdown elements are missing in the DOM.");
-    return;
-  }
-
-  const dropdownButtons = document.querySelectorAll(".select-btn");
-
-  dropdownButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const dropdown = button.nextElementSibling;
-      const isOpen = dropdown.classList.contains("open-list");
-      document
-        .querySelectorAll(".list-items")
-        .forEach((list) => list.classList.remove("open-list"));
-      if (!isOpen) {
-        dropdown.classList.add("open-list");
-      }
-      const arrow = button.querySelector(".arrow-dwn i");
-      document.querySelectorAll(".arrow-dwn i").forEach((arrow) => {
-        arrow.classList.remove("bx-chevron-up");
-        arrow.classList.add("bx-chevron-down");
-      });
-      arrow.classList.toggle("bx-chevron-up", !isOpen);
-      arrow.classList.toggle("bx-chevron-down", isOpen);
-    });
-  });
-
-  const populateDropdown = (element, data, key) => {
-    if (!element) {
-      console.error(`Element for ${key} is missing.`);
-      return;
-    }
-
-    const selectAllItem = document.createElement("li");
-    selectAllItem.classList.add("item");
-    selectAllItem.innerHTML = `<label><input type="checkbox" class="select-all"> Select All</label>`;
-    element.appendChild(selectAllItem);
-
-    const uniqueValues = [...new Set(data.map((item) => item[key]))];
-    uniqueValues.forEach((value) => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("item");
-      listItem.innerHTML = `<label><input type="checkbox" class="option-checkbox" value="${value}"> ${value}</label>`;
-      element.appendChild(listItem);
-    });
-
-    const selectAllCheckbox = selectAllItem.querySelector(".select-all");
-    selectAllCheckbox.addEventListener("change", (event) => {
-      const checkboxes = element.querySelectorAll(".option-checkbox");
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = event.target.checked;
-      });
-    });
+  // Initialize total values to 0
+  const resetTotals = () => {
+    document.getElementById("total-income").textContent = "$0.00";
+    document.getElementById("total-quantity").textContent = "0";
+    document.getElementById("total-order").textContent = "0";
   };
+
+  resetTotals();
 
   fetch("pizza_places.json")
     .then((response) => {
@@ -93,67 +43,173 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((pizzaData) => {
+      const monthYearSelect = document.getElementById("month-year-select");
+      const pizzaNameSelect = document.getElementById("pizza-name-select");
+      const categorySelect = document.getElementById("category-select");
+
+      if (!monthYearSelect || !pizzaNameSelect || !categorySelect) {
+        console.error("One or more dropdown elements are missing in the DOM.");
+        return;
+      }
+
+      const dropdownButtons = document.querySelectorAll(".select-btn");
+
+      dropdownButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const dropdown = button.nextElementSibling;
+          const isOpen = dropdown.classList.contains("open-list");
+          document
+            .querySelectorAll(".list-items")
+            .forEach((list) => list.classList.remove("open-list"));
+          if (!isOpen) {
+            dropdown.classList.add("open-list");
+          }
+          const arrow = button.querySelector(".arrow-dwn i");
+          document.querySelectorAll(".arrow-dwn i").forEach((arrow) => {
+            arrow.classList.remove("bx-chevron-up");
+            arrow.classList.add("bx-chevron-down");
+          });
+          arrow.classList.toggle("bx-chevron-up", !isOpen);
+          arrow.classList.toggle("bx-chevron-down", isOpen);
+        });
+      });
+
+      const populateDropdown = (element, data, key) => {
+        if (!element) {
+          console.error(`Element for ${key} is missing.`);
+          return;
+        }
+
+        const selectAllItem = document.createElement("li");
+        selectAllItem.classList.add("item");
+        selectAllItem.innerHTML = `<label><input type="checkbox" class="select-all"> Select All</label>`;
+        element.appendChild(selectAllItem);
+
+        const uniqueValues = [...new Set(data.map((item) => item[key]))];
+        uniqueValues.forEach((value) => {
+          const listItem = document.createElement("li");
+          listItem.classList.add("item");
+          listItem.innerHTML = `<label><input type="checkbox" class="option-checkbox" value="${value}"> ${value}</label>`;
+          element.appendChild(listItem);
+        });
+
+        const selectAllCheckbox = selectAllItem.querySelector(".select-all");
+        selectAllCheckbox.addEventListener("change", (event) => {
+          const checkboxes = element.querySelectorAll(".option-checkbox");
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = event.target.checked;
+          });
+          filterAndDisplayTotals(pizzaData);
+        });
+
+        const optionCheckboxes = element.querySelectorAll(".option-checkbox");
+        optionCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", () => {
+            filterAndDisplayTotals(pizzaData);
+          });
+        });
+      };
+
+      const calculateTotals = (data) => {
+        let totalIncome = 0;
+        let totalQuantity = 0;
+        let orderIds = new Set();
+
+        data.forEach((item) => {
+          const price = parseFloat(item.Price.replace("$", ""));
+          const quantity = item.Quantity;
+          totalIncome += price * quantity;
+          totalQuantity += quantity;
+          orderIds.add(item["Order ID"]);
+        });
+
+        return {
+          totalIncome: totalIncome.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }),
+          totalQuantity: totalQuantity.toLocaleString("en-US"),
+          totalOrders: orderIds.size.toLocaleString("en-US"),
+        };
+      };
+
+      const filterAndDisplayTotals = (data) => {
+        const selectedCategories = Array.from(
+          document.querySelectorAll("#category-select .option-checkbox:checked")
+        ).map((checkbox) => checkbox.value);
+        const selectedMonths = Array.from(
+          document.querySelectorAll(
+            "#month-year-select .option-checkbox:checked"
+          )
+        ).map((checkbox) => checkbox.value);
+        const selectedPizzas = Array.from(
+          document.querySelectorAll(
+            "#pizza-name-select .option-checkbox:checked"
+          )
+        ).map((checkbox) => checkbox.value);
+
+        const filteredData = data.filter((item) => {
+          const categoryMatch = selectedCategories.length
+            ? selectedCategories.includes(item.Category)
+            : true;
+          const monthMatch = selectedMonths.length
+            ? selectedMonths.includes(item.Month)
+            : true;
+          const pizzaMatch = selectedPizzas.length
+            ? selectedPizzas.includes(item.Name)
+            : true;
+          return categoryMatch && monthMatch && pizzaMatch;
+        });
+
+        const { totalIncome, totalQuantity, totalOrders } =
+          calculateTotals(filteredData);
+        document.getElementById("total-income").textContent = `$${totalIncome}`;
+        document.getElementById(
+          "total-quantity"
+        ).textContent = `${totalQuantity}`;
+        document.getElementById("total-order").textContent = `${totalOrders}`;
+
+        displayRevenueChart(filteredData);
+      };
+
+      const resetFilters = () => {
+        document.querySelectorAll(".option-checkbox").forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+        document.querySelectorAll(".select-all").forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+        resetTotals();
+      };
+
+      // Event listener for reset button
+      document.getElementById("reset-button").addEventListener("click", () => {
+        resetFilters();
+      });
+
       populateDropdown(monthYearSelect, pizzaData, "Month");
       populateDropdown(pizzaNameSelect, pizzaData, "Name");
       populateDropdown(categorySelect, pizzaData, "Category");
+
+      // Initially do not call filterAndDisplayTotals to ensure initial values are 0
     })
     .catch((error) => console.error("Error fetching the pizza data:", error));
 });
 
-/** chartmini */
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("pizza_places.json")
-    .then((response) => response.json())
-    .then((data) => {
-      const { totalIncome, totalQuantity, totalOrders } = calculateTotals(data);
-      document.getElementById("total-income").textContent = `$${totalIncome}`;
-      document.getElementById(
-        "total-quantity"
-      ).textContent = `${totalQuantity}`;
-      document.getElementById("total-order").textContent = `${totalOrders}`;
-      displayRevenueChart(data);
-      // Assuming displayRevenueChart function exists and works with raw data
-    })
-    .catch((error) => console.error("Error fetching the JSON data:", error));
+// Show popup
+window.addEventListener("load", function () {
+  setTimeout(function open(event) {
+    document.querySelector(".popup").style.display = "block";
+  }, 300);
+});
 
-  function calculateTotals(data) {
-    let totalIncome = 0;
-    let totalQuantity = 0;
-    let orderIds = new Set();
-  
-    data.forEach((item) => {
-      const price = parseFloat(item.Price.replace("$", ""));
-      const quantity = item.Quantity;
-      totalIncome += price * quantity;
-      totalQuantity += quantity;
-      orderIds.add(item["Order ID"]);
-    });
+// Close popup
+document.querySelector("#xbutton").addEventListener("click", function () {
+  document.querySelector(".popup").style.display = "none";
+});
 
-    return {
-      totalIncome: totalIncome.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
-      totalQuantity: totalQuantity.toLocaleString("en-US"),
-      totalOrders: orderIds.size.toLocaleString("en-US"),
-    };
-  }
-
-  // Show popup
-  window.addEventListener("load", function () {
-    setTimeout(function open(event) {
-      document.querySelector(".popup").style.display = "block";
-    }, 300);
-  });
-
-  // Close popup
-  document.querySelector("#xbutton").addEventListener("click", function () {
-    document.querySelector(".popup").style.display = "none";
-  });
-
-  document.querySelector("#close").addEventListener("click", function () {
-    document.querySelector(".popup").style.display = "none";
-  });
+document.querySelector("#close").addEventListener("click", function () {
+  document.querySelector(".popup").style.display = "none";
 });
 
 /* table penjualan */
@@ -680,5 +736,3 @@ fetch("pizza_places.json")
       bottom5Categories
     );
   });
-
-
