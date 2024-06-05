@@ -142,8 +142,10 @@ body {
   justify-content: center;
 }
 .tampilan .home-text {
-  padding: 1.4rem 7%;
+  margin-top: 40px;
+  padding: 4rem;
   max-width: 60rem;
+  margin-inline: auto;
 }
 
 .tampilan .home-text h1 {
@@ -443,6 +445,17 @@ footer .credit a {
   .navbar .navbar-nav a:hover::after {
     transform: scaleX(0.2);
   }
+  .tampilan .content{
+    flex-direction: column;
+  }
+  .tampilan .content .home-img img{
+    width: 50%;
+    order: 1;
+  }
+  .tampilan .content .home-text{
+    margin-top: 0;
+    order: 2;
+  }
   .insight .row {
     flex-wrap: wrap;
   }
@@ -464,16 +477,7 @@ footer .credit a {
   .insight .row .content p {
     font-size: 1.6rem;
   }
-  .tampilan .content{
-    flex-direction: column;
-  }
-  .tampilan .content .home-img img{
-    width: 50%;
-    order: 1;
-  }
-  .tampilan .content .home-text{
-    order: 2;
-  }
+  
   .profil p {
     font-size: 1.2rem;
   }
