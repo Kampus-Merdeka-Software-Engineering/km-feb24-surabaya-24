@@ -251,9 +251,8 @@
    <!-- Custom Script -->
    <script>
     $(document).ready(function() {
-        // Contoh data JSON
-        var jsonData = [
-            
+        // data JSON
+        var jsonData = [ 
     {
       "Order Details ID": 1,
       "Order ID": 1,
@@ -670,10 +669,9 @@
       "Time": "13:02:59",
       "Time Rounding\r": "1:00:00 PM\r"
     },
-            // Tambahkan data lainnya di sini
         ];
 
-        // Inisialisasi DataTables dengan data JSON
+        // Inisialisasi DataTables pake data JSON
         $('#pizzaOrders').DataTable({
             data: jsonData,
             columns: [
