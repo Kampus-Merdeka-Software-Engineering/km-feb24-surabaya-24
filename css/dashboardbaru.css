@@ -230,6 +230,12 @@ input[type="checkbox"] {
   justify-content: space-between;
 }
 
+.row3 {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
 .row:first-child {
   justify-content: space-between; /* Ensure all 3 columns take equal space */
 }
@@ -321,7 +327,7 @@ h3 {
   width: 500px;
 }
 
-/* price range barchart */
+/* price range barchart
 .pricebar {
   width: 600px;
   display: flexbox;
@@ -332,7 +338,7 @@ h3 {
 }
 #pricerange {
   width: 500px;
-}
+} */
 /* top 5 pizza barchart */
 .top5 {
   width: 600px;

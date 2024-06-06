@@ -1,9 +1,12 @@
 $(document).ready(function () {
   // Fetch the JSON data
   $.getJSON("pizza_places.json", function (data) {
+    // Limit the data to 100 entries
+    var limitedData = data.slice(0, 100);
+
     // Initialize the DataTable
     $("#pizzaOrders").DataTable({
-      data: data,
+      data: limitedData,
       columns: [
         { data: "Order Details ID" },
         { data: "Order ID" },
@@ -21,7 +24,6 @@ $(document).ready(function () {
   });
 });
 
-/** filtering dropdown */
 document.addEventListener("DOMContentLoaded", () => {
   const setInitialTotals = () => {
     document.getElementById("total-income").textContent = "$0.00";
@@ -200,313 +202,201 @@ document.addEventListener("DOMContentLoaded", () => {
       populateDropdown(pizzaNameSelect, pizzaData, "Name");
       populateDropdown(categorySelect, pizzaData, "Category");
 
-      // Initial display set to 0, do not calculate totals yet
-      // filterAndDisplayTotals(pizzaData); <- Comment out this line to prevent initial calculation
-    })
-    .catch((error) => console.error("Error fetching the pizza data:", error));
-});
+      // Mengelompokkan data berdasarkan nama pizza dan menghitung jumlahnya
+      let pizzaSales = {};
 
-// Show popup
-window.addEventListener("load", function () {
-  setTimeout(function open(event) {
-    document.querySelector(".popup").style.display = "block";
-  }, 300);
-});
+      pizzaData.forEach(function (product) {
+        // Buat kunci unik berdasarkan nama dan ukuran untuk memastikan setiap ukuran dicatat
+        let key = `${product.Name} (${product.Size})`;
 
-// Close popup
-document.querySelector("#xbutton").addEventListener("click", function () {
-  document.querySelector(".popup").style.display = "none";
-});
+        if (!pizzaSales[key]) {
+          pizzaSales[key] = {
+            Name: product.Name,
+            Size: product.Size,
+            Category: product.Category,
+            Price: product.Price,
+            OrderVolume: 0,
+          };
+        }
+        pizzaSales[key].OrderVolume += product.Quantity;
+      });
 
-document.querySelector("#close").addEventListener("click", function () {
-  document.querySelector(".popup").style.display = "none";
-});
+      // Mengubah objek pizzaSales menjadi array dan mengurutkannya berdasarkan OrderVolume secara menurun
+      let sortedProducts = Object.values(pizzaSales).sort(
+        (a, b) => b.OrderVolume - a.OrderVolume
+      );
 
-/* table penjualan */
-fetch("pizza_places.json")
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (products) {
-    // Mengelompokkan data berdasarkan nama pizza dan menghitung jumlahnya
-    let pizzaSales = {};
+      // Mengambil 10 produk pertama untuk ditampilkan
+      let displayedProducts = sortedProducts.slice(0, 10);
 
-    products.forEach(function (product) {
-      // Buat kunci unik berdasarkan nama dan ukuran untuk memastikan setiap ukuran dicatat
-      let key = `${product.Name} (${product.Size})`;
-
-      if (!pizzaSales[key]) {
-        pizzaSales[key] = {
-          Name: product.Name,
-          Size: product.Size,
-          Category: product.Category,
-          Price: product.Price,
-          OrderVolume: 0,
-        };
+      let placeholder = document.querySelector("#data-output");
+      let out = "";
+      for (let product of displayedProducts) {
+        out += `
+          <tr>
+            <td>${product.Name}</td>
+            <td>${product.Size}</td>
+            <td>${product.Category}</td>
+            <td>${product.Price}</td>
+            <td>${product.OrderVolume}</td>
+          </tr>
+        `;
       }
-      pizzaSales[key].OrderVolume += product.Quantity;
-    });
+      placeholder.innerHTML = out;
 
-    // Mengubah objek pizzaSales menjadi array dan mengurutkannya berdasarkan OrderVolume secara menurun
-    let sortedProducts = Object.values(pizzaSales).sort(
-      (a, b) => b.OrderVolume - a.OrderVolume
-    );
-
-    // Mengambil 10 produk pertama untuk ditampilkan
-    let displayedProducts = sortedProducts;
-
-    let placeholder = document.querySelector("#data-output");
-    let out = "";
-    for (let product of displayedProducts) {
-      out += `
-        <tr>
-          <td>${product.Name}</td>
-          <td>${product.Size}</td>
-          <td>${product.Category}</td>
-          <td>${product.Price}</td>
-          <td>${product.OrderVolume}</td>
-        </tr>
-      `;
-    }
-    placeholder.innerHTML = out;
-  })
-  .catch(function (error) {
-    console.error("Error fetching and processing data:", error);
-  });
-
-// Mengambil data dari file JSON menggunakan fetch
-fetch("pizza_places.json")
-  .then((response) => response.json())
-  .then((data) => {
-    // Inisialisasi objek untuk menyimpan jumlah penjualan berdasarkan rentang waktu
-    const salesByTimeRange = {
-      "11:00:00-15:00:00": 0,
-      "15:00:01-19:00:00": 0,
-      "19:00:01-23:00:00": 0,
-    };
-
-    // Fungsi untuk menentukan rentang waktu
-    function getTimeRange(time) {
-      if (time >= "11:00:00" && time <= "15:00:00") {
-        return "11:00:00-15:00:00";
-      } else if (time >= "15:00:01" && time <= "19:00:00") {
-        return "15:00:01-19:00:00";
-      } else if (time >= "19:00:01" && time <= "23:00:00") {
-        return "19:00:01-23:00:00";
-      } else {
-        return "Invalid Time";
-      }
-    }
-
-    // Hitung jumlah penjualan berdasarkan rentang waktu
-    data.forEach((order) => {
-      const time = order["Time"];
-      const timeRange = getTimeRange(time);
-      if (timeRange !== "Invalid Time") {
-        salesByTimeRange[timeRange] += order.Quantity;
-      }
-    });
-
-    console.log(salesByTimeRange);
-
-    // Buat array untuk label waktu dan data penjualan
-    const labels = Object.keys(salesByTimeRange);
-    const dataValues = Object.values(salesByTimeRange);
-
-    // Buat bar chart
-    const ctx = document.getElementById("timebarchart").getContext("2d");
-    const timeBarChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Count Time based on Penjualan",
-            data: dataValues,
-            backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue,
-            borderColor: "rgba(54, 162, 235, 1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-  });
-
-//revenue//
-// Ambil elemen canvas dari HTML
-var ctx = document.getElementById("revenue").getContext("2d");
-
-// Ambil data dari file JSON menggunakan fetch
-fetch("pizza_places.json")
-  .then((response) => response.json()) // Ubah respons ke JSON
-  .then((data) => {
-    // Ubah format tanggal dan pendapatan
-    var formattedData = data.map(function (item) {
-      return {
-        month: item.Month.trim(), // Hapus spasi ekstra dari nama bulan
-        revenue: parseFloat(item.Price.replace("$", "")), // Hapus tanda $ dan ubah ke float
+      // Inisialisasi objek untuk menyimpan jumlah penjualan berdasarkan rentang waktu
+      const salesByTimeRange = {
+        "11:00:00-15:00:00": 0,
+        "15:00:01-19:00:00": 0,
+        "19:00:01-23:00:00": 0,
       };
-    });
 
-    // Buat objek untuk menyimpan total pendapatan per bulan
-    var monthlyRevenue = {};
-
-    // Hitung total pendapatan per bulan
-    formattedData.forEach(function (item) {
-      if (!monthlyRevenue[item.month]) {
-        monthlyRevenue[item.month] = 0;
+      // Fungsi untuk menentukan rentang waktu
+      function getTimeRange(time) {
+        if (time >= "11:00:00" && time <= "15:00:00") {
+          return "11:00:00-15:00:00";
+        } else if (time >= "15:00:01" && time <= "19:00:00") {
+          return "15:00:01-19:00:00";
+        } else if (time >= "19:00:01" && time <= "23:00:00") {
+          return "19:00:01-23:00:00";
+        } else {
+          return "Invalid Time";
+        }
       }
-      monthlyRevenue[item.month] += item.revenue;
-    });
 
-    // Urutkan total pendapatan berdasarkan bulan (dengan memastikan urutan bulan dari Januari ke Desember)
-    var sortedMonthlyRevenue = Object.keys(monthlyRevenue)
-      .sort((a, b) => {
-        // Konversi nama bulan menjadi angka untuk memudahkan pengurutan
-        var months = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ];
-        return months.indexOf(a) - months.indexOf(b);
-      })
-      .map(function (month) {
-        return {
-          month: month,
-          revenue: monthlyRevenue[month],
-        };
+      // Hitung jumlah penjualan berdasarkan rentang waktu
+      pizzaData.forEach((order) => {
+        const time = order["Time"];
+        const timeRange = getTimeRange(time);
+        if (timeRange !== "Invalid Time") {
+          salesByTimeRange[timeRange] += order.Quantity;
+        }
       });
 
-    // Siapkan data untuk chart
-    var labels = sortedMonthlyRevenue.map(function (item) {
-      return item.month;
-    });
-    var values = sortedMonthlyRevenue.map(function (item) {
-      return item.revenue;
-    });
+      console.log(salesByTimeRange);
 
-    // Buat grafik garis
-    var lineChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Total Revenue",
-            data: values,
-            backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
-            borderColor: "rgba(75, 192, 192, 1)", // Warna garis
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
-  })
-  .catch((error) => console.error("Error fetching data:", error)); // Tangani kesalahan jika fetch gagal
+      // Buat array untuk label waktu dan data penjualan
+      const labels = Object.keys(salesByTimeRange);
+      const dataValues = Object.values(salesByTimeRange);
 
-/*pringe range*/
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Function to get the price from the pizza object
-  const getPrice = (pizza) => parseFloat(pizza.Price.replace("$", ""));
-
-  // Group pizzas by price range
-  const priceRanges = {
-    "10-15": 0,
-    "15.1-20": 0,
-    "20.1-25": 0,
-    "25.1-30": 0,
-    "35.1-40": 0,
-    Other: 0,
-  };
-
-  fetch("pizza_places.json")
-    .then((response) => response.json())
-    .then((pizzaData) => {
-      pizzaData.forEach((pizza) => {
-        const price = getPrice(pizza);
-        if (price >= 10 && price <= 15) priceRanges["10-15"] += pizza.Quantity;
-        else if (price > 15 && price <= 20)
-          priceRanges["15.1-20"] += pizza.Quantity;
-        else if (price > 20 && price <= 25)
-          priceRanges["20.1-25"] += pizza.Quantity;
-        else if (price > 25 && price <= 30)
-          priceRanges["25.1-30"] += pizza.Quantity;
-        else if (price > 35 && price <= 40)
-          priceRanges["35.1-40"] += pizza.Quantity;
-        else priceRanges["Other"] += pizza.Quantity;
-      });
-
-      // Create the bar chart
-      const ctx = document.getElementById("pricerange").getContext("2d");
-      new Chart(ctx, {
+      // Buat bar chart
+      const ctxTime = document.getElementById("timebarchart").getContext("2d");
+      const timeBarChart = new Chart(ctxTime, {
         type: "bar",
         data: {
-          labels: Object.keys(priceRanges),
+          labels: labels,
           datasets: [
             {
-              label: "Quantity",
-              data: Object.values(priceRanges),
-              backgroundColor: [
-                "blue",
-                "lightblue",
-                "orange",
-                "yellow",
-                "green",
-                "pink",
-              ],
+              label: "Count Time based on Penjualan",
+              data: dataValues,
+              backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue,
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
             },
           ],
         },
         options: {
           scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function (value) {
-                  return value + " rb";
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
                 },
               },
-            },
+            ],
           },
         },
       });
+
+      // Buat chart revenue
+      var ctxRevenue = document.getElementById("revenue").getContext("2d");
+
+      // Ubah format tanggal dan pendapatan
+      var formattedData = pizzaData.map(function (item) {
+        return {
+          month: item.Month.trim(), // Hapus spasi ekstra dari nama bulan
+          revenue: parseFloat(item.Price.replace("$", "")), // Hapus tanda $ dan ubah ke float
+        };
+      });
+
+      // Buat objek untuk menyimpan total pendapatan per bulan
+      var monthlyRevenue = {};
+
+      // Hitung total pendapatan per bulan
+      formattedData.forEach(function (item) {
+        if (!monthlyRevenue[item.month]) {
+          monthlyRevenue[item.month] = 0;
+        }
+        monthlyRevenue[item.month] += item.revenue;
+      });
+
+      // Urutkan total pendapatan berdasarkan bulan (dengan memastikan urutan bulan dari Januari ke Desember)
+      var sortedMonthlyRevenue = Object.keys(monthlyRevenue)
+        .sort((a, b) => {
+          // Konversi nama bulan menjadi angka untuk memudahkan pengurutan
+          var months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          return months.indexOf(a) - months.indexOf(b);
+        })
+        .map(function (month) {
+          return {
+            month: month,
+            revenue: monthlyRevenue[month],
+          };
+        });
+
+      // Siapkan data untuk chart
+      var labelsRevenue = sortedMonthlyRevenue.map(function (item) {
+        return item.month;
+      });
+      var valuesRevenue = sortedMonthlyRevenue.map(function (item) {
+        return item.revenue;
+      });
+
+      // Buat grafik garis
+      var lineChart = new Chart(ctxRevenue, {
+        type: "line",
+        data: {
+          labels: labelsRevenue,
+          datasets: [
+            {
+              label: "Total Revenue",
+              data: valuesRevenue,
+              backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
+              borderColor: "rgba(75, 192, 192, 1)", // Warna garis
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+        },
+      });
+
+      // Initial display set to 0, do not calculate totals yet
+      // filterAndDisplayTotals(pizzaData); <- Comment out this line to prevent initial calculation
     })
-    .catch((error) => console.error("Error fetching the JSON data:", error));
+    .catch((error) => console.error("Error fetching the pizza data:", error));
 });
 
 /*top5*/
@@ -815,3 +705,90 @@ fetch("pizza_places.json")
       bottom5Categories
     );
   });
+
+// Show popup
+window.addEventListener("load", function () {
+  setTimeout(function open(event) {
+    document.querySelector(".popup").style.display = "block";
+  }, 300);
+});
+
+// Close popup
+document.querySelector("#xbutton").addEventListener("click", function () {
+  document.querySelector(".popup").style.display = "none";
+});
+
+document.querySelector("#close").addEventListener("click", function () {
+  document.querySelector(".popup").style.display = "none";
+});
+
+// /*pringe range*/
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   // Function to get the price from the pizza object
+//   const getPrice = (pizza) => parseFloat(pizza.Price.replace("$", ""));
+
+//   // Group pizzas by price range
+//   const priceRanges = {
+//     "10-15": 0,
+//     "15.1-20": 0,
+//     "20.1-25": 0,
+//     "25.1-30": 0,
+//     "35.1-40": 0,
+//     Other: 0,
+//   };
+
+//   fetch("pizza_places.json")
+//     .then((response) => response.json())
+//     .then((pizzaData) => {
+//       pizzaData.forEach((pizza) => {
+//         const price = getPrice(pizza);
+//         if (price >= 10 && price <= 15) priceRanges["10-15"] += pizza.Quantity;
+//         else if (price > 15 && price <= 20)
+//           priceRanges["15.1-20"] += pizza.Quantity;
+//         else if (price > 20 && price <= 25)
+//           priceRanges["20.1-25"] += pizza.Quantity;
+//         else if (price > 25 && price <= 30)
+//           priceRanges["25.1-30"] += pizza.Quantity;
+//         else if (price > 35 && price <= 40)
+//           priceRanges["35.1-40"] += pizza.Quantity;
+//         else priceRanges["Other"] += pizza.Quantity;
+//       });
+
+//       // Create the bar chart
+//       const ctx = document.getElementById("pricerange").getContext("2d");
+//       new Chart(ctx, {
+//         type: "bar",
+//         data: {
+//           labels: Object.keys(priceRanges),
+//           datasets: [
+//             {
+//               label: "Quantity",
+//               data: Object.values(priceRanges),
+//               backgroundColor: [
+//                 "blue",
+//                 "lightblue",
+//                 "orange",
+//                 "yellow",
+//                 "green",
+//                 "pink",
+//               ],
+//             },
+//           ],
+//         },
+//         options: {
+//           scales: {
+//             y: {
+//               beginAtZero: true,
+//               ticks: {
+//                 callback: function (value) {
+//                   return value + " rb";
+//                 },
+//               },
+//             },
+//           },
+//         },
+//       });
+//     })
+//     .catch((error) => console.error("Error fetching the JSON data:", error));
+// });
