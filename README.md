@@ -1,3 +1,17 @@
+<br />
+<p align="center">
+    <img src="image/logoRevoU.png" width='250dp' alt="Logo" >
+  </a>
+
+  <h1 align="center">SE Capstone Project RevoU KM</h1>
+  <h2 align="center">
+  RevoU Tech Academy - Learn Data Analytics & Software Development With AI Capstone Project worked by our team.</h2> 
+</p>
+<br>
+# Team Members
+
+## Team  : Medan Team 6
+
 # Surabaya tim 24
 <!DOCTYPE html>
 <html>
