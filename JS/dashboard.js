@@ -15,10 +15,7 @@ $(document).ready(function () {
         { data: "Quantity" },
         { data: "Price" },
         { data: "Date" },
-        { data: "Month" },
-        { data: "Day" },
         { data: "Time" },
-        { data: "Time Rounding\r" },
       ],
     });
   });
@@ -26,14 +23,14 @@ $(document).ready(function () {
 
 /** filtering dropdown */
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize total values to 0
-  const resetTotals = () => {
+  const setInitialTotals = () => {
     document.getElementById("total-income").textContent = "$0.00";
     document.getElementById("total-quantity").textContent = "0";
     document.getElementById("total-order").textContent = "0";
   };
 
-  resetTotals();
+  // Initialize total values to 0
+  setInitialTotals();
 
   fetch("pizza_places.json")
     .then((response) => {
@@ -172,26 +169,13 @@ document.addEventListener("DOMContentLoaded", () => {
         displayRevenueChart(filteredData);
       };
 
-      const resetFilters = () => {
-        document.querySelectorAll(".option-checkbox").forEach((checkbox) => {
-          checkbox.checked = false;
-        });
-        document.querySelectorAll(".select-all").forEach((checkbox) => {
-          checkbox.checked = false;
-        });
-        resetTotals();
-      };
-
-      // Event listener for reset button
-      document.getElementById("reset-button").addEventListener("click", () => {
-        resetFilters();
-      });
-
+      // Populate dropdowns but do not calculate totals yet
       populateDropdown(monthYearSelect, pizzaData, "Month");
       populateDropdown(pizzaNameSelect, pizzaData, "Name");
       populateDropdown(categorySelect, pizzaData, "Category");
 
-      // Initially do not call filterAndDisplayTotals to ensure initial values are 0
+      // Initial display set to 0, do not calculate totals yet
+      // filterAndDisplayTotals(pizzaData); <- Comment out this line to prevent initial calculation
     })
     .catch((error) => console.error("Error fetching the pizza data:", error));
 });
@@ -429,6 +413,75 @@ fetch("pizza_places.json")
   .catch((error) => console.error("Error fetching data:", error)); // Tangani kesalahan jika fetch gagal
 
 /*pringe range*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Function to get the price from the pizza object
+  const getPrice = (pizza) => parseFloat(pizza.Price.replace("$", ""));
+
+  // Group pizzas by price range
+  const priceRanges = {
+    "10-15": 0,
+    "15.1-20": 0,
+    "20.1-25": 0,
+    "25.1-30": 0,
+    "35.1-40": 0,
+    Other: 0,
+  };
+
+  fetch("pizza_places.json")
+    .then((response) => response.json())
+    .then((pizzaData) => {
+      pizzaData.forEach((pizza) => {
+        const price = getPrice(pizza);
+        if (price >= 10 && price <= 15) priceRanges["10-15"] += pizza.Quantity;
+        else if (price > 15 && price <= 20)
+          priceRanges["15.1-20"] += pizza.Quantity;
+        else if (price > 20 && price <= 25)
+          priceRanges["20.1-25"] += pizza.Quantity;
+        else if (price > 25 && price <= 30)
+          priceRanges["25.1-30"] += pizza.Quantity;
+        else if (price > 35 && price <= 40)
+          priceRanges["35.1-40"] += pizza.Quantity;
+        else priceRanges["Other"] += pizza.Quantity;
+      });
+
+      // Create the bar chart
+      const ctx = document.getElementById("pricerange").getContext("2d");
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: Object.keys(priceRanges),
+          datasets: [
+            {
+              label: "Quantity",
+              data: Object.values(priceRanges),
+              backgroundColor: [
+                "blue",
+                "lightblue",
+                "orange",
+                "yellow",
+                "green",
+                "pink",
+              ],
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function (value) {
+                  return value + " rb";
+                },
+              },
+            },
+          },
+        },
+      });
+    })
+    .catch((error) => console.error("Error fetching the JSON data:", error));
+});
 
 /*top5*/
 // Fungsi untuk mengambil ID pizza berdasarkan nama
