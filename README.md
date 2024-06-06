@@ -1,7 +1,66 @@
 # Surabaya tim 24
-### Pizza Sales Dashboard
-Project Leader : Mohammad Abror Hidayat <br>
-Front End Engineer: Kevin Candra, Nurul Dini Kamilah, Nurrahman Firdaus, Bela Durotunavisa, Fadia Nailah <br>
-Deployment Team : Eva Dhorifah <br>
-Pitch Deck Team : Aulia Mayang Kusuma & Syah Rizal Al-Ghifari <br>
-Quality Assurance: Shabrina Muthia Adani & Jona Maruli Maleakhi Sitorus
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Pizza Sales Dashboard</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>PIC Roles</th>
+    
+  </tr>
+  <tr>
+    <td>Mohammad Abror Hidayat</td>
+    <td>Project Leader</td>
+    
+  </tr>
+  <tr>
+    <td>Nurrahman Firdaus</td>
+    <td>Front End Engineer</td>
+    
+  </tr>
+  <tr>
+    <td>Kevin Candra</td>
+    <td>Front End Engineer</td>
+    
+  </tr>
+  <tr>
+    <td>Nurul Dini Kamilah</td>
+    <td>Front End Engineer</td>
+    
+  </tr>
+  <tr>
+    <td>Bela Durotunavisa</td>
+    <td>Front End Engineer</td>
+    
+  </tr>
+  <tr>
+    <td>Fadia Nailah</td>
+    <td>Front End Engineer</td>
+  </tr>
+    <tr>
+    <td>Eva Dhorifah</td>
+    <td>Deployment Team</td>
+  </tr>
+    <tr>
+    <td>Aulia Mayang Kusuma</td>
+    <td>Pitch Deck Team</td>
+  </tr>
+    <tr>
+    <td>Syah Rizal Al Ghifari</td>
+    <td>Pitch Deck Team</td>
+  </tr>
+    <tr>
+    <td>Shabrina Muthia Adani</td>
+    <td>Quality Assurance</td>
+  </tr>
+    <tr>
+    <td>Jona Maruli Maleakhi Sitorus</td>
+    <td>Quality Assurance</td>
+  </tr>
+</table>
+
+</body>
+</html>
