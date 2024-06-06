@@ -96,13 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
           checkboxes.forEach((checkbox) => {
             checkbox.checked = event.target.checked;
           });
-          filterAndDisplayTotals(pizzaData);
+          checkTotalsAndUpdate();
         });
 
         const optionCheckboxes = element.querySelectorAll(".option-checkbox");
         optionCheckboxes.forEach((checkbox) => {
           checkbox.addEventListener("change", () => {
-            filterAndDisplayTotals(pizzaData);
+            checkTotalsAndUpdate();
           });
         });
       };
@@ -167,6 +167,32 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("total-order").textContent = `${totalOrders}`;
 
         displayRevenueChart(filteredData);
+      };
+
+      const checkTotalsAndUpdate = () => {
+        const selectedCategories = Array.from(
+          document.querySelectorAll("#category-select .option-checkbox:checked")
+        );
+        const selectedMonths = Array.from(
+          document.querySelectorAll(
+            "#month-year-select .option-checkbox:checked"
+          )
+        );
+        const selectedPizzas = Array.from(
+          document.querySelectorAll(
+            "#pizza-name-select .option-checkbox:checked"
+          )
+        );
+
+        if (
+          selectedCategories.length === 0 &&
+          selectedMonths.length === 0 &&
+          selectedPizzas.length === 0
+        ) {
+          setInitialTotals();
+        } else {
+          filterAndDisplayTotals(pizzaData);
+        }
       };
 
       // Populate dropdowns but do not calculate totals yet
