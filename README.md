@@ -1,25 +1,16 @@
-<br />
+
 <p align="center">
-    <img src="image/logoRevoU.png" width='250dp' alt="Logo" >
+    <img src="image/logoRevoU.png" width='250px' alt="Logo" >
   </a>
 
   <h1 align="center">SE Capstone Project RevoU KM</h1>
-  <h2 align="center">
-  RevoU Tech Academy - Learn Data Analytics & Software Development With AI Capstone Project worked by our team.</h2> 
+  <h3 align="center">
+  Team 24-Surabaya || Pizza Sales Dashboard.</h3> 
 </p>
 <br>
-# Team Members
 
-## Team  : Medan Team 6
 
-# Surabaya tim 24
-<!DOCTYPE html>
-<html>
-<body>
-
-<h2>Pizza Sales Dashboard</h2>
-
-<table>
+<table align="center">
   <tr>
     <th>Name</th>
     <th>PIC Roles</th>
@@ -75,6 +66,3 @@
     <td>Quality Assurance</td>
   </tr>
 </table>
-
-</body>
-</html>
