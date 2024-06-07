@@ -168,7 +168,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ).textContent = `${totalQuantity}`;
         document.getElementById("total-order").textContent = `${totalOrders}`;
 
-        displayRevenueChart(filteredData);
+        updateSalesTable(filteredData);
+        updateTimeBarChart(filteredData);
+        updateRevenueChart(filteredData);
       };
 
       const checkTotalsAndUpdate = () => {
@@ -202,199 +204,192 @@ document.addEventListener("DOMContentLoaded", () => {
       populateDropdown(pizzaNameSelect, pizzaData, "Name");
       populateDropdown(categorySelect, pizzaData, "Category");
 
-      // Mengelompokkan data berdasarkan nama pizza dan menghitung jumlahnya
-      let pizzaSales = {};
+      // Functions to update sales table and charts
+      const updateSalesTable = (data) => {
+        let pizzaSales = {};
 
-      pizzaData.forEach(function (product) {
-        // Buat kunci unik berdasarkan nama dan ukuran untuk memastikan setiap ukuran dicatat
-        let key = `${product.Name} (${product.Size})`;
+        data.forEach(function (product) {
+          let key = `${product.Name} (${product.Size})`;
 
-        if (!pizzaSales[key]) {
-          pizzaSales[key] = {
-            Name: product.Name,
-            Size: product.Size,
-            Category: product.Category,
-            Price: product.Price,
-            OrderVolume: 0,
-          };
+          if (!pizzaSales[key]) {
+            pizzaSales[key] = {
+              Name: product.Name,
+              Size: product.Size,
+              Category: product.Category,
+              Price: product.Price,
+              OrderVolume: 0,
+            };
+          }
+          pizzaSales[key].OrderVolume += product.Quantity;
+        });
+
+        let sortedProducts = Object.values(pizzaSales).sort(
+          (a, b) => b.OrderVolume - a.OrderVolume
+        );
+
+        let displayedProducts = sortedProducts.slice(0, 10);
+
+        let placeholder = document.querySelector("#data-output");
+        let out = "";
+        for (let product of displayedProducts) {
+          out += `
+            <tr>
+              <td>${product.Name}</td>
+              <td>${product.Size}</td>
+              <td>${product.Category}</td>
+              <td>${product.Price}</td>
+              <td>${product.OrderVolume}</td>
+            </tr>
+          `;
         }
-        pizzaSales[key].OrderVolume += product.Quantity;
-      });
-
-      // Mengubah objek pizzaSales menjadi array dan mengurutkannya berdasarkan OrderVolume secara menurun
-      let sortedProducts = Object.values(pizzaSales).sort(
-        (a, b) => b.OrderVolume - a.OrderVolume
-      );
-
-      // Mengambil 10 produk pertama untuk ditampilkan
-      let displayedProducts = sortedProducts.slice(0, 10);
-
-      let placeholder = document.querySelector("#data-output");
-      let out = "";
-      for (let product of displayedProducts) {
-        out += `
-          <tr>
-            <td>${product.Name}</td>
-            <td>${product.Size}</td>
-            <td>${product.Category}</td>
-            <td>${product.Price}</td>
-            <td>${product.OrderVolume}</td>
-          </tr>
-        `;
-      }
-      placeholder.innerHTML = out;
-
-      // Inisialisasi objek untuk menyimpan jumlah penjualan berdasarkan rentang waktu
-      const salesByTimeRange = {
-        "11:00:00-15:00:00": 0,
-        "15:00:01-19:00:00": 0,
-        "19:00:01-23:00:00": 0,
+        placeholder.innerHTML = out;
       };
 
-      // Fungsi untuk menentukan rentang waktu
-      function getTimeRange(time) {
-        if (time >= "11:00:00" && time <= "15:00:00") {
-          return "11:00:00-15:00:00";
-        } else if (time >= "15:00:01" && time <= "19:00:00") {
-          return "15:00:01-19:00:00";
-        } else if (time >= "19:00:01" && time <= "23:00:00") {
-          return "19:00:01-23:00:00";
-        } else {
-          return "Invalid Time";
+      const updateTimeBarChart = (data) => {
+        const salesByTimeRange = {
+          "11:00:00-15:00:00": 0,
+          "15:00:01-19:00:00": 0,
+          "19:00:01-23:00:00": 0,
+        };
+
+        const getTimeRange = (time) => {
+          if (time >= "11:00:00" && time <= "15:00:00") {
+            return "11:00:00-15:00:00";
+          } else if (time >= "15:00:01" && time <= "19:00:00") {
+            return "15:00:01-19:00:00";
+          } else if (time >= "19:00:01" && time <= "23:00:00") {
+            return "19:00:01-23:00:00";
+          } else {
+            return "Invalid Time";
+          }
+        };
+
+        data.forEach((order) => {
+          const time = order["Time"];
+          const timeRange = getTimeRange(time);
+          if (timeRange !== "Invalid Time") {
+            salesByTimeRange[timeRange] += order.Quantity;
+          }
+        });
+
+        const labels = Object.keys(salesByTimeRange);
+        const dataValues = Object.values(salesByTimeRange);
+
+        const ctxTime = document
+          .getElementById("timebarchart")
+          .getContext("2d");
+
+        if (window.timeBarChart) {
+          window.timeBarChart.destroy();
         }
-      }
 
-      // Hitung jumlah penjualan berdasarkan rentang waktu
-      pizzaData.forEach((order) => {
-        const time = order["Time"];
-        const timeRange = getTimeRange(time);
-        if (timeRange !== "Invalid Time") {
-          salesByTimeRange[timeRange] += order.Quantity;
-        }
-      });
-
-      console.log(salesByTimeRange);
-
-      // Buat array untuk label waktu dan data penjualan
-      const labels = Object.keys(salesByTimeRange);
-      const dataValues = Object.values(salesByTimeRange);
-
-      // Buat bar chart
-      const ctxTime = document.getElementById("timebarchart").getContext("2d");
-      const timeBarChart = new Chart(ctxTime, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: "Count Time based on Penjualan",
-              data: dataValues,
-              backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue,
-              borderColor: "rgba(54, 162, 235, 1)",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            yAxes: [
+        window.timeBarChart = new Chart(ctxTime, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
               {
-                ticks: {
-                  beginAtZero: true,
-                },
+                label: "Count Time based on Penjualan",
+                data: dataValues,
+                backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
               },
             ],
           },
-        },
-      });
+          options: {
+            scales: {
+              y: {
+                //beginAtZero: true,
+              },
+            },
+          },
+        });
+      };
 
-      // Buat chart revenue
-      var ctxRevenue = document.getElementById("revenue").getContext("2d");
-
-      // Ubah format tanggal dan pendapatan
-      var formattedData = pizzaData.map(function (item) {
-        return {
-          month: item.Month.trim(), // Hapus spasi ekstra dari nama bulan
-          revenue: parseFloat(item.Price.replace("$", "")), // Hapus tanda $ dan ubah ke float
-        };
-      });
-
-      // Buat objek untuk menyimpan total pendapatan per bulan
-      var monthlyRevenue = {};
-
-      // Hitung total pendapatan per bulan
-      formattedData.forEach(function (item) {
-        if (!monthlyRevenue[item.month]) {
-          monthlyRevenue[item.month] = 0;
-        }
-        monthlyRevenue[item.month] += item.revenue;
-      });
-
-      // Urutkan total pendapatan berdasarkan bulan (dengan memastikan urutan bulan dari Januari ke Desember)
-      var sortedMonthlyRevenue = Object.keys(monthlyRevenue)
-        .sort((a, b) => {
-          // Konversi nama bulan menjadi angka untuk memudahkan pengurutan
-          var months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-          ];
-          return months.indexOf(a) - months.indexOf(b);
-        })
-        .map(function (month) {
+      const updateRevenueChart = (data) => {
+        const formattedData = data.map(function (item) {
           return {
-            month: month,
-            revenue: monthlyRevenue[month],
+            month: item.Month.trim(), // Hapus spasi ekstra dari nama bulan
+            revenue: parseFloat(item.Price.replace("$", "")) * item.Quantity, // Hapus tanda $ dan ubah ke float, kalikan dengan quantity
           };
         });
 
-      // Siapkan data untuk chart
-      var labelsRevenue = sortedMonthlyRevenue.map(function (item) {
-        return item.month;
-      });
-      var valuesRevenue = sortedMonthlyRevenue.map(function (item) {
-        return item.revenue;
-      });
+        const monthlyRevenue = {};
 
-      // Buat grafik garis
-      var lineChart = new Chart(ctxRevenue, {
-        type: "line",
-        data: {
-          labels: labelsRevenue,
-          datasets: [
-            {
-              label: "Total Revenue",
-              data: valuesRevenue,
-              backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
-              borderColor: "rgba(75, 192, 192, 1)", // Warna garis
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            yAxes: [
+        formattedData.forEach(function (item) {
+          if (!monthlyRevenue[item.month]) {
+            monthlyRevenue[item.month] = 0;
+          }
+          monthlyRevenue[item.month] += item.revenue;
+        });
+
+        const sortedMonthlyRevenue = Object.keys(monthlyRevenue)
+          .sort((a, b) => {
+            const months = [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ];
+            return months.indexOf(a) - months.indexOf(b);
+          })
+          .map(function (month) {
+            return {
+              month: month,
+              revenue: monthlyRevenue[month],
+            };
+          });
+
+        const labelsRevenue = sortedMonthlyRevenue.map(function (item) {
+          return item.month;
+        });
+        const valuesRevenue = sortedMonthlyRevenue.map(function (item) {
+          return item.revenue;
+        });
+
+        const ctxRevenue = document.getElementById("revenue").getContext("2d");
+
+        if (window.lineChart) {
+          window.lineChart.destroy();
+        }
+
+        window.lineChart = new Chart(ctxRevenue, {
+          type: "line",
+          data: {
+            labels: labelsRevenue,
+            datasets: [
               {
-                ticks: {
-                  beginAtZero: true,
-                },
+                label: "Total Revenue",
+                data: valuesRevenue,
+                backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
+                borderColor: "rgba(75, 192, 192, 1)", // Warna garis
+                borderWidth: 1,
               },
             ],
           },
-        },
-      });
+          options: {
+            scales: {
+              y: {
+                //beginAtZero: true,
+              },
+            },
+          },
+        });
+      };
 
-      // Initial display set to 0, do not calculate totals yet
-      // filterAndDisplayTotals(pizzaData); <- Comment out this line to prevent initial calculation
+      // Do not call filterAndDisplayTotals initially
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
     });
 
   /*top5*/
@@ -405,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Fungsi untuk membuat chart
+
   function createChart(ctxId, labels, dataValues, categories) {
     const ctx = document.getElementById(ctxId).getContext("2d");
 
@@ -546,164 +542,163 @@ document.addEventListener("DOMContentLoaded", () => {
       // Membuat chart top 5 pizza
       createChart("top5pizza", top5Labels, top5DataValues, top5Categories);
     });
-
-  //bottom 5 pizza//
-  // Fungsi untuk mengambil ID pizza berdasarkan nama
-  function getPizzaID(data, pizzaName) {
-    const pizza = data.find((order) => order["Name"] === pizzaName);
-    return pizza ? pizza["Pizza ID"] : "Unknown";
-  }
-
-  // Fungsi untuk membuat chart
-  function createChart(ctxId, labels, dataValues, categories) {
-    const ctx = document.getElementById(ctxId).getContext("2d");
-
-    const categoryColors = {
-      Classic: {
-        backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
-        borderColor: "rgba(54, 162, 235, 1)",
-      },
-      Supreme: {
-        backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
-        borderColor: "rgba(75, 192, 192, 1)",
-      },
-      Veggie: {
-        backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
-        borderColor: "rgba(255, 99, 132, 1)",
-      },
-      Chicken: {
-        backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
-        borderColor: "rgba(255, 159, 64, 1)",
-      },
-      Other: {
-        backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
-        borderColor: "rgba(153, 102, 255, 1)",
-      },
-    };
-
-    const allCategories = ["Classic", "Supreme", "Veggie", "Chicken"]; // Include all categories
-
-    const chart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Pizza Sales",
-            data: dataValues,
-            backgroundColor: categories.map(
-              (category) =>
-                categoryColors[category]?.backgroundColor ||
-                categoryColors["Other"].backgroundColor
-            ),
-            borderColor: categories.map(
-              (category) =>
-                categoryColors[category]?.borderColor ||
-                categoryColors["Other"].borderColor
-            ),
-            borderWidth: 2,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                var label = context.dataset.label || "";
-                if (label) {
-                  label += ": ";
-                }
-                if (context.parsed.y !== null) {
-                  label += context.parsed.y;
-                }
-                return label;
-              },
-            },
-          },
-          legend: {
-            display: true,
-            labels: {
-              generateLabels: function (chart) {
-                const datasets = chart.data.datasets[0];
-                return allCategories.map((category) => ({
-                  text: category,
-                  fillStyle:
-                    categoryColors[category]?.backgroundColor ||
-                    categoryColors["Other"].backgroundColor,
-                  strokeStyle:
-                    categoryColors[category]?.borderColor ||
-                    categoryColors["Other"].borderColor,
-                  lineWidth: datasets.borderWidth,
-                  hidden: false, // Initialize all categories as visible
-                }));
-              },
-            },
-            onClick: function (e, legendItem, legend) {
-              const category = legendItem.text;
-              const ci = legend.chart;
-              const meta = ci.getDatasetMeta(0);
-
-              meta.data.forEach(function (bar, barIndex) {
-                if (categories[barIndex] === category) {
-                  bar.hidden = !bar.hidden;
-                }
-              });
-
-              ci.update();
-            },
-          },
-        },
-      },
-    });
-
-    return chart;
-  }
-
-  // Fetch data dan buat chart untuk bottom 5 pizza
-  fetch("pizza_places.json")
-    .then((response) => response.json())
-    .then((data) => {
-      // Menghitung total penjualan untuk setiap jenis pizza
-      const pizzaSales = {};
-      const pizzaCategories = {};
-      data.forEach((order) => {
-        const pizzaID = order["Pizza ID"];
-        if (pizzaSales[pizzaID]) {
-          pizzaSales[pizzaID] += order.Quantity;
-        } else {
-          pizzaSales[pizzaID] = order.Quantity;
-          pizzaCategories[pizzaID] = order.Category;
-        }
-      });
-
-      // Mengurutkan jenis pizza berdasarkan total penjualan secara ascending
-      const sortedPizzaSales = Object.entries(pizzaSales).sort(
-        (a, b) => a[1] - b[1]
-      );
-
-      // Mengambil lima jenis pizza terendah
-      const bottom5Pizza = sortedPizzaSales.slice(0, 5);
-      const bottom5Labels = bottom5Pizza.map((item) => item[0]);
-      const bottom5DataValues = bottom5Pizza.map((item) => item[1]);
-      const bottom5Categories = bottom5Labels.map(
-        (label) => pizzaCategories[label]
-      );
-
-      // Membuat chart bottom 5 pizza
-      createChart(
-        "bottom5pizza",
-        bottom5Labels,
-        bottom5DataValues,
-        bottom5Categories
-      );
-    });
 });
+//bottom 5 pizza//
+// Fungsi untuk mengambil ID pizza berdasarkan nama
+function getPizzaID(data, pizzaName) {
+  const pizza = data.find((order) => order["Name"] === pizzaName);
+  return pizza ? pizza["Pizza ID"] : "Unknown";
+}
+
+// Fungsi untuk membuat chart
+function createChart(ctxId, labels, dataValues, categories) {
+  const ctx = document.getElementById(ctxId).getContext("2d");
+
+  const categoryColors = {
+    Classic: {
+      backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
+      borderColor: "rgba(54, 162, 235, 1)",
+    },
+    Supreme: {
+      backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
+      borderColor: "rgba(75, 192, 192, 1)",
+    },
+    Veggie: {
+      backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
+      borderColor: "rgba(255, 99, 132, 1)",
+    },
+    Chicken: {
+      backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
+      borderColor: "rgba(255, 159, 64, 1)",
+    },
+    Other: {
+      backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
+      borderColor: "rgba(153, 102, 255, 1)",
+    },
+  };
+
+  const allCategories = ["Classic", "Supreme", "Veggie", "Chicken"]; // Include all categories
+
+  const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Pizza Sales",
+          data: dataValues,
+          backgroundColor: categories.map(
+            (category) =>
+              categoryColors[category]?.backgroundColor ||
+              categoryColors["Other"].backgroundColor
+          ),
+          borderColor: categories.map(
+            (category) =>
+              categoryColors[category]?.borderColor ||
+              categoryColors["Other"].borderColor
+          ),
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              var label = context.dataset.label || "";
+              if (label) {
+                label += ": ";
+              }
+              if (context.parsed.y !== null) {
+                label += context.parsed.y;
+              }
+              return label;
+            },
+          },
+        },
+        legend: {
+          display: true,
+          labels: {
+            generateLabels: function (chart) {
+              const datasets = chart.data.datasets[0];
+              return allCategories.map((category) => ({
+                text: category,
+                fillStyle:
+                  categoryColors[category]?.backgroundColor ||
+                  categoryColors["Other"].backgroundColor,
+                strokeStyle:
+                  categoryColors[category]?.borderColor ||
+                  categoryColors["Other"].borderColor,
+                lineWidth: datasets.borderWidth,
+                hidden: false, // Initialize all categories as visible
+              }));
+            },
+          },
+          onClick: function (e, legendItem, legend) {
+            const category = legendItem.text;
+            const ci = legend.chart;
+            const meta = ci.getDatasetMeta(0);
+
+            meta.data.forEach(function (bar, barIndex) {
+              if (categories[barIndex] === category) {
+                bar.hidden = !bar.hidden;
+              }
+            });
+
+            ci.update();
+          },
+        },
+      },
+    },
+  });
+
+  return chart;
+}
+
+// Fetch data dan buat chart untuk bottom 5 pizza
+fetch("pizza_places.json")
+  .then((response) => response.json())
+  .then((data) => {
+    // Menghitung total penjualan untuk setiap jenis pizza
+    const pizzaSales = {};
+    const pizzaCategories = {};
+    data.forEach((order) => {
+      const pizzaID = order["Pizza ID"];
+      if (pizzaSales[pizzaID]) {
+        pizzaSales[pizzaID] += order.Quantity;
+      } else {
+        pizzaSales[pizzaID] = order.Quantity;
+        pizzaCategories[pizzaID] = order.Category;
+      }
+    });
+
+    // Mengurutkan jenis pizza berdasarkan total penjualan secara ascending
+    const sortedPizzaSales = Object.entries(pizzaSales).sort(
+      (a, b) => a[1] - b[1]
+    );
+
+    // Mengambil lima jenis pizza terendah
+    const bottom5Pizza = sortedPizzaSales.slice(0, 5);
+    const bottom5Labels = bottom5Pizza.map((item) => item[0]);
+    const bottom5DataValues = bottom5Pizza.map((item) => item[1]);
+    const bottom5Categories = bottom5Labels.map(
+      (label) => pizzaCategories[label]
+    );
+
+    // Membuat chart bottom 5 pizza
+    createChart(
+      "bottom5pizza",
+      bottom5Labels,
+      bottom5DataValues,
+      bottom5Categories
+    );
+  });
 
 // Show popup
 window.addEventListener("load", function () {
