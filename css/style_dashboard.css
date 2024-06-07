@@ -210,7 +210,7 @@ input[type="checkbox"] {
 
 /*chartmini*/
 .container {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   gap: 30px; /* Spacing between rows */
   height: 100%;
@@ -219,20 +219,26 @@ input[type="checkbox"] {
 }
 
 .row {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   gap: 30px;
   padding-bottom: 30px;
 }
 
 .row2 {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
 }
 
 .row3 {
   display: flex;
   justify-content: center;
+  padding-bottom: 20px;
+}
+
+.row4 {
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 20px;
 }
 
@@ -255,7 +261,6 @@ input[type="checkbox"] {
   ); /* 2 columns with equal width, considering the margin */
 }
 
-/* table */
 /* table */
 h3 {
   text-align: center;
@@ -304,7 +309,6 @@ h3 {
 /* time barchart */
 .timebar {
   width: 600px;
-  display: flexbox;
   background-color: #dddddd;
 }
 h3 {
@@ -363,4 +367,26 @@ h3 {
 }
 #bottom5pizza {
   width: 500px;
+}
+
+/*  Media Queries*/
+/*  Laptop*/
+@media (max-width: 1366px) {
+  html {
+    font-size: 75%;
+  }
+}
+
+/*  Tablet*/
+@media (max-width: 650px) {
+  html {
+    font-size: 62.5%;
+  }
+}
+
+/*  Mobile Phone*/
+@media (max-width: 500px) {
+  html {
+    font-size: 55%;
+  }
 }
