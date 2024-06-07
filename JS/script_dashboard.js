@@ -386,320 +386,150 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
+      const createTop5PizzaChart = (data) => {
+        const pizzaSales = {};
+        const pizzaCategories = {};
+        data.forEach((order) => {
+          const pizzaID = order["Pizza ID"];
+          if (pizzaSales[pizzaID]) {
+            pizzaSales[pizzaID] += order.Quantity;
+          } else {
+            pizzaSales[pizzaID] = order.Quantity;
+            pizzaCategories[pizzaID] = order.Category;
+          }
+        });
+
+        const sortedPizzaSales = Object.entries(pizzaSales).sort(
+          (a, b) => b[1] - a[1]
+        );
+
+        const top5Pizza = sortedPizzaSales.slice(0, 5);
+        const top5Labels = top5Pizza.map((item) => item[0]);
+        const top5DataValues = top5Pizza.map((item) => item[1]);
+        const top5Categories = top5Labels.map(
+          (label) => pizzaCategories[label]
+        );
+
+        const ctx = document.getElementById("top5pizza").getContext("2d");
+
+        if (window.top5PizzaChart) {
+          window.top5PizzaChart.destroy();
+        }
+
+        window.top5PizzaChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: top5Labels,
+            datasets: [
+              {
+                label: "Top 5 Pizza Sales",
+                data: top5DataValues,
+                backgroundColor: [
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                ],
+                borderColor: [
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      };
+
+      const createBottom5PizzaChart = (data) => {
+        const pizzaSales = {};
+        const pizzaCategories = {};
+        data.forEach((order) => {
+          const pizzaID = order["Pizza ID"];
+          if (pizzaSales[pizzaID]) {
+            pizzaSales[pizzaID] += order.Quantity;
+          } else {
+            pizzaSales[pizzaID] = order.Quantity;
+            pizzaCategories[pizzaID] = order.Category;
+          }
+        });
+
+        const sortedPizzaSales = Object.entries(pizzaSales).sort(
+          (a, b) => a[1] - b[1]
+        );
+
+        const bottom5Pizza = sortedPizzaSales.slice(0, 5);
+        const bottom5Labels = bottom5Pizza.map((item) => item[0]);
+        const bottom5DataValues = bottom5Pizza.map((item) => item[1]);
+        const bottom5Categories = bottom5Labels.map(
+          (label) => pizzaCategories[label]
+        );
+
+        const ctx = document.getElementById("bottom5pizza").getContext("2d");
+
+        if (window.bottom5PizzaChart) {
+          window.bottom5PizzaChart.destroy();
+        }
+
+        window.bottom5PizzaChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: bottom5Labels,
+            datasets: [
+              {
+                label: "Bottom 5 Pizza Sales",
+                data: bottom5DataValues,
+                backgroundColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(54, 162, 235, 1)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(54, 162, 235, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      };
+
+      // Memanggil fungsi untuk membuat chart top 5 pizza
+      createTop5PizzaChart(pizzaData);
+
+      // Memanggil fungsi untuk membuat chart bottom 5 pizza
+      createBottom5PizzaChart(pizzaData);
+
       // Do not call filterAndDisplayTotals initially
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
-
-  /*top5*/
-  // Fungsi untuk mengambil ID pizza berdasarkan nama
-  function getPizzaID(data, pizzaName) {
-    const pizza = data.find((order) => order["Name"] === pizzaName);
-    return pizza ? pizza["Pizza ID"] : "Unknown";
-  }
-
-  // Fungsi untuk membuat chart
-
-  function createChart(ctxId, labels, dataValues, categories) {
-    const ctx = document.getElementById(ctxId).getContext("2d");
-
-    const categoryColors = {
-      Classic: {
-        backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
-        borderColor: "rgba(54, 162, 235, 1)",
-      },
-      Supreme: {
-        backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
-        borderColor: "rgba(75, 192, 192, 1)",
-      },
-      Veggie: {
-        backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
-        borderColor: "rgba(255, 99, 132, 1)",
-      },
-      Chicken: {
-        backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
-        borderColor: "rgba(255, 159, 64, 1)",
-      },
-      Other: {
-        backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
-        borderColor: "rgba(153, 102, 255, 1)",
-      },
-    };
-
-    const allCategories = ["Classic", "Supreme", "Veggie", "Chicken"]; // Include all categories
-
-    const chart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Pizza Sales",
-            data: dataValues,
-            backgroundColor: categories.map(
-              (category) =>
-                categoryColors[category]?.backgroundColor ||
-                categoryColors["Other"].backgroundColor
-            ),
-            borderColor: categories.map(
-              (category) =>
-                categoryColors[category]?.borderColor ||
-                categoryColors["Other"].borderColor
-            ),
-            borderWidth: 2,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                var label = context.dataset.label || "";
-                if (label) {
-                  label += ": ";
-                }
-                if (context.parsed.y !== null) {
-                  label += context.parsed.y;
-                }
-                return label;
-              },
-            },
-          },
-          legend: {
-            display: true,
-            labels: {
-              generateLabels: function (chart) {
-                const datasets = chart.data.datasets[0];
-                return allCategories.map((category) => ({
-                  text: category,
-                  fillStyle:
-                    categoryColors[category]?.backgroundColor ||
-                    categoryColors["Other"].backgroundColor,
-                  strokeStyle:
-                    categoryColors[category]?.borderColor ||
-                    categoryColors["Other"].borderColor,
-                  lineWidth: datasets.borderWidth,
-                  hidden: false, // Initialize all categories as visible
-                }));
-              },
-            },
-            onClick: function (e, legendItem, legend) {
-              const category = legendItem.text;
-              const ci = legend.chart;
-              const meta = ci.getDatasetMeta(0);
-
-              meta.data.forEach(function (bar, barIndex) {
-                if (categories[barIndex] === category) {
-                  bar.hidden = !bar.hidden;
-                }
-              });
-
-              ci.update();
-            },
-          },
-        },
-      },
-    });
-
-    return chart;
-  }
-
-  // Fetch data dan buat chart untuk top 5 pizza
-  fetch("pizza_places.json")
-    .then((response) => response.json())
-    .then((data) => {
-      // Menghitung total penjualan untuk setiap jenis pizza
-      const pizzaSales = {};
-      const pizzaCategories = {};
-      data.forEach((order) => {
-        const pizzaID = order["Pizza ID"];
-        if (pizzaSales[pizzaID]) {
-          pizzaSales[pizzaID] += order.Quantity;
-        } else {
-          pizzaSales[pizzaID] = order.Quantity;
-          pizzaCategories[pizzaID] = order.Category;
-        }
-      });
-
-      // Mengurutkan jenis pizza berdasarkan total penjualan secara descending
-      const sortedPizzaSales = Object.entries(pizzaSales).sort(
-        (a, b) => b[1] - a[1]
-      );
-
-      // Mengambil lima jenis pizza teratas
-      const top5Pizza = sortedPizzaSales.slice(0, 5);
-      const top5Labels = top5Pizza.map((item) => item[0]);
-      const top5DataValues = top5Pizza.map((item) => item[1]);
-      const top5Categories = top5Labels.map((label) => pizzaCategories[label]);
-
-      // Membuat chart top 5 pizza
-      createChart("top5pizza", top5Labels, top5DataValues, top5Categories);
-    });
 });
-//bottom 5 pizza//
-// Fungsi untuk mengambil ID pizza berdasarkan nama
-function getPizzaID(data, pizzaName) {
-  const pizza = data.find((order) => order["Name"] === pizzaName);
-  return pizza ? pizza["Pizza ID"] : "Unknown";
-}
-
-// Fungsi untuk membuat chart
-function createChart(ctxId, labels, dataValues, categories) {
-  const ctx = document.getElementById(ctxId).getContext("2d");
-
-  const categoryColors = {
-    Classic: {
-      backgroundColor: "rgba(54, 162, 235, 1)", // Solid Blue
-      borderColor: "rgba(54, 162, 235, 1)",
-    },
-    Supreme: {
-      backgroundColor: "rgba(75, 192, 192, 1)", // Solid Teal
-      borderColor: "rgba(75, 192, 192, 1)",
-    },
-    Veggie: {
-      backgroundColor: "rgba(255, 99, 132, 1)", // Solid Pink
-      borderColor: "rgba(255, 99, 132, 1)",
-    },
-    Chicken: {
-      backgroundColor: "rgba(255, 159, 64, 1)", // Solid Orange
-      borderColor: "rgba(255, 159, 64, 1)",
-    },
-    Other: {
-      backgroundColor: "rgba(153, 102, 255, 1)", // Solid Purple
-      borderColor: "rgba(153, 102, 255, 1)",
-    },
-  };
-
-  const allCategories = ["Classic", "Supreme", "Veggie", "Chicken"]; // Include all categories
-
-  const chart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Pizza Sales",
-          data: dataValues,
-          backgroundColor: categories.map(
-            (category) =>
-              categoryColors[category]?.backgroundColor ||
-              categoryColors["Other"].backgroundColor
-          ),
-          borderColor: categories.map(
-            (category) =>
-              categoryColors[category]?.borderColor ||
-              categoryColors["Other"].borderColor
-          ),
-          borderWidth: 2,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              var label = context.dataset.label || "";
-              if (label) {
-                label += ": ";
-              }
-              if (context.parsed.y !== null) {
-                label += context.parsed.y;
-              }
-              return label;
-            },
-          },
-        },
-        legend: {
-          display: true,
-          labels: {
-            generateLabels: function (chart) {
-              const datasets = chart.data.datasets[0];
-              return allCategories.map((category) => ({
-                text: category,
-                fillStyle:
-                  categoryColors[category]?.backgroundColor ||
-                  categoryColors["Other"].backgroundColor,
-                strokeStyle:
-                  categoryColors[category]?.borderColor ||
-                  categoryColors["Other"].borderColor,
-                lineWidth: datasets.borderWidth,
-                hidden: false, // Initialize all categories as visible
-              }));
-            },
-          },
-          onClick: function (e, legendItem, legend) {
-            const category = legendItem.text;
-            const ci = legend.chart;
-            const meta = ci.getDatasetMeta(0);
-
-            meta.data.forEach(function (bar, barIndex) {
-              if (categories[barIndex] === category) {
-                bar.hidden = !bar.hidden;
-              }
-            });
-
-            ci.update();
-          },
-        },
-      },
-    },
-  });
-
-  return chart;
-}
-
-// Fetch data dan buat chart untuk bottom 5 pizza
-fetch("pizza_places.json")
-  .then((response) => response.json())
-  .then((data) => {
-    // Menghitung total penjualan untuk setiap jenis pizza
-    const pizzaSales = {};
-    const pizzaCategories = {};
-    data.forEach((order) => {
-      const pizzaID = order["Pizza ID"];
-      if (pizzaSales[pizzaID]) {
-        pizzaSales[pizzaID] += order.Quantity;
-      } else {
-        pizzaSales[pizzaID] = order.Quantity;
-        pizzaCategories[pizzaID] = order.Category;
-      }
-    });
-
-    // Mengurutkan jenis pizza berdasarkan total penjualan secara ascending
-    const sortedPizzaSales = Object.entries(pizzaSales).sort(
-      (a, b) => a[1] - b[1]
-    );
-
-    // Mengambil lima jenis pizza terendah
-    const bottom5Pizza = sortedPizzaSales.slice(0, 5);
-    const bottom5Labels = bottom5Pizza.map((item) => item[0]);
-    const bottom5DataValues = bottom5Pizza.map((item) => item[1]);
-    const bottom5Categories = bottom5Labels.map(
-      (label) => pizzaCategories[label]
-    );
-
-    // Membuat chart bottom 5 pizza
-    createChart(
-      "bottom5pizza",
-      bottom5Labels,
-      bottom5DataValues,
-      bottom5Categories
-    );
-  });
-
 // Show popup
 window.addEventListener("load", function () {
   setTimeout(function open(event) {
