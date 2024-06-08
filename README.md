@@ -1,7 +1,6 @@
-
 <p align="center">
-    <img src="image/logoRevoU.png" width='250px' alt="Logo" >
-  </a>
+   <img src= "https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-surabaya-24/assets/74400133/766daa73-467e-4e28-aa59-7630dada519f">
+
 
   <h1 align="center">SE Capstone Project RevoU KM</h1>
   <h3 align="center">
