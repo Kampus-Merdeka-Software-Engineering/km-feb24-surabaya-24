@@ -30,11 +30,7 @@
         <span><b>Pizza Sales Dashboard</b></span>
       </div>
       <!---filter------------------------------>
-      <ul class="project-filter">
-        <li class="list project-filter-active" data-filter="all">Dashboard</li>
-        <li class="list" data-filter="insight">Insight</li>
-        <li class="list" data-filter="recomendation">Recomendation</li>
-      </ul>
+
       <h1>Pizza Orders</h1>
       <table id="pizzaOrders" class="display">
           <thead>
@@ -53,25 +49,6 @@
               </tr>
           </thead>
       </table>
-
-    <!---Halaman aawal--------------------------------------------------->
-    <div class="project-container">
-        <!--page 1 dashboard-->
-        <div class="project-box dashboard">
-            
-        </div>
-
-        <!--page 2 insight-->
-        <div class="project-box insight">
-            
-        </div>
-
-        <!--page 3 recomendation-->
-        <div  class="project-box recomendation">
-            
-        </div>
-
-    </div>
     </section>
 
     <form action="JS/dashboard.js" class="select"></form>
@@ -199,31 +176,6 @@
 
     <!--Using JQuery------------>
     <script src="JS/jquery.js"></script>
-
-    <script type="text/javascript">
-        $(document).on('click','.project-filter li',function(){
-            $(this).addClass('project-filter-active').siblings().removeClass('project-filter-active')
-        });
-    /*----buat page pindah pindah---------------*/
-    $(document).ready(function(){
-        $('.list').click(function(){
-            const value = $(this).attr('data-filter');
-            if(value == 'dashboard'){
-                $('.project-box').show('1000');
-            }
-            else{
-                $('.project-box').not('.'+value).hide('1000');
-                $('.project-box').filter('.'+value).show('1000');
-            }
-        });
-    });
-      $(document).on("click", ".project-filter li", function () {
-        $(this)
-          .addClass("project-filter-active")
-          .siblings()
-          .removeClass("project-filter-active");
-      });
-    </script>
    <!-- jQuery -->
    <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
    <!-- DataTables -->

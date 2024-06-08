@@ -110,19 +110,6 @@ a {
   cursor: pointer;
   user-select: none;
 }
-.project-filter-active {
-  background: #f0f0f0;
-  color: #272727;
-  border-radius: 3rem;
-}
-.project-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: auto;
-}
 
 /*-------------------filtering----------------*/
 /* Container styling */

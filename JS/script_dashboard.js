@@ -530,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("There was a problem with the fetch operation:", error);
     });
 });
+
 // Show popup
 window.addEventListener("load", function () {
   setTimeout(function open(event) {
