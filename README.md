@@ -1,7 +1,7 @@
 <p align="center">
    <img src= "https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-surabaya-24/assets/74400133/766daa73-467e-4e28-aa59-7630dada519f">
 <style>
-   .img{
+   .p .img{
       width : 100%;
    }
 </style>
