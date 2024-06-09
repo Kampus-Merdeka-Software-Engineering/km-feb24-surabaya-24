@@ -197,36 +197,40 @@ input[type="checkbox"] {
 
 /*chartmini*/
 .container {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   gap: 30px; /* Spacing between rows */
   height: 100%;
   width: 100%;
-  padding: 20px 30px 20px 30px;
 }
 
 .row {
-  display: inline-flex;
+  display: flex;
   justify-content: space-between;
+  flex-wrap: wrap; /* Wrap items to next line if needed */
   gap: 30px;
-  padding-bottom: 30px;
 }
 
 .row2 {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap; /* Wrap items to next line if needed */
   justify-content: space-between;
+  gap: 30px;
 }
 
 .row3 {
   display: flex;
   justify-content: center;
-  padding-bottom: 20px;
+  gap: 30px;
+  flex-wrap: wrap; /* Wrap items to next line if needed */
 }
 
 .row4 {
   display: flex;
+  flex-wrap: wrap; /* Wrap items to next line if needed */
   justify-content: space-between;
-  padding-bottom: 20px;
+  padding-top: 30px;
+  gap: 30px;
 }
 
 .row:first-child {
@@ -240,6 +244,7 @@ input[type="checkbox"] {
   text-align: center;
   flex: 1;
   margin: 5px; /* Spacing between columns */
+  min-width: 200px; /* Ensure items don't shrink too much */
 }
 
 .row:not(:first-child) .item {
@@ -253,7 +258,8 @@ h3 {
   text-align: center;
 }
 .table {
-  min-width: 600px; /* Tetapkan lebar tabel */
+  width: 500px;
+  min-width: 200px; /* Tetapkan lebar tabel */
   max-width: 500px;
   height: 300px;
   overflow-y: auto; /* Tambahkan scrollbar vertikal */
@@ -296,6 +302,8 @@ h3 {
 /* time barchart */
 .timebar {
   width: 600px;
+  min-width: 200px;
+  max-width: 600px;
   background-color: #dddddd;
 }
 h3 {
@@ -308,6 +316,7 @@ h3 {
 /* revnue linechart */
 .reve {
   width: 600px;
+  min-width: 200px;
   display: flexbox;
   background-color: #dddddd;
 }
@@ -333,6 +342,7 @@ h3 {
 /* top 5 pizza barchart */
 .top5 {
   width: 600px;
+  min-width: 200px;
   display: flexbox;
   background-color: #dddddd;
 }
@@ -346,6 +356,7 @@ h3 {
 /* bottom 5 pizza barchart */
 .bottom5 {
   width: 600px;
+  min-width: 200px;
   display: flexbox;
   background-color: #dddddd;
 }
