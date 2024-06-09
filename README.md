@@ -2,7 +2,7 @@
    <img src= "https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-surabaya-24/assets/74400133/766daa73-467e-4e28-aa59-7630dada519f">
 <style>
    .img{
-      width = 100%;
+      width : 100%;
    }
 </style>
   <h1 align="center">SE Capstone Project RevoU KM</h1>
