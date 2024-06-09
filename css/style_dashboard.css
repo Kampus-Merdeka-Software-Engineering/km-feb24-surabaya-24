@@ -17,6 +17,19 @@ body {
   background: #e5e3d1;
 }
 
+.back {
+  background-color: #ea4201;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
 /*Popup*/
 .popup {
   box-sizing: border-box;
@@ -57,11 +70,11 @@ body {
   margin-top: 10px;
   margin-bottom: 27px;
 }
-#pizzaOrders{
+#pizzaOrders {
   padding-top: 10px;
   margin-block: 10px;
 }
-#pizzaOrders th{
+#pizzaOrders th {
   background-color: #ea4201;
   color: white;
 }
@@ -78,7 +91,7 @@ a {
   padding: 5px 0;
   cursor: pointer;
 }
-.container-data a{
+.container-data a {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
@@ -125,7 +138,7 @@ a {
 
 /*-------------------filtering----------------*/
 /* Container styling */
-.container-data{
+.container-data {
   padding: 20px;
   max-width: 1380px;
   width: 100%;
@@ -293,7 +306,7 @@ h3 {
   width: 600px;
   min-width: 200px; /* Tetapkan lebar tabel */
   /* max-width: 500px; */
-  height: 300px;  
+  height: 300px;
   overflow-y: auto; /* Tambahkan scrollbar vertikal */
   /* background-color: #dddddd; */
 }
@@ -406,7 +419,11 @@ h3 {
   html {
     font-size: 75%;
   }
-  .top5, .bottom5, .reve, .timebar, .table {
+  .top5,
+  .bottom5,
+  .reve,
+  .timebar,
+  .table {
     width: 90vw;
   }
 }
@@ -415,8 +432,8 @@ h3 {
 @media (max-width: 650px) {
   html {
     font-size: 62.5%;
+    width: 95%;
   }
-
 }
 
 /*  Mobile Phone*/
@@ -424,5 +441,4 @@ h3 {
   html {
     font-size: 55%;
   }
-
 }
