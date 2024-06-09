@@ -31,6 +31,36 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("total-order").textContent = "0";
   };
 
+  const setInitialChart = (chartId) => {
+    const ctx = document.getElementById(chartId).getContext("2d");
+    const emptyData = {
+      labels: [],
+      datasets: [
+        {
+          label: "",
+          data: [],
+          backgroundColor: [],
+          borderColor: [],
+          borderWidth: 1,
+        },
+      ],
+    };
+    if (window[chartId]) {
+      window[chartId].destroy();
+    }
+    window[chartId] = new Chart(ctx, {
+      type: "bar",
+      data: emptyData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  };
+
   // Initialize total values to 0
   setInitialTotals();
 
@@ -171,6 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSalesTable(filteredData);
         updateTimeBarChart(filteredData);
         updateRevenueChart(filteredData);
+        createTop5PizzaChart(filteredData);
+        createBottom5PizzaChart(filteredData);
       };
 
       const checkTotalsAndUpdate = () => {
@@ -194,6 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
           selectedPizzas.length === 0
         ) {
           setInitialTotals();
+          setInitialChart("top5pizza");
+          setInitialChart("bottom5pizza");
         } else {
           filterAndDisplayTotals(pizzaData);
         }
@@ -227,20 +261,22 @@ document.addEventListener("DOMContentLoaded", () => {
           (a, b) => b.OrderVolume - a.OrderVolume
         );
 
-        let displayedProducts = sortedProducts.slice(0, 10);
+        // Removed the slicing to limit to top 10 products
+        // let displayedProducts = sortedProducts.slice(0, 10);
+        let displayedProducts = sortedProducts; // Display all sorted products
 
         let placeholder = document.querySelector("#data-output");
         let out = "";
         for (let product of displayedProducts) {
           out += `
-            <tr>
-              <td>${product.Name}</td>
-              <td>${product.Size}</td>
-              <td>${product.Category}</td>
-              <td>${product.Price}</td>
-              <td>${product.OrderVolume}</td>
-            </tr>
-          `;
+      <tr>
+        <td>${product.Name}</td>
+        <td>${product.Size}</td>
+        <td>${product.Category}</td>
+        <td>${product.Price}</td>
+        <td>${product.OrderVolume}</td>
+      </tr>
+    `;
         }
         placeholder.innerHTML = out;
       };
@@ -386,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
+      // Chart creation functions
       const createTop5PizzaChart = (data) => {
         const pizzaSales = {};
         const pizzaCategories = {};
@@ -518,13 +555,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
-      // Memanggil fungsi untuk membuat chart top 5 pizza
-      createTop5PizzaChart(pizzaData);
-
-      // Memanggil fungsi untuk membuat chart bottom 5 pizza
-      createBottom5PizzaChart(pizzaData);
-
       // Do not call filterAndDisplayTotals initially
+      createTop5PizzaChart(pizzaData);
+      createBottom5PizzaChart(pizzaData);
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
