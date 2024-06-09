@@ -359,8 +359,19 @@ footer {
   color: black;
   text-align: center;
   padding: 1rem 1.3rem;
-  margin-top: 3rem;
   box-sizing: content-box;
+}
+
+/* footer .socials .cta {
+  display: inline-block;
+  padding: 5px 5px;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #552222;
+  background: #ea4201;
+  border-radius: 0.5rem;
+  box-shadow: 1px 3px 5px rgba(1, 1, 3, 0.5);
 }
 
 footer .socials {
@@ -375,23 +386,27 @@ footer .socials a {
 footer .socials a:hover {
   color: var(--main-color);
   padding: 0.1rem 0.1rem;
-}
+} */
+
 footer .links a {
   color: black;
   margin-bottom: 1.4rem;
 }
 
 footer .links a:hover {
-  color: var(--main-color);
+  color: #ea4201;
   padding: 0.1rem 0.1rem;
+  font-weight: bold;
+  text-shadow: #ff9f0d 0px 1px 25px;
 }
 
 footer .credit {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 footer .credit a {
   font-weight: 600;
+  color: #ea4201;
 }
 
 /*  Media Queries*/
