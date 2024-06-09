@@ -418,7 +418,7 @@ footer .credit a {
 }
 
 /*  Tablet*/
-@media (max-width: 650px) {
+@media (max-width: 720px) {
   html {
     font-size: 62.5%;
   }
