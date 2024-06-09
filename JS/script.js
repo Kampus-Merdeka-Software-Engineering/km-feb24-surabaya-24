@@ -31,36 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("total-order").textContent = "0";
   };
 
-  const setInitialChart = (chartId) => {
-    const ctx = document.getElementById(chartId).getContext("2d");
-    const emptyData = {
-      labels: [],
-      datasets: [
-        {
-          label: "",
-          data: [],
-          backgroundColor: [],
-          borderColor: [],
-          borderWidth: 1,
-        },
-      ],
-    };
-    if (window[chartId]) {
-      window[chartId].destroy();
-    }
-    window[chartId] = new Chart(ctx, {
-      type: "bar",
-      data: emptyData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  };
-
   // Initialize total values to 0
   setInitialTotals();
 
@@ -226,8 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
           selectedPizzas.length === 0
         ) {
           setInitialTotals();
-          setInitialChart("top5pizza");
-          setInitialChart("bottom5pizza");
+          updateSalesTable([]);
+          updateTimeBarChart([]);
+          updateRevenueChart([]);
+          createTop5PizzaChart([]);
+          createBottom5PizzaChart([]);
         } else {
           filterAndDisplayTotals(pizzaData);
         }
@@ -238,8 +211,8 @@ document.addEventListener("DOMContentLoaded", () => {
       populateDropdown(pizzaNameSelect, pizzaData, "Name");
       populateDropdown(categorySelect, pizzaData, "Category");
 
-      // Functions to update sales table and charts
-      const updateSalesTable = (data) => {
+      // Chart and table update functions
+      const updateSalesTable = (data = []) => {
         let pizzaSales = {};
 
         data.forEach(function (product) {
@@ -261,27 +234,25 @@ document.addEventListener("DOMContentLoaded", () => {
           (a, b) => b.OrderVolume - a.OrderVolume
         );
 
-        // Removed the slicing to limit to top 10 products
-        // let displayedProducts = sortedProducts.slice(0, 10);
         let displayedProducts = sortedProducts; // Display all sorted products
 
         let placeholder = document.querySelector("#data-output");
         let out = "";
         for (let product of displayedProducts) {
           out += `
-      <tr>
-        <td>${product.Name}</td>
-        <td>${product.Size}</td>
-        <td>${product.Category}</td>
-        <td>${product.Price}</td>
-        <td>${product.OrderVolume}</td>
-      </tr>
-    `;
+          <tr>
+            <td>${product.Name}</td>
+            <td>${product.Size}</td>
+            <td>${product.Category}</td>
+            <td>${product.Price}</td>
+            <td>${product.OrderVolume}</td>
+          </tr>
+        `;
         }
         placeholder.innerHTML = out;
       };
 
-      const updateTimeBarChart = (data) => {
+      const updateTimeBarChart = (data = []) => {
         const salesByTimeRange = {
           "11:00:00-15:00:00": 0,
           "15:00:01-19:00:00": 0,
@@ -343,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
-      const updateRevenueChart = (data) => {
+      const updateRevenueChart = (data = []) => {
         const formattedData = data.map(function (item) {
           return {
             month: item.Month.trim(), // Hapus spasi ekstra dari nama bulan
@@ -423,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       // Chart creation functions
-      const createTop5PizzaChart = (data) => {
+      const createTop5PizzaChart = (data = []) => {
         const pizzaSales = {};
         const pizzaCategories = {};
         data.forEach((order) => {
@@ -489,7 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
-      const createBottom5PizzaChart = (data) => {
+      const createBottom5PizzaChart = (data = []) => {
         const pizzaSales = {};
         const pizzaCategories = {};
         data.forEach((order) => {
@@ -555,9 +526,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
-      // Do not call filterAndDisplayTotals initially
-      createTop5PizzaChart(pizzaData);
-      createBottom5PizzaChart(pizzaData);
+      // Initialize charts and table with empty data
+      updateSalesTable([]);
+      updateTimeBarChart([]);
+      updateRevenueChart([]);
+      createTop5PizzaChart([]);
+      createBottom5PizzaChart([]);
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
