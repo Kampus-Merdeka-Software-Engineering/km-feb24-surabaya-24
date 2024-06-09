@@ -1,201 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pizza Sales</title>
 
-    <!-- Fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza Sales</title>
+  <link rel="icon" href="./image/logo.png" />
 
-    <!-- Feather Icons-->
-    <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
 
-    <!-- My Style-->
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+  <!-- Feather Icons-->
+  <script src="https://unpkg.com/feather-icons"></script>
 
-  <body>
-    <div class="background"></div>
+  <!-- My Style-->
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 
-    <!--Navbar Start-->
-    <nav class="navbar">
-      <a href="#" class="navbar-logo">Pizza<span>Sales</span>.</a>
-      <div class="navbar-nav">
-        <a href="#home">Home</a>
-        <a href="#insight">Introduction</a>
-        <a href="#profile">Team</a>
+<body>
+  <div class="background"></div>
+
+  <!--Navbar Start-->
+  <nav class="navbar">
+    <a href="#" class="navbar-logo">Pizza<span>Sales</span>.</a>
+    <div class="navbar-nav">
+      <a href="#home">Home</a>
+      <a href="#insight">Introduction</a>
+      <a href="#profile">Team</a>
+    </div>
+  </nav>
+
+  <!--Tampilan Section Start-->
+  <section class="tampilan" id="home">
+    <div class="container">
+      <div class="content">
+        <main class="home-text">
+          <h1>
+            Welcome to Pizza Sales
+            <span>Dashboard</span>
+          </h1>
+          <a href="index_dashboard.html" class="cta">Dashboard Dataset</a>
+        </main>
+        <div class="home-img">
+          <img src="image/pizzabaru.png" />
+        </div>
       </div>
-    </nav>
+    </div>
+  </section>
+  <!-- TampilanSection End-->
 
-    <!--Tampilan Section Start-->
-    <section class="tampilan" id="home">
-      <div class="container">
+  <!--Abaout Section Start-->
+  <section id="insight" class="insight">
+    <div class="container">
+      <div class="row">
+        <div class="insight-img">
+          <img src="image/pizzateam.png" alt="Insight" />
+        </div>
         <div class="content">
-          <main class="home-text">
-            <h1>
-              Welcome to Pizza Sales
-              <span>Dashboard</span>
-            </h1>
-            <a href="index_dashboard.html" class="cta">Dashboard Dataset</a>
-          </main>
-          <div class="home-img">
-            <img src="image/pizzabaru.png" />
-          </div>
+          <article>
+            <h2>Introduce Team</h2>
+            <h3>
+              Hi everyone! In introducing our team,
+              <span> We are from team 24 Surabaya</span>. Here we proudly
+              present our capstone project, that's Pizza Sales Dashboard. The
+              data analys dashboard that we have previously created in Looker
+              Studio will be displayed on the website. Thank you, and
+              hopefully it will be useful.
+            </h3>
+          </article>
         </div>
       </div>
-    </section>
-    <!-- TampilanSection End-->
+    </div>
+  </section>
+  <!--Abaout Section End-->
 
-    <!--Abaout Section Start-->
-    <section id="insight" class="insight">
-      <div class="container">
-        <div class="row">
-          <div class="insight-img">
-            <img src="image/pizzateam.png" alt="Insight" />
-          </div>
-          <div class="content">
-            <article>
-              <h2>Introduce Team</h2>
-              <h3>
-                Hi everyone! In introducing our team,
-                <span> We are from team 24 Surabaya</span>. Here we proudly
-                present our capstone project, that's Pizza Sales Dashboard. The
-                data analys dashboard that we have previously created in Looker
-                Studio will be displayed on the website. Thank you, and
-                hopefully it will be useful.
-              </h3>
-            </article>
-          </div>
+  <!--Profil Section Start-->
+  <section id="profile" class="profile">
+    <div class="container">
+      <h2>Meet Our Team</h2>
+      <div class="container-card">
+        <div class="profil-card">
+          <img src="image/Aulia.jpeg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Aulia Mayang Kusuma</h3>
+          <p class="profil-nama-jurusan">Statistika</p>
+          <p class="profil-nama-univ">Universitas Brawijaya</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/bela.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Bela Durotunavisa</h3>
+          <p class="profil-nama-jurusan">Kesehatan Masyarakat</p>
+          <p class="profil-nama-univ">Universitas Siliwangi</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/Eva.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Eva Dhorifah</h3>
+          <p class="profil-nama-jurusan">Matematika</p>
+          <p class="profil-nama-univ">Universitas Negeri Jember</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/Fadia.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Fadia Nailah</h3>
+          <p class="profil-nama-jurusan">Statistika</p>
+          <p class="profil-nama-univ">Universitas Hasanuddin</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/Kevin.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Kevin Candra</h3>
+          <p class="profil-nama-jurusan">Sistem Informasi</p>
+          <p class="profil-nama-univ">Universitas Prima</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/rahman.png" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Nurrahman Firdaus</h3>
+          <p class="profil-nama-jurusan">PTIK</p>
+          <p class="profil-nama-univ">Universitas Negeri Semarang</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/Jona.JPG" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Jona Maruli Maleakhi Sitorus</h3>
+          <p class="profil-nama-jurusan">Fisika</p>
+          <p class="profil-nama-univ">Institut Teknologi Sepuluh November</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/abror.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Mohammad Abror Hidayat</h3>
+          <p class="profil-nama-jurusan">Agroteknologi</p>
+          <p class="profil-nama-univ">Universitas Negeri Surakarta</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/nurul.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Nurul Dini Kamilah</h3>
+          <p class="profil-nama-jurusan">Teknik Informatika</p>
+          <p class="profil-nama-univ">Universitas Komputer Indonesia</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/Shabrina.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Shabrina Muthia Adani</h3>
+          <p class="profil-nama-jurusan">Teknik Informatika</p>
+          <p class="profil-nama-univ">Universitas YARSI</p>
+        </div>
+        <div class="profil-card">
+          <img src="image/rizal.jpg" alt="naruto" class="profil-nama-img" />
+          <h3 class="profil-title">Syah Rizal Al Ghifari</h3>
+          <p class="profil-nama-jurusan">Matematika</p>
+          <p class="profil-nama-univ">Universitas Airlangga</p>
         </div>
       </div>
-    </section>
-    <!--Abaout Section End-->
+    </div>
+  </section>
+  <!--Profil Section End -->
 
-    <!--Profil Section Start-->
-    <section id="profile" class="profile">
-      <div class="container">
-        <h2>Meet Our Team</h2>
-        <div class="container-card">
-          <div class="profil-card">
-            <img src="image/Aulia.jpeg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Aulia Mayang Kusuma</h3>
-            <p class="profil-nama-jurusan">Statistika</p>
-            <p class="profil-nama-univ">Universitas Brawijaya</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/bela.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Bela Durotunavisa</h3>
-            <p class="profil-nama-jurusan">Kesehatan Masyarakat</p>
-            <p class="profil-nama-univ">Universitas Siliwangi</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/Eva.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Eva Dhorifah</h3>
-            <p class="profil-nama-jurusan">Matematika</p>
-            <p class="profil-nama-univ">Universitas Negeri Jember</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/Fadia.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Fadia Nailah</h3>
-            <p class="profil-nama-jurusan">Statistika</p>
-            <p class="profil-nama-univ">Universitas Hasanuddin</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/Kevin.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Kevin Candra</h3>
-            <p class="profil-nama-jurusan">Sistem Informasi</p>
-            <p class="profil-nama-univ">Universitas Prima</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/rahman.png" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Nurrahman Firdaus</h3>
-            <p class="profil-nama-jurusan">PTIK</p>
-            <p class="profil-nama-univ">Universitas Negeri Semarang</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/Jona.JPG" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Jona Maruli Maleakhi Sitorus</h3>
-            <p class="profil-nama-jurusan">Fisika</p>
-            <p class="profil-nama-univ">Institut Teknologi Sepuluh November</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/abror.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Mohammad Abror Hidayat</h3>
-            <p class="profil-nama-jurusan">Agroteknologi</p>
-            <p class="profil-nama-univ">Universitas Negeri Surakarta</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/nurul.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Nurul Dini Kamilah</h3>
-            <p class="profil-nama-jurusan">Teknik Informatika</p>
-            <p class="profil-nama-univ">Universitas Komputer Indonesia</p>
-          </div>
-          <div class="profil-card">
-            <img
-              src="image/Shabrina.jpg"
-              alt="naruto"
-              class="profil-nama-img"
-            />
-            <h3 class="profil-title">Shabrina Muthia Adani</h3>
-            <p class="profil-nama-jurusan">Teknik Informatika</p>
-            <p class="profil-nama-univ">Universitas YARSI</p>
-          </div>
-          <div class="profil-card">
-            <img src="image/rizal.jpg" alt="naruto" class="profil-nama-img" />
-            <h3 class="profil-title">Syah Rizal Al Ghifari</h3>
-            <p class="profil-nama-jurusan">Matematika</p>
-            <p class="profil-nama-univ">Universitas Airlangga</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--Profil Section End -->
-
-    <!-- Footer Start-->
-    <footer>
-      <!-- <div class="socials">
+  <!-- Footer Start-->
+  <footer>
+    <!-- <div class="socials">
         <a href="#"> <i data-feather="github"></i></a>
         <a href="#"> <i data-feather="disc"></i></a>
         <a href=" " class="cta">Github</a>
       </div> -->
 
-      <div class="links">
-        <a
-          href="https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-surabaya-24"
-          >Github</a
-        >
-        <span>|</span>
-        <a
-          href="https://lookerstudio.google.com/u/0/reporting/34ef952b-6c8e-45bc-b67d-43c274e38834/page/1v2wD"
-          >Looker Studio</a
-        >
-        <span>|</span>
-        <a href="https://mavenanalytics.io/data-playground?page=6&pageSize=5"
-          >Dataset</a
-        >
-      </div>
+    <div class="links">
+      <a href="https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-surabaya-24">Github</a>
+      <span>|</span>
+      <a href="https://lookerstudio.google.com/u/0/reporting/34ef952b-6c8e-45bc-b67d-43c274e38834/page/1v2wD">Looker
+        Studio</a>
+      <span>|</span>
+      <a href="https://mavenanalytics.io/data-playground?page=6&pageSize=5">Dataset</a>
+    </div>
 
-      <div class="credit">
-        <p>Created by <a href="">Surabaya 24</a>. | &copy; 2024.</p>
-      </div>
-    </footer>
+    <div class="credit">
+      <p>Created by <a href="">Surabaya 24</a>. | &copy; 2024.</p>
+    </div>
+  </footer>
 
-    <!--Footer End-->
+  <!--Footer End-->
 
-    <script>
-      feather.replace();
-    </script>
+  <script>
+    feather.replace();
+  </script>
 
-    <!-- My Javasript-->
-    <script src="JS/script.js"></script>
-  </body>
+  <!-- My Javasript-->
+  <script src="JS/script.js"></script>
+</body>
+
 </html>
 
 <!-- coba -->

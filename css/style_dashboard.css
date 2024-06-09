@@ -218,6 +218,7 @@ input[type="checkbox"] {
 /* General Styling */
 .box {
   width: fit-content;
+  height: fit-content;
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
@@ -334,28 +335,28 @@ h3 {
 .timebar {
   width: 600px;
   min-width: 200px;
-  max-width: 600px;
   /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
 }
 #timebarchart {
-  width: 500px;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* revnue linechart */
 .reve {
   width: 600px;
   min-width: 200px;
-  display: flexbox;
   /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
 }
 #revenue {
-  width: 500px;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* price range barchart
@@ -374,28 +375,29 @@ h3 {
 .top5 {
   width: 600px;
   min-width: 200px;
-  display: flexbox;
   /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
 }
 #top5pizza {
-  width: 500px;
+  /* width: 500px; */
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* bottom 5 pizza barchart */
 .bottom5 {
   width: 600px;
   min-width: 200px;
-  display: flexbox;
   /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
 }
 #bottom5pizza {
-  width: 500px;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /*  Media Queries*/
@@ -404,6 +406,9 @@ h3 {
   html {
     font-size: 75%;
   }
+  .top5, .bottom5, .reve, .timebar, .table {
+    width: 90vw;
+  }
 }
 
 /*  Tablet*/
@@ -411,6 +416,7 @@ h3 {
   html {
     font-size: 62.5%;
   }
+
 }
 
 /*  Mobile Phone*/
@@ -418,4 +424,5 @@ h3 {
   html {
     font-size: 55%;
   }
+
 }
