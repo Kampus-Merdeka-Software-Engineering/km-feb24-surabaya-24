@@ -1,88 +1,93 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>dashboard baru</title>
-    <!---Stylesheet-->
-    <link rel="stylesheet" href="css/style_dashboard.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <!--Font-------------------------------->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-        }
-    </style>
-  </head>
-  <body>
-    <!--Project Section--------------------->
-    <section id="project">
-      <div class="project-heading">
-        <span><b>Pizza Sales Dashboard</b></span>
-      </div>
-      <!---filter------------------------------>
 
-      <h1>Pizza Orders</h1>
+<head>
+  <meta charset="utf-8" />
+  <title>dashboard baru</title>
+  <!---Stylesheet-->
+  <link rel="stylesheet" href="css/style_dashboard.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <!--Font-------------------------------->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    table {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!--Project Section--------------------->
+  <section id="project">
+    <div class="project-heading">
+      <span><b>Pizza Sales Dashboard</b></span>
+    </div>
+    <!---filter------------------------------>
+
+    <h1>Pizza Orders</h1>
+    <div class="container-data">
       <table id="pizzaOrders" class="display">
-          <thead>
-              <tr>
-                  <th>Order Details ID</th>
-                  <th>Order ID</th>
-                  <th>Pizza ID</th>
-                  <th>Pizza Type ID</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Size</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Date</th>
-                  <th>Time</th>
-              </tr>
-          </thead>
+        <thead>
+          <tr>
+            <th>Order Details ID</th>
+            <th>Order ID</th>
+            <th>Pizza ID</th>
+            <th>Pizza Type ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Size</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
       </table>
-    </section>
+    </div>
 
-    <form action="JS/dashboard.js" class="select"></form>
-    <main class="container-dashboard">
-      <header class="dash-header">
-        <div class="select-dropdown">
-          <div class="select-btn btn1">
-            <span class="btn-text">MonthYearSelect</span>
-            <span class="arrow-dwn">
-              <i class="bx bx-chevron-up"></i>
-            </span>
-          </div>
-          <ul class="list-items pizza-type" id="month-year-select"></ul>
+  </section>
+
+  <form action="JS/dashboard.js" class="select"></form>
+  <main class="container-dashboard">
+    <header class="dash-header">
+      <div class="select-dropdown">
+        <div class="select-btn btn1">
+          <span class="btn-text">MonthYearSelect</span>
+          <span class="arrow-dwn">
+            <i class="bx bx-chevron-up"></i>
+          </span>
         </div>
-        <div class="select-dropdown">
-          <div class="select-btn btn2">
-            <span class="btn-text">Pizza-Name</span>
-            <span class="arrow-dwn">
-              <i class="bx bx-chevron-up"></i>
-            </span>
-          </div>
-          <ul class="list-items pizza-category" id="pizza-name-select"></ul>
-        </div>
-        <div class="select-dropdown">
-          <div class="select-btn btn3">
-            <span class="btn-text">Category</span>
-            <span class="arrow-dwn">
-              <i class="bx bx-chevron-up"></i>
-            </span>
-          </div>
-          <ul class="list-items pizza-size" id="category-select"></ul>
+        <ul class="list-items pizza-type" id="month-year-select"></ul>
       </div>
-    </form>
-  </header>
+      <div class="select-dropdown">
+        <div class="select-btn btn2">
+          <span class="btn-text">Pizza-Name</span>
+          <span class="arrow-dwn">
+            <i class="bx bx-chevron-up"></i>
+          </span>
+        </div>
+        <ul class="list-items pizza-category" id="pizza-name-select"></ul>
+      </div>
+      <div class="select-dropdown">
+        <div class="select-btn btn3">
+          <span class="btn-text">Category</span>
+          <span class="arrow-dwn">
+            <i class="bx bx-chevron-up"></i>
+          </span>
+        </div>
+        <ul class="list-items pizza-size" id="category-select"></ul>
+      </div>
+      </form>
+    </header>
 
     <!---section analys------------------------------>
     <!--Nyoba flex box -->
@@ -104,62 +109,73 @@
 
       <!--tampilan table dan time barchart -->
       <div class="row2">
-        <div class="table">
+        <div class="box">
           <h3>Sales Table</h3>
-          <table>
-            <thread>
-              <tr>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>order.vol</th>
-              </tr>
-            </thread>
-            <tbody id="data-output"></tbody>
-          </table>
+          <div class="table">
+            <table>
+              <thread>
+                <tr>
+                  <th>Name</th>
+                  <th>Size</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>order.vol</th>
+                </tr>
+              </thread>
+              <tbody id="data-output"></tbody>
+            </table>
+          </div>
         </div>
-
-        <div class="timebar">
-          <h3>Time Barchart</h3>
-          <div>
-            <canvas id="timebarchart"></canvas>
+        <div class="box">
+          <div class="timebar">
+            <h3>Time Barchart</h3>
+            <div>
+              <canvas id="timebarchart"></canvas>
+            </div>
           </div>
         </div>
       </div>
 
       <!--revenue linechart dan price barchart -->
       <main>
-        <div class="row3">
+        <!-- <div class="row3">
+          <div class="pricebar">
+            <h3>Price Range</h3>
+            <div>
+              <canvas id="pricerange"></canvas>
+            </div>
+          </div>
+        </div> -->
+        <div class="row4">
+          <div class="box">
+            <div class="top5">
+              <h3>Top 5 Pizza Sales</h3>
+              <div>
+                <canvas id="top5pizza"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="box">
+            <div class="bottom5">
+              <h3>Bottom 5 Pizza Sales</h3>
+              <div>
+                <canvas id="bottom5pizza"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- REVENUE -->
+      <div class="row3">
+        <div class="box">
           <div class="reve">
             <h3>Revenue</h3>
             <div>
               <canvas id="revenue"></canvas>
             </div>
           </div>
-
-          <!-- <div class="pricebar">
-            <h3>Price Range</h3>
-            <div>
-              <canvas id="pricerange"></canvas>
-            </div>
-          </div> -->
         </div>
-        <div class="row4">
-          <div class="top5">
-            <h3>Top 5 Pizza Sales</h3>
-            <div>
-              <canvas id="top5pizza"></canvas>
-            </div>
-          </div>
-          <div class="bottom5">
-            <h3>Bottom 5 Pizza Sales</h3>
-            <div>
-              <canvas id="bottom5pizza"></canvas>
-            </div>
-          </div>
-        </div>
-      </main>
+      </div>
     </main>
     <!--overview section end-->
 
@@ -176,28 +192,28 @@
 
     <!--Using JQuery------------>
     <script src="JS/jquery.js"></script>
-   <!-- jQuery -->
-   <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
-   <!-- DataTables -->
-   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.dataTables.js"></script>
-   <!-- Initialize DataTable -->
-   <script>
-     $(document).ready(function() {
-       $('#myTable').DataTable();
-     });
-   </script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.dataTables.js"></script>
+    <!-- Initialize DataTable -->
+    <script>
+      $(document).ready(function () {
+        $('#myTable').DataTable();
+      });
+    </script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <!-- Custom Script -->
-   
-   <!-- My Javascript -->
-   <script src="JS/script.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <!-- Custom Script -->
-   
-   <!-- <script>
+
+    <!-- My Javascript -->
+    <script src="JS/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Script -->
+
+    <!-- <script>
     $(document).ready(function() {
         // data JSON
         var jsonData = [ 
@@ -641,5 +657,6 @@
         });
     });
 </script> -->
-  </body>
+</body>
+
 </html>
