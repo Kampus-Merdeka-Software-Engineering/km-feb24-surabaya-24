@@ -401,8 +401,8 @@ h3 {
   height: 100% !important;
 }
 
-/* bottom 5 pizza barchart */
-.pricebar {
+/* price range*/
+.pricerange {
   width: 600px;
   min-width: 200px;
   /* background-color: #dddddd; */
@@ -413,7 +413,6 @@ h3 {
 #pricerangebar {
   width: 100% !important;
   height: 100% !important;
-  flex-direction: row;
 }
 
 /*  Media Queries*/
