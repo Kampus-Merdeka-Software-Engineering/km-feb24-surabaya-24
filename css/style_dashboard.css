@@ -413,6 +413,7 @@ h3 {
 #pricerangebar {
   width: 100% !important;
   height: 100% !important;
+  flex-direction: row;
 }
 
 /*  Media Queries*/
