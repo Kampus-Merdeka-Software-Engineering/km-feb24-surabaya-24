@@ -1,3 +1,4 @@
+// pizzaorders table //
 $(document).ready(function () {
   // Fetch the JSON data
   $.getJSON("pizza_places.json", function (data) {
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // dropdown function starts here
       const dropdownButtons = document.querySelectorAll(".select-btn");
 
       dropdownButtons.forEach((button) => {
@@ -108,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
       };
+      // dropdown function ends here
 
       const calculateTotals = (data) => {
         let totalIncome = 0;
@@ -132,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
       };
 
+      // function filtering starts here
       const filterAndDisplayTotals = (data) => {
         const selectedCategories = Array.from(
           document.querySelectorAll("#category-select .option-checkbox:checked")
@@ -174,6 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createTop5PizzaChart(filteredData);
         createBottom5PizzaChart(filteredData);
       };
+      // filtering function ends here
 
       const checkTotalsAndUpdate = () => {
         const selectedCategories = Array.from(
@@ -211,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
       populateDropdown(pizzaNameSelect, pizzaData, "Name");
       populateDropdown(categorySelect, pizzaData, "Category");
 
+      //time range barchart
       // Chart and table update functions
       const updateSalesTable = (data = []) => {
         let pizzaSales = {};
@@ -314,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
+      //revenue linechart
       const updateRevenueChart = (data = []) => {
         const formattedData = data.map(function (item) {
           return {
@@ -393,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
+      //top 5 pizza sales barchart
       // Chart creation functions
       const createTop5PizzaChart = (data = []) => {
         const pizzaSales = {};
@@ -460,6 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       };
 
+      //bottom 5 pizza sales
       const createBottom5PizzaChart = (data = []) => {
         const pizzaSales = {};
         const pizzaCategories = {};
@@ -538,6 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+//price range barchart
 document.addEventListener("DOMContentLoaded", () => {
   fetch("price_range.json")
     .then((response) => response.json())
@@ -629,74 +639,3 @@ document.querySelector("#xbutton").addEventListener("click", function () {
 document.querySelector("#close").addEventListener("click", function () {
   document.querySelector(".popup").style.display = "none";
 });
-
-// /*pringe range*/
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Function to get the price from the pizza object
-//   const getPrice = (pizza) => parseFloat(pizza.Price.replace("$", ""));
-
-//   // Group pizzas by price range
-//   const priceRanges = {
-//     "10-15": 0,
-//     "15.1-20": 0,
-//     "20.1-25": 0,
-//     "25.1-30": 0,
-//     "35.1-40": 0,
-//     Other: 0,
-//   };
-
-//   fetch("pizza_places.json")
-//     .then((response) => response.json())
-//     .then((pizzaData) => {
-//       pizzaData.forEach((pizza) => {
-//         const price = getPrice(pizza);
-//         if (price >= 10 && price <= 15) priceRanges["10-15"] += pizza.Quantity;
-//         else if (price > 15 && price <= 20)
-//           priceRanges["15.1-20"] += pizza.Quantity;
-//         else if (price > 20 && price <= 25)
-//           priceRanges["20.1-25"] += pizza.Quantity;
-//         else if (price > 25 && price <= 30)
-//           priceRanges["25.1-30"] += pizza.Quantity;
-//         else if (price > 35 && price <= 40)
-//           priceRanges["35.1-40"] += pizza.Quantity;
-//         else priceRanges["Other"] += pizza.Quantity;
-//       });
-
-//       // Create the bar chart
-//       const ctx = document.getElementById("pricerange").getContext("2d");
-//       new Chart(ctx, {
-//         type: "bar",
-//         data: {
-//           labels: Object.keys(priceRanges),
-//           datasets: [
-//             {
-//               label: "Quantity",
-//               data: Object.values(priceRanges),
-//               backgroundColor: [
-//                 "blue",
-//                 "lightblue",
-//                 "orange",
-//                 "yellow",
-//                 "green",
-//                 "pink",
-//               ],
-//             },
-//           ],
-//         },
-//         options: {
-//           scales: {
-//             y: {
-//               beginAtZero: true,
-//               ticks: {
-//                 callback: function (value) {
-//                   return value + " rb";
-//                 },
-//               },
-//             },
-//           },
-//         },
-//       });
-//     })
-//     .catch((error) => console.error("Error fetching the JSON data:", error));
-// });
