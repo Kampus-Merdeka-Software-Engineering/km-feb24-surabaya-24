@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">SE Capstone Project RevoU KM</h1>
   <p align="center">
-  <a href="https://vercel.com/login?next=%2Fsso-api%3Furl%3Dhttps%253A%252F%252Fkm-feb24-surabaya-24-fw1f8u2fy-evas-projects-e06c712a.vercel.app%252F%26nonce%3Dc24301bc4cbe4e5f8925ea35225186472b9586110af241f9ba671b3ce7532e6f">Link Deploy Vercel</a>
+  <a href="https://km-feb24-surabaya-24-fw1f8u2fy-evas-projects-e06c712a.vercel.app">Link Deploy Vercel</a>
 </p>
 <br>
   <h3 align="center">
