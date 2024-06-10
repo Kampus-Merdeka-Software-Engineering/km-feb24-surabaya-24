@@ -538,6 +538,82 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("price_range.json")
+    .then((response) => response.json())
+    .then((data) => {
+      createBarChart(data);
+    })
+    .catch((error) => console.error("Error fetching the JSON data:", error));
+});
+
+function createBarChart(data) {
+  const ctx = document.getElementById("pricerangebar").getContext("2d");
+
+  // Extract labels and data from JSON
+  const labels = data.map((item) => item.pizza_id);
+  const recordCounts = data.map((item) => item.Record_Count);
+  const priceRanges = data.map((item) => item.PriceRange);
+
+  // Generate a list of solid colors
+  const backgroundColors = [
+    "rgba(255, 99, 132, 1)",
+    "rgba(54, 162, 235, 1)",
+    "rgba(255, 206, 86, 1)",
+    "rgba(75, 192, 192, 1)",
+    "rgba(153, 102, 255, 1)",
+    "rgba(255, 159, 64, 1)",
+  ];
+
+  // Create a bar chart
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Record Count",
+          data: recordCounts,
+          backgroundColor: backgroundColors.slice(0, labels.length),
+          borderColor: backgroundColors.slice(0, labels.length),
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          labels: {
+            generateLabels: function (chart) {
+              const data = chart.data;
+              if (data.labels.length && data.datasets.length) {
+                return data.labels.map((label, index) => {
+                  return {
+                    text: priceRanges[index],
+                    fillStyle: data.datasets[0].backgroundColor[index],
+                    strokeStyle: data.datasets[0].borderColor[index],
+                    lineWidth: data.datasets[0].borderWidth,
+                    hidden: false,
+                    index: index,
+                  };
+                });
+              }
+              return [];
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
 // Show popup
 window.addEventListener("load", function () {
   setTimeout(function open(event) {

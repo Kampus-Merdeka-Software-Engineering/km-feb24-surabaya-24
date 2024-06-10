@@ -372,18 +372,6 @@ h3 {
   height: 100% !important;
 }
 
-/* price range barchart
-.pricebar {
-  width: 600px;
-  display: flexbox;
-  background-color: #dddddd;
-}
-h3 {
-  text-align: center;
-}
-#pricerange {
-  width: 500px;
-} */
 /* top 5 pizza barchart */
 .top5 {
   width: 600px;
@@ -413,6 +401,20 @@ h3 {
   height: 100% !important;
 }
 
+/* bottom 5 pizza barchart */
+.pricebar {
+  width: 600px;
+  min-width: 200px;
+  /* background-color: #dddddd; */
+}
+h3 {
+  text-align: center;
+}
+#pricerangebar {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /*  Media Queries*/
 /*  Laptop*/
 @media (max-width: 1366px) {
@@ -423,7 +425,8 @@ h3 {
   .bottom5,
   .reve,
   .timebar,
-  .table {
+  .table,
+  .pricebar {
     width: 90vw;
   }
 }
