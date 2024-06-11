@@ -207,7 +207,7 @@ body {
 /* introduce the team */
 .content h2 {
   font-size: var(--h2-font);
-  line-height: 0.3;
+  line-height: 1.2;
   color: #ea4201;
   text-align: justify;
 }
