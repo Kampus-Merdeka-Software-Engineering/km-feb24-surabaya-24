@@ -487,3 +487,24 @@ footer .credit a {
     text-align: center;
   }
 }
+/*  Tablet*/
+@media (max-width: 650px) {
+  html {
+    font-size: 62.5%;
+    width: 95%;
+  }
+}
+/*  Laptop*/
+@media (max-width: 1366px) {
+  html {
+    font-size: 75%;
+  }
+  .top5,
+  .bottom5,
+  .reve,
+  .timebar,
+  .table,
+  .pricebar {
+    width: 90vw;
+  }
+}
