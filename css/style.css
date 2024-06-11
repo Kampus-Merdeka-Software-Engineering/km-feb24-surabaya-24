@@ -494,17 +494,3 @@ footer .credit a {
     width: 95%;
   }
 }
-/*  Laptop*/
-@media (max-width: 1366px) {
-  html {
-    font-size: 75%;
-  }
-  .top5,
-  .bottom5,
-  .reve,
-  .timebar,
-  .table,
-  .pricebar {
-    width: 90vw;
-  }
-}
