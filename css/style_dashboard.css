@@ -136,7 +136,7 @@ a {
   user-select: none;
 }
 
-/*-------------------filtering----------------*/
+/*--filtering--*/
 /* Container styling */
 .container-data {
   padding: 20px;
@@ -242,7 +242,7 @@ input[type="checkbox"] {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 30px; /* Spacing between rows */
+  gap: 30px; 
   height: 100%;
   max-width: 100vw;
 }
@@ -250,13 +250,13 @@ input[type="checkbox"] {
 .row {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; /* Wrap items to next line if needed */
+  flex-wrap: wrap; 
   gap: 30px;
 }
 
 .row2 {
   display: flex;
-  flex-wrap: wrap; /* Wrap items to next line if needed */
+  flex-wrap: wrap; 
   justify-content: center;
   gap: 30px;
 }
@@ -265,19 +265,19 @@ input[type="checkbox"] {
   display: flex;
   justify-content: center;
   gap: 30px;
-  flex-wrap: wrap; /* Wrap items to next line if needed */
+  flex-wrap: wrap; 
 }
 
 .row4 {
   display: flex;
-  flex-wrap: wrap; /* Wrap items to next line if needed */
+  flex-wrap: wrap; 
   justify-content: center;
   padding-top: 30px;
   gap: 30px;
 }
 
 .row:first-child {
-  justify-content: space-between; /* Ensure all 3 columns take equal space */
+  justify-content: space-between; 
 }
 
 .item {
@@ -288,14 +288,13 @@ input[type="checkbox"] {
   padding: 20px;
   text-align: center;
   flex: 1;
-  margin: 5px; /* Spacing between columns */
-  /* min-width: 200px; Ensure items don't shrink too much */
+  margin: 5px; 
 }
 
 .row:not(:first-child) .item {
   flex-basis: calc(
     50% - 10px
-  ); /* 2 columns with equal width, considering the margin */
+  ); 
 }
 
 /* table */
@@ -304,15 +303,13 @@ h3 {
 }
 .table {
   width: 600px;
-  min-width: 200px; /* Tetapkan lebar tabel */
-  /* max-width: 500px; */
+  min-width: 200px; 
   height: 300px;
-  overflow-y: auto; /* Tambahkan scrollbar vertikal */
-  /* background-color: #dddddd; */
+  overflow-y: auto; 
 }
 
 .table table {
-  width: 100%; /* Lebar tabel mengisi kontainer */
+  width: 100%; 
   border-collapse: collapse;
 }
 
@@ -348,7 +345,6 @@ h3 {
 .timebar {
   width: 600px;
   min-width: 200px;
-  /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
@@ -362,7 +358,6 @@ h3 {
 .reve {
   width: 600px;
   min-width: 200px;
-  /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
@@ -376,13 +371,11 @@ h3 {
 .top5 {
   width: 600px;
   min-width: 200px;
-  /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
 }
 #top5pizza {
-  /* width: 500px; */
   width: 100% !important;
   height: 100% !important;
 }
@@ -391,7 +384,6 @@ h3 {
 .bottom5 {
   width: 600px;
   min-width: 200px;
-  /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
@@ -405,7 +397,6 @@ h3 {
 .pricerange {
   width: 600px;
   min-width: 200px;
-  /* background-color: #dddddd; */
 }
 h3 {
   text-align: center;
